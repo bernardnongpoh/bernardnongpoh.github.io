@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Bernard Nongpoh]]></title><description><![CDATA[Security Researcher]]></description><link>https://lumen.netlify.com</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 14 Jun 2021 21:05:15 GMT</lastBuildDate><item><title><![CDATA[Installing LLVM Compiler Infrastructure]]></title><description><![CDATA[Installing LLVM Compiler Infrastructure]]></description><link>https://lumen.netlify.com/posts/llvm</link><guid isPermaLink="false">https://lumen.netlify.com/posts/llvm</guid><pubDate>Fri, 21 May 2021 22:40:32 GMT</pubDate><content:encoded>&lt;p&gt;This blog walks you through how to install &lt;code class=&quot;language-text&quot;&gt;LLVM Compiler Infrastructure&lt;/code&gt; from scratch&lt;/p&gt;
+&lt;h2 id=&quot;prerequisites&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#prerequisites&quot; aria-label=&quot;prerequisites permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;I assume you have installed git in your system &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt install git-all  # To install git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;Running a Linux Machine (This installation tested on Ubuntu 20 LTS)&lt;/li&gt;
+&lt;li&gt;Make sure you have sufficient storage (around 20 GB free)&lt;/li&gt;
+&lt;li&gt;While building, your CPU might freeze; it better to close all programs before installation. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;clone-check-out-the-llvm-source-from-git-repository&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#clone-check-out-the-llvm-source-from-git-repository&quot; aria-label=&quot;clone check out the llvm source from git repository permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Clone (Check out) the llvm source from git repository&lt;/h2&gt;
+&lt;p&gt;We first need to clone the repository. To save space, we do a &lt;code class=&quot;language-text&quot;&gt;shallow&lt;/code&gt; clone. If you want the complete source code, go check this link &lt;a href=&quot;https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Getting the source code and building LLVM&lt;/a&gt;
+Doing this will also pull llvm subprojects such as Clang and others. &lt;/p&gt;
+&lt;h3 id=&quot;create-a-directory-and-clone&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#create-a-directory-and-clone&quot; aria-label=&quot;create a directory and clone permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Create a directory and clone&lt;/h3&gt;
+&lt;p&gt; Create a new directory in your home folder&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;mkdir llvm
+cd llvm
+git clone --depth 1 https://github.com/llvm/llvm-project.git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;configure-and-build-llvm-and-clang&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#configure-and-build-llvm-and-clang&quot; aria-label=&quot;configure and build llvm and clang permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Configure and build LLVM and Clang&lt;/h2&gt;
+&lt;p&gt; Once you have clone successfully, you can now execute the following commands in your terminal. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;cd llvm-project
+mkdir build
+cd build
+cmake -G Ninja ../llvm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note that -G Ninja is a build system generator; you can choose others as well. Check the official documentation &lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; if you would like to build &lt;code class=&quot;language-text&quot;&gt;llvm&lt;/code&gt; other than &lt;code class=&quot;language-text&quot;&gt;Ninja&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you haven’t installed &lt;code class=&quot;language-text&quot;&gt;cmake&lt;/code&gt;, go ahead and install it&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt install cmake&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once done, run. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt; cmake -G Ninja ../llvm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you haven’t installed &lt;code class=&quot;language-text&quot;&gt;Ninja,&lt;/code&gt; you will get errors as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Error: CMake was unable to find a build program corresponding to &amp;quot;Ninja&amp;quot;. 
+
+CMAKE_MAKE_PROGRAM is not set. You probably need to select a different build tool. CMake 
+
+Error: CMAKE_C_COMPILER not set, after EnableLanguage CMake Error: CMAKE_CXX_COMPILER not 
+
+set, after EnableLanguage CMake Error: CMAKE_ASM_COMPILER not set, after EnableLanguage -- Configuring incomplete, errors occurred!&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;install-ninja&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#install-ninja&quot; aria-label=&quot;install ninja permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Install Ninja&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt-get install -y ninja-build&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once done, run the following command to generate the &lt;code class=&quot;language-text&quot;&gt;build files.&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt; cmake -G Ninja ../llvm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;building-llvm-and-clang&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#building-llvm-and-clang&quot; aria-label=&quot;building llvm and clang permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Building llvm and clang&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;cmake --build  .&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This might takes hours, depending on your machine. &lt;/p&gt;
+&lt;p&gt;It took &lt;code class=&quot;language-text&quot;&gt;1 hr (approx)&lt;/code&gt; in my machine  (Intel Xeon, 32GB Ram). &lt;/p&gt;
+&lt;p&gt;I also encountered an error in linking, error similar to the following &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;FAILED: lib/libLTO.so.13git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt; Do the following &lt;sup id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;#fn-2&quot; class=&quot;footnote-ref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_PARALLEL_LINK_JOBS=1 ../llvm
+cmake --build .&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt; This error happens likely that you’re running out of memory &lt;sup id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;#fn-2&quot; class=&quot;footnote-ref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn-1&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn-2&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/65633304/not-able-to-build-llvm-from-its-source-code&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://stackoverflow.com/questions/65633304/not-able-to-build-llvm-from-its-source-code&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Installing and Setting up PupilFirst]]></title><description><![CDATA[Installing and Setting up PupilFirst ]]></description><link>https://lumen.netlify.com/posts/lms</link><guid isPermaLink="false">https://lumen.netlify.com/posts/lms</guid><pubDate>Fri, 21 May 2021 22:40:32 GMT</pubDate><content:encoded>&lt;p&gt;This blog walks you through how to install and setting up &lt;code class=&quot;language-text&quot;&gt;PupilFirst&lt;/code&gt; from scratch&lt;/p&gt;
+&lt;h2 id=&quot;prerequisites&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#prerequisites&quot; aria-label=&quot;prerequisites permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;I assume you have installed git in your system &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt install git-all  # To install git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;Running a Linux Machine (This installation tested on Ubuntu 20 LTS)&lt;/li&gt;
+&lt;li&gt;Make sure you have sufficient storage (around 20 GB free)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;dependencies&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#dependencies&quot; aria-label=&quot;dependencies permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Dependencies&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt-get install imagemagick postgresql postgresql-contrib autoconf libtool nginx&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;clone-check-out-the-llvm-source-from-git-repository&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#clone-check-out-the-llvm-source-from-git-repository&quot; aria-label=&quot;clone check out the llvm source from git repository permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Clone (Check out) the llvm source from git repository&lt;/h2&gt;
+&lt;p&gt;We first need to clone the repository. To save space, we do a &lt;code class=&quot;language-text&quot;&gt;shallow&lt;/code&gt; clone. If you want the complete source code, go check this link &lt;a href=&quot;https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Getting the source code and building LLVM&lt;/a&gt;
+Doing this will also pull llvm subprojects such as Clang and others. &lt;/p&gt;
+&lt;h3 id=&quot;create-a-directory-and-clone&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#create-a-directory-and-clone&quot; aria-label=&quot;create a directory and clone permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Create a directory and clone&lt;/h3&gt;
+&lt;p&gt; Create a new directory in your home folder&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;mkdir llvm
+cd llvm
+git clone --depth 1 https://github.com/llvm/llvm-project.git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;configure-and-build-llvm-and-clang&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#configure-and-build-llvm-and-clang&quot; aria-label=&quot;configure and build llvm and clang permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Configure and build LLVM and Clang&lt;/h2&gt;
+&lt;p&gt; Once you have clone successfully, you can now execute the following commands in your terminal. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;cd llvm-project
+mkdir build
+cd build
+cmake -G Ninja ../llvm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note that -G Ninja is a build system generator; you can choose others as well. Check the official documentation &lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; if you would like to build &lt;code class=&quot;language-text&quot;&gt;llvm&lt;/code&gt; other than &lt;code class=&quot;language-text&quot;&gt;Ninja&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you haven’t installed &lt;code class=&quot;language-text&quot;&gt;cmake&lt;/code&gt;, go ahead and install it&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt install cmake&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once done, run. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt; cmake -G Ninja ../llvm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you haven’t installed &lt;code class=&quot;language-text&quot;&gt;Ninja,&lt;/code&gt; you will get errors as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Error: CMake was unable to find a build program corresponding to &amp;quot;Ninja&amp;quot;. 
+
+CMAKE_MAKE_PROGRAM is not set. You probably need to select a different build tool. CMake 
+
+Error: CMAKE_C_COMPILER not set, after EnableLanguage CMake Error: CMAKE_CXX_COMPILER not 
+
+set, after EnableLanguage CMake Error: CMAKE_ASM_COMPILER not set, after EnableLanguage -- Configuring incomplete, errors occurred!&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;install-ninja&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#install-ninja&quot; aria-label=&quot;install ninja permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Install Ninja&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt-get install -y ninja-build&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once done, run the following command to generate the &lt;code class=&quot;language-text&quot;&gt;build files.&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt; cmake -G Ninja ../llvm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;building-llvm-and-clang&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#building-llvm-and-clang&quot; aria-label=&quot;building llvm and clang permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Building llvm and clang&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;cmake --build  .&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This might takes hours, depending on your machine. &lt;/p&gt;
+&lt;p&gt;It took &lt;code class=&quot;language-text&quot;&gt;1 hr (approx)&lt;/code&gt; in my machine  (Intel Xeon, 32GB Ram). &lt;/p&gt;
+&lt;p&gt;I also encountered an error in linking, error similar to the following &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;FAILED: lib/libLTO.so.13git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt; Do the following &lt;sup id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;#fn-2&quot; class=&quot;footnote-ref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_PARALLEL_LINK_JOBS=1 ../llvm
+cmake --build .&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt; This error happens likely that you’re running out of memory &lt;sup id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;#fn-2&quot; class=&quot;footnote-ref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn-1&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn-2&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/65633304/not-able-to-build-llvm-from-its-source-code&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://stackoverflow.com/questions/65633304/not-able-to-build-llvm-from-its-source-code&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Installing & Building RISC-V Toolchain]]></title><description><![CDATA[Installing & Building RISC-V Toolchain]]></description><link>https://lumen.netlify.com/posts/riscv</link><guid isPermaLink="false">https://lumen.netlify.com/posts/riscv</guid><pubDate>Fri, 21 May 2021 22:40:32 GMT</pubDate><content:encoded>&lt;p&gt;This blog walks you through how to install and build Installing &amp;#x26; Building RISC-V Toolchain from scratch &lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;h3 id=&quot;prerequisites&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#prerequisites&quot; aria-label=&quot;prerequisites permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Prerequisites&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;I assume you have installed git in your system &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt install git-all  # To install git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;Running a Linux Machine (This installation tested on Ubuntu 20 LTS)&lt;/li&gt;
+&lt;li&gt;Make sure you have sufficient storage (around 30 GB free)&lt;/li&gt;
+&lt;li&gt;You also need to install few dependencies &lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;create-a-directory-and-clone&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#create-a-directory-and-clone&quot; aria-label=&quot;create a directory and clone permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Create a directory and clone&lt;/h3&gt;
+&lt;p&gt; Create a new directory in your home folder&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;mkdir risc-v
+cd risc-v
+git clone https://github.com/riscv/riscv-gnu-toolchain&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;create-a-directory-in-opt&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#create-a-directory-in-opt&quot; aria-label=&quot;create a directory in opt permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Create a directory in &lt;code class=&quot;language-text&quot;&gt;opt&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;mkdir /opt/riscv&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;configure-and-make&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#configure-and-make&quot; aria-label=&quot;configure and make permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Configure and make&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;./configure --prefix=/opt/riscv
+make linux&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This might take several hours depending on your machine configuration.&lt;/p&gt;
+&lt;p&gt;Your tool will be available on &lt;code class=&quot;language-text&quot;&gt;/opt/riscv/bin&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&quot;add-optriscvbin-to-path&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#add-optriscvbin-to-path&quot; aria-label=&quot;add optriscvbin to path permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Add &lt;code class=&quot;language-text&quot;&gt;/opt/riscv/bin&lt;/code&gt; to &lt;code class=&quot;language-text&quot;&gt;PATH&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Open the &lt;code class=&quot;language-text&quot;&gt;~/.bashrc&lt;/code&gt; file &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo gedit ~/.bashrc &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Add below the almost at the end of the file and save it. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;.....
+
+export PATH=&amp;quot;$PATH:/opt/riscv/bin&amp;quot;
+.....&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now your RISC-V tools will be available without specifying the path. &lt;/p&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn-1&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/riscv/riscv-gnu-toolchain&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://github.com/riscv/riscv-gnu-toolchain&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Introduction to x86 Architecture]]></title><description><![CDATA[Introduction to x86 Architecture]]></description><link>https://lumen.netlify.com/posts/x86-architecture</link><guid isPermaLink="false">https://lumen.netlify.com/posts/x86-architecture</guid><pubDate>Fri, 21 May 2021 22:40:32 GMT</pubDate><content:encoded></content:encoded></item><item><title><![CDATA[Computer Architecture Summer School (CASS) 2018, IIT Kanpur]]></title><description><![CDATA[Computer Architecture Summer School (CASS) 2018, IIT Kanpur]]></description><link>https://lumen.netlify.com/posts/summer-school-iitkanpur</link><guid isPermaLink="false">https://lumen.netlify.com/posts/summer-school-iitkanpur</guid><pubDate>Sun, 19 Aug 2018 22:40:32 GMT</pubDate><content:encoded>&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 812px; &quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/5bd0947f9472df7266aec6bc0e746d3e/63ec5/cass.png&quot; style=&quot;display: block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 64.58333333333334%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAIAAAAmMtkJAAAACXBIWXMAAAsTAAALEwEAmpwYAAACA0lEQVQoz41S+2/SUBTun+o/oP64xGiMmswZ3QgbbG7FDZasrLKBPCoKa2lhkdAxEcb7MUsplFI7XtJC4ZbxMG5Ol/nl5pyTe8/33dxzP2h8G7TxnYDu7FDb0v+RNW265pyerAGgaVorFrp2ftVwjaxNMc2jERiNJgVHRJRWJ0xSzVMSDBUNqEDt/3XzXGkW+01RPIkojcakrtNnyoUY9B/xPgsXMAoRa79ZkVIZWWzcJPdEqZlnGC/GeNxpn7+EeQqI/dvSExzd5/1I5eMWT6GtdDgLG0rmV6okTF8EACTXqlKhQO+ikW1reMd27qeyiLVos7P2w/w7OL1nZt/D323bHGbLoOYYguZJIu37VA+5x6oM8QGqk8uVCSK+tlxEVhjHamrtwfnBEut6nTfdr3nfsi59FTNUkEcMgQbhp7RpAdMtWI2bSToKpTx4KZkhdvc/b5iipsX83vOS9VnZ+aaGw+UPL1nPshA0pw5X/Iv3ojbD8eZjavUhBb84xY+5bAHivnzttttKp9Pr/qwns/WTGEeGOBLnjhwVn7OIGAXSFcecFh3s2EHcBy6Lbt25ZR4oynRgQ7l/5afZ8NROiyO8iij1+DqLU4n1jTODPqE3XqRzYDT8kYgLND2U5ZsmmXlgDAYDWRR+a3WrDE8HwKD/L4dpt5j4TzP9kp7E2SfNdy4BF/iwA0IlFN8AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source srcset=&quot;/static/5bd0947f9472df7266aec6bc0e746d3e/8ac56/cass.webp 240w,
+/static/5bd0947f9472df7266aec6bc0e746d3e/d3be9/cass.webp 480w,
+/static/5bd0947f9472df7266aec6bc0e746d3e/77913/cass.webp 812w&quot; sizes=&quot;(max-width: 812px) 100vw, 812px&quot; type=&quot;image/webp&quot;&gt;
+          &lt;source srcset=&quot;/static/5bd0947f9472df7266aec6bc0e746d3e/8ff5a/cass.png 240w,
+/static/5bd0947f9472df7266aec6bc0e746d3e/e85cb/cass.png 480w,
+/static/5bd0947f9472df7266aec6bc0e746d3e/63ec5/cass.png 812w&quot; sizes=&quot;(max-width: 812px) 100vw, 812px&quot; type=&quot;image/png&quot;&gt;
+          &lt;img class=&quot;gatsby-resp-image-image&quot; src=&quot;/static/5bd0947f9472df7266aec6bc0e746d3e/63ec5/cass.png&quot; alt=&quot;drawing&quot; title=&quot;drawing&quot; loading=&quot;lazy&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+If you&apos;re reading this, it might happen that you&apos;re looking for information about computer architecture or you followed some link that led you to this post. This short blog is to tell you about my experience while attending [the first awesome Computer Architecture Summer School (CASS) 2018 ](https://www.cse.iitk.ac.in/users/biswap/CASS18/cass.html) organized by top researchers and top computer architects at IIT Kanpur. Why I say, top architects, is because when you listen to their lecture and talk to them personally you have a feel of what the state of the art is. You get a grasp of what can be done and what cannot, and it makes sense out of what it really means to pull up our socks to kick-start the pursuing of research in computer systems. It ignites our minds with ideas and striving for excellence. Coming from the northeastern region of India, I felt lucky and grateful to the organizers for being selected for the opportunity to participate in the CASS 2018 program. 
+&lt;p&gt;I applied for the School and informed the same to my friend Phrangboklang Thangkhiew (hereon referred to as Phrang), who applied subsequently. We booked our train tickets and reached Kanpur on July 1st, Sunday, at 12 PM. We were expecting temperatures close to 40 degrees, but Kanpur city welcome us with a pleasant weather with little rainfall. We reached Kanpur central station and from there moved to IIT Kanpur. I was allocated &lt;code class=&quot;language-text&quot;&gt;Room 313&lt;/code&gt; at Hall-VII.  Phrang and I went straight to the mess hall for lunch. What was really surprising to me was the cost of juice which was just Rs. 12 only, which would easily cost Rs 80 or more where I live - in Shillong, the capital city of Meghalaya. The first day, we walked from Hall-VII to The &lt;a href=&quot;https://en.wikipedia.org/wiki/Rajeev_Motwani&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Rajeev Motwani&lt;/a&gt; Building (1.5 KM approx) where the summer school was held. &lt;/p&gt;
+&lt;p&gt; &lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 960px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAIDAQT/xAAWAQEBAQAAAAAAAAAAAAAAAAABAAL/2gAMAwEAAhADEAAAAXtxbgmOT//EABkQAAIDAQAAAAAAAAAAAAAAAAECAxETAP/aAAgBAQABBQJJKGi0Z2BzWsU4xrf/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEv/aAAgBAwEBPwFT/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAES/9oACAECAQE/AaRSP//EABoQAAICAwAAAAAAAAAAAAAAAAABITECEKH/2gAIAQEABj8CVE5Lg6JK1//EABwQAQACAQUAAAAAAAAAAAAAAAEAESExQVFhcf/aAAgBAQABPyF8IeJL7neILh1zC6RYL2R9m5//2gAMAwEAAgADAAAAEO8P/8QAGBEAAgMAAAAAAAAAAAAAAAAAAAERIXH/2gAIAQMBAT8QbmzR/8QAFREBAQAAAAAAAAAAAAAAAAAAARD/2gAIAQIBAT8QJX//xAAcEAEAAwEAAwEAAAAAAAAAAAABABEhMUFxsdH/2gAIAQEAAT8QRASFoEKzrL/gd1P2pUWi8H7FBa1QpdqJgODFOMVafc//2Q==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/static/c188513a7fba39b59bd979b8328d3619/8ac56/RA.webp 240w,
+/static/c188513a7fba39b59bd979b8328d3619/d3be9/RA.webp 480w,
+/static/c188513a7fba39b59bd979b8328d3619/e46b2/RA.webp 960w,
+/static/c188513a7fba39b59bd979b8328d3619/f992d/RA.webp 1440w,
+/static/c188513a7fba39b59bd979b8328d3619/882b9/RA.webp 1920w,
+/static/c188513a7fba39b59bd979b8328d3619/de19c/RA.webp 4608w&quot;
+              sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/static/c188513a7fba39b59bd979b8328d3619/09b79/RA.jpg 240w,
+/static/c188513a7fba39b59bd979b8328d3619/7cc5e/RA.jpg 480w,
+/static/c188513a7fba39b59bd979b8328d3619/6a068/RA.jpg 960w,
+/static/c188513a7fba39b59bd979b8328d3619/644c5/RA.jpg 1440w,
+/static/c188513a7fba39b59bd979b8328d3619/0f98f/RA.jpg 1920w,
+/static/c188513a7fba39b59bd979b8328d3619/c83bb/RA.jpg 4608w&quot;
+            sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+            type=&quot;image/jpeg&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/static/c188513a7fba39b59bd979b8328d3619/6a068/RA.jpg&quot;
+            alt=&quot;RAJEEV&quot;
+            title=&quot;RAJEEV&quot;
+            loading=&quot;lazy&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+    &lt;/span&gt;
+&lt;a href=&quot;https://faculty.iiit.ac.in/~lavanya.r/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Lavanya&lt;/a&gt; delivered a tutorial on performance metrics and went on to ISA and finally introducing us the &lt;code class=&quot;language-text&quot;&gt;RISC-V&lt;/code&gt;. &lt;a href=&quot;https://www.cse.iitk.ac.in/users/biswap/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Biswa&lt;/a&gt; walked us through the architecture of the memory hierarchy. I really enjoyed and appreciate the teaching style of &lt;a href=&quot;https://www.cse.iitk.ac.in/users/biswap/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Biswa&lt;/a&gt;, where &lt;a href=&quot;https://www.cse.iitk.ac.in/users/biswap/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Biswa&lt;/a&gt; will kept on asking question after question before giving the answer. This is great, which allowed us to think and use our neurons to spark itself instead of simply feeding us with information where at the end of the day we would have been unable to solve any problem. Thanks,  &lt;a href=&quot;https://www.cse.iitk.ac.in/users/biswap/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Biswa&lt;/a&gt; will apply your style if I secure a teaching position.
+In one of the discussions, a question was raised on how to read the research paper. &lt;a href=&quot;https://www.cse.iitk.ac.in/users/mainakc/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Mainak&lt;/a&gt; had another approach of thinking: While reading the paper, but before reading the solution in the paper,  we should first exercise and think what would be our own solution to that problem - another way to exercise our brain on how to think. Teaching assistants are great &lt;a href=&quot;http://ndesh26.github.io/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Nayan&lt;/a&gt; (follow this link you might find his blogs interesting) and &lt;a href=&quot;https://www.linkedin.com/in/sudhanshu-gupta-in/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Sudhanshu&lt;/a&gt;(really amazing experience with you guys). &lt;/p&gt;
+&lt;p&gt;On Day-2 of the Summer School, Manu made us to explore the out of order pipelines and various components required to make the pipeline OOO. The assignment was great, we pulled the &lt;a href=&quot;https://github.com/ChampSim&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;ChamSim Simulator&lt;/a&gt; and ran it on our laptop, tweaking with it. It is a great pleasure to meet &lt;a href=&quot;https://drona.csa.iisc.ac.in/~arkapravab/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Arka&lt;/a&gt; co-author of &lt;a href=&quot;http://gem5.org/Main_Page&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Gem5 Simulator&lt;/a&gt;. Discussion with &lt;a href=&quot;https://drona.csa.iisc.ac.in/~arkapravab/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Arka&lt;/a&gt; really helped, whereby giving the exact direction of what can be done and what cannot be done.  The hands-on session was amazing. &lt;a href=&quot;https://www.linkedin.com/in/sudhanshu-gupta-in/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Sudhanshu&lt;/a&gt; helped to figure out the GPU bug in the implementation of the assignment on day 4. I was amazed by his skills in locating the bug in such a short time.  &lt;/p&gt;
+&lt;p&gt; Day 3, &lt;a href=&quot;https://drona.csa.iisc.ac.in/~arkapravab/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Arka&lt;/a&gt; introduced us to the Virtual memory concepts and how it interacts with the OS. &lt;a href=&quot;http://www.serc.iisc.ernet.in/~govind/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Govind&lt;/a&gt; gave us an in-depth discussion on DRAM organization. We were convinced that &lt;code class=&quot;language-text&quot;&gt;DRAM&lt;/code&gt; was the main component in degrading the throughput due to both the &lt;code class=&quot;language-text&quot;&gt;memory&lt;/code&gt;  and &lt;code class=&quot;language-text&quot;&gt;bandwidth&lt;/code&gt; wall. The &lt;code class=&quot;language-text&quot;&gt;TLB&lt;/code&gt; hands-on session was an eye-opener on how we can control the page size in the real system. &lt;/p&gt;
+&lt;p&gt;Day 4, &lt;a href=&quot;https://www.cse.iitk.ac.in/users/mainakc/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Mainak&lt;/a&gt;  discussed shared memory architecture and some issue relating to the memory consistency model. We were so excited about the industry talk where &lt;a href=&quot;https://www.linkedin.com/in/anasua-bhowmik-b1896610/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Anasua&lt;/a&gt; delivered a talk on &lt;a href=&quot;https://www.amd.com/en/technologies/zen-core&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;AMD’s Ryzen Processor design and architecture&lt;/a&gt;.
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 960px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 57.50000000000001%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAABYlAAAWJQFJUiTwAAACtklEQVQozxWO20/TYADFv3WwsWv7rd/Wrpf1xtZ1a7exrWMFGY77xm0CjgHlrgSCt6AYiESNRl8MMSb6or74gr4YjJGo8UH/NEdycs55+eUcACEkEYKhUNtJkiQIot3bCiMUCZNsO4J+iaMFGkkMJUXDDMKJLmfQ7Qy6MKDret7QU7JkGkYhm+Wi0XQyacTjPWq8qCUGy6WUIlj5TG82VbWKVaugyxx0AdwFiC4MYAC4JcXVY3Zoupvnu/iYm2W7VM2Ty/syWRz3hdwOFnoTTCjNo4xI6TzSY5GswgmkHzgB8M61oi9Pg4cnsFaDo6NwaMi3s49enOKPnjGqEnaC2mB5fb6+3hi7tTq3vVDbac3WrKzBk5dwR30WP3rs2bsLGk1g3wDXbcfqFjw87ti/z8dFJYhZKlvNyGM5pWGlZnvVUUPIRFwp5AJODPP2mN5KlR/oo5ot+d4BsbFNDFwhyyXfQEWLsznKezVJ181ELd89rrOjcViJeSpiwIoFAHA4bovcB4l9mxQ/Jrj3NH4gdb6po3fTzOsRvKYS/QqcNKjpojRblMeSaEQJNNKhKQ0Od+NtGHsai/5ThR+q+EsVz2Xhieb9vRj4a1MXDe9MOjSUDLcKzLIlLltSq1e8ppMLmZBdCDezCAAMO+HpP6nub1ntIqd9VYSXuv97E/5cYc8bgSE50MMFpw2qVeI3+/nNcnStRNslZtWktyzmEn7AovM481nlvqjRT2LkVd5zNuc9myHOJv1WzK+E/ZVEZDwvzxRiDYO0TWrdYu0+frnMtl9jk7y1q07ZXPXIWH5urj00V47Ltt1v3Vka1wWKw90GBzMCMrujOS5oSfhEGs0X6WY51h529IqVWmphUKovFW9uWHtrpR27sDtcnmguLWoiQ/sxHrp5olMgOmXkUSmfzgRMCQ7r9H98VYiG8nLQvQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/static/edbe2a990e35bb9f06ac4302b2aa195f/8ac56/ryzen.webp 240w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/d3be9/ryzen.webp 480w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/e46b2/ryzen.webp 960w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/f992d/ryzen.webp 1440w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/882b9/ryzen.webp 1920w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/b84eb/ryzen.webp 2000w&quot;
+              sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/static/edbe2a990e35bb9f06ac4302b2aa195f/8ff5a/ryzen.png 240w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/e85cb/ryzen.png 480w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/d9199/ryzen.png 960w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/07a9c/ryzen.png 1440w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/29114/ryzen.png 1920w,
+/static/edbe2a990e35bb9f06ac4302b2aa195f/e8950/ryzen.png 2000w&quot;
+            sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/static/edbe2a990e35bb9f06ac4302b2aa195f/d9199/ryzen.png&quot;
+            alt=&quot;AMD Ryzen&quot;
+            title=&quot;AMD Ryzen&quot;
+            loading=&quot;lazy&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;  We were moved by the amount of work &lt;code class=&quot;language-text&quot;&gt;AMD&lt;/code&gt; has been doing over the years and its capability to capture the market and compete with the giant: Intel. On the last day of the school, the hands-on session was amazing. It is for the first time I set my hands on programming for GPU system. &lt;a href=&quot;https://www.linkedin.com/in/kanishka-lahiri-478713/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Kanishka&lt;/a&gt; showed us how the industry, in particular, AMD, was doing performance analysis. &lt;a href=&quot;https://www.linkedin.com/in/kanishka-lahiri-478713/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Kanishka&lt;/a&gt; pinpointed on why trace-driven simulation won’t work in real performance analysis and directed us on how to go about it. One example was the event-driven simulation to capture server workloads in which the dynamics of the system changes. &lt;a href=&quot;https://www.thebetterindia.com/74187/kanishka-lahiri-cancer-survivor-runs-half-marathons-climbs-mountains-trekking-one-lung-runner/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Kanishka’s&lt;/a&gt; personal life was a great motivation to us about life and that we should not give up.  Lastly, was the panel discussion that gave us a direction as to where to publish a research paper in a top-tier conference and journal. The following picture shows the list given by the panel.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 960px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/7c271bd41e2bddd5053c217e37b5ff91/c83bb/PUB.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIDBAX/xAAWAQEBAQAAAAAAAAAAAAAAAAACAAH/2gAMAwEAAhADEAAAAXyXIXiA1f/EABoQAAICAwAAAAAAAAAAAAAAAAABAxMQEjH/2gAIAQEAAQUCU8dS7qhNYtP/xAAXEQADAQAAAAAAAAAAAAAAAAABAhAR/9oACAEDAQE/AQuT/8QAFREBAQAAAAAAAAAAAAAAAAAAEBH/2gAIAQIBAT8Bp//EABsQAAIBBQAAAAAAAAAAAAAAAAAQEQEhMUFR/9oACAEBAAY/Ao3HCiwWX//EABwQAAICAgMAAAAAAAAAAAAAAAABETEhUXGBkf/aAAgBAQABPyFBJunwIu4clDIcLOxwP//aAAwDAQACAAMAAAAQ18//xAAWEQEBAQAAAAAAAAAAAAAAAAARAAH/2gAIAQMBAT8QU5G3/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAER/9oACAECAQE/EDY//8QAGhABAAMAAwAAAAAAAAAAAAAAAQARITFBUf/aAAgBAQABPxBqucxY4jgXoVUPSsC2j6MJjuBbgG1qvOz/2Q==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/static/7c271bd41e2bddd5053c217e37b5ff91/8ac56/PUB.webp 240w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/d3be9/PUB.webp 480w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/e46b2/PUB.webp 960w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/f992d/PUB.webp 1440w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/882b9/PUB.webp 1920w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/de19c/PUB.webp 4608w&quot;
+              sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/static/7c271bd41e2bddd5053c217e37b5ff91/09b79/PUB.jpg 240w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/7cc5e/PUB.jpg 480w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/6a068/PUB.jpg 960w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/644c5/PUB.jpg 1440w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/0f98f/PUB.jpg 1920w,
+/static/7c271bd41e2bddd5053c217e37b5ff91/c83bb/PUB.jpg 4608w&quot;
+            sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+            type=&quot;image/jpeg&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/static/7c271bd41e2bddd5053c217e37b5ff91/6a068/PUB.jpg&quot;
+            alt=&quot;publication&quot;
+            title=&quot;publication&quot;
+            loading=&quot;lazy&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+&lt;code class=&quot;language-text&quot;&gt;Top tier publications&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 960px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/c6d8ca5bf0dc26bed767e494a32ad17f/eea4a/cass.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 37.916666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAIABQDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAL/xAAWAQEBAQAAAAAAAAAAAAAAAAACAAH/2gAMAwEAAhADEAAAAagxWIf/xAAZEAACAwEAAAAAAAAAAAAAAAABAgADERL/2gAIAQEAAQUCudu9Ii34P//EABURAQEAAAAAAAAAAAAAAAAAABBB/9oACAEDAQE/AYf/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAZEAEAAgMAAAAAAAAAAAAAAAABAAIQIZH/2gAIAQEABj8CQmy3cf/EABoQAQADAAMAAAAAAAAAAAAAAAEAETEhQWH/2gAIAQEAAT8hq4rfCPU2UKw1EwTzZ//aAAwDAQACAAMAAAAQg/8A/8QAFREBAQAAAAAAAAAAAAAAAAAAERD/2gAIAQMBAT8QGP/EABYRAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAgBAgEBPxDcZb//xAAbEAEAAgMBAQAAAAAAAAAAAAABABExcYEhQf/aAAgBAQABPxBibfJlRDeZkobrBVY7CJWfSjXu5//Z&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/static/c6d8ca5bf0dc26bed767e494a32ad17f/8ac56/cass.webp 240w,
+/static/c6d8ca5bf0dc26bed767e494a32ad17f/d3be9/cass.webp 480w,
+/static/c6d8ca5bf0dc26bed767e494a32ad17f/e46b2/cass.webp 960w,
+/static/c6d8ca5bf0dc26bed767e494a32ad17f/af3f0/cass.webp 1280w&quot;
+              sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/static/c6d8ca5bf0dc26bed767e494a32ad17f/09b79/cass.jpg 240w,
+/static/c6d8ca5bf0dc26bed767e494a32ad17f/7cc5e/cass.jpg 480w,
+/static/c6d8ca5bf0dc26bed767e494a32ad17f/6a068/cass.jpg 960w,
+/static/c6d8ca5bf0dc26bed767e494a32ad17f/eea4a/cass.jpg 1280w&quot;
+            sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+            type=&quot;image/jpeg&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/static/c6d8ca5bf0dc26bed767e494a32ad17f/6a068/cass.jpg&quot;
+            alt=&quot;Group photo&quot;
+            title=&quot;Group photo&quot;
+            loading=&quot;lazy&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+&lt;code class=&quot;language-text&quot;&gt;Group photo&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt; Thanks to &lt;a href=&quot;https://sites.google.com/site/sitemoumitait/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Moumita Das&lt;/a&gt; for informing us about the course. Thanks to &lt;a href=&quot;https://www.cse.iitk.ac.in/users/biswap/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Biswa&lt;/a&gt;  and the organizer for selecting me to be one of the students in the 1st CASS-18 at IIT-K.&lt;/p&gt;</content:encoded></item></channel></rss>
