@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  url: 'https://lumen.netlify.com',
+  url: 'https://bernardnongpoh.github.io',
   pathPrefix: '/',
   title: 'Bernard Nongpoh',
   subtitle: 'Security Researcher',
@@ -12,37 +12,53 @@ module.exports = {
   useKatex: false,
   menu: [
     {
-      label: 'Articles',
+      label: ' 🏠  Home',
       path: '/'
     },
     {
-      label: 'About me',
-      path: '/pages/about'
+      label: '📝  Publications ',
+      path: '/pages/publications'
     },
     {
-      label: 'Contact me',
-      path: '/pages/contacts'
-    }
+      label: '📖  Writeups ',
+      path: '/categories'
+    },
+    
+   
+    {
+      label: '📼  Talks ',
+      path: '/pages/talks'
+    },
+    {
+      label: '👨‍👩‍👦  Family',
+      path: '/pages/about'
+    },
+
+    {
+      label: '🏖️  Travels ',
+      path: '/pages/travels'
+    },
+    
   ],
   author: {
     name: 'Bernard Nongpoh',
-    photo: '/bernardn.jpg',
+    photo: 'photo.jpg',
     bio: 'Security Researcher @CEA LIST, Paris, France',
     contacts: {
       email: 'bernard.nongpoh@gmail.com',
       facebook: '#',
       telegram: '#',
-      twitter: '#',
-      github: '#',
+      twitter: 'bernardnongpoh',
+      github: 'bernardnongpoh',
       rss: '',
       vkontakte: '',
-      linkedin: '#',
+      linkedin: 'bernard-nongpoh',
       instagram: '#',
       line: '',
       gitlab: '',
       weibo: '',
       codepen: '',
-      youtube: '',
+      youtube: 'UCznpDClZhLJ04-rV9LMHacg',
       soundcloud: '',
       medium: '',
     }

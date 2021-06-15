@@ -31,6 +31,8 @@ const PageTemplate = ({ data }: Props) => {
   );
 };
 
+
+
 export const query = graphql`
   query PageBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {

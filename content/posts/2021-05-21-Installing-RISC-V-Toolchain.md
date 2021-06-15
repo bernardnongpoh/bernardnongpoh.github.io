@@ -4,7 +4,7 @@ date: "2021-05-21T22:40:32.169Z"
 template: "post"
 draft: false
 slug: "riscv"
-category: "RISC-V"
+category: "🤖 RISC-V"
 tags:
   - "RISC-V"
 description: "Installing & Building RISC-V Toolchain"

@@ -3,71 +3,52 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar';
-import Feed from '../components/Feed';
 import Page from '../components/Page';
-import Pagination from '../components/Pagination';
 import { useSiteMetadata } from '../hooks';
-import type { PageContext, AllMarkdownRemark } from '../types';
+import type { MarkdownRemark } from '../types';
 
 type Props = {
-  data: AllMarkdownRemark,
-  pageContext: PageContext
+  data: {
+    markdownRemark: MarkdownRemark
+  }
 };
 
-const IndexTemplate = ({ data, pageContext }: Props) => {
+const IndexTemplate = ({ data }: Props) => {
   const { title: siteTitle, subtitle: siteSubtitle } = useSiteMetadata();
-
-  const {
-    currentPage,
-    hasNextPage,
-    hasPrevPage,
-    prevPagePath,
-    nextPagePath
-  } = pageContext;
-
-  const { edges } = data.allMarkdownRemark;
-  const pageTitle = currentPage > 0 ? `Posts - Page ${currentPage} - ${siteTitle}` : siteTitle;
+  const { html: pageBody } = data.markdownRemark;
+  const { frontmatter } = data.markdownRemark;
+  const { title: pageTitle, description: pageDescription = '', socialImage } = frontmatter;
+  const metaDescription = pageDescription || siteSubtitle;
+  const socialImageUrl = socialImage?.publicURL;
 
   return (
-    <Layout title={pageTitle} description={siteSubtitle}>
-      <Sidebar isIndex />
-      <Page>
-        <Feed edges={edges} />
-        <Pagination
-          prevPagePath={prevPagePath}
-          nextPagePath={nextPagePath}
-          hasPrevPage={hasPrevPage}
-          hasNextPage={hasNextPage}
-        />
+    <Layout title={`${pageTitle} - ${siteTitle}`} description={metaDescription} socialImage={socialImageUrl} >
+      <Sidebar />
+      <Page title={pageTitle}>
+        <div dangerouslySetInnerHTML={{ __html: pageBody }} />
       </Page>
     </Layout>
   );
 };
 
+
+
 export const query = graphql`
-  query IndexTemplate($postsLimit: Int!, $postsOffset: Int!) {
-    allMarkdownRemark(
-        limit: $postsLimit,
-        skip: $postsOffset,
-        filter: { frontmatter: { template: { eq: "post" }, draft: { ne: true } } },
-        sort: { order: DESC, fields: [frontmatter___date] }
-      ){
-      edges {
-        node {
-          fields {
-            slug
-            categorySlug
-          }
-          frontmatter {
-            title
-            date
-            category
-            description
-          }
+query IndexQuery{
+  markdownRemark(fields: {slug: {eq: "/pages/home/"}}) {
+    id
+     html
+      frontmatter {
+        title
+        date
+        description
+        socialImage {
+          publicURL
         }
       }
-    }
+    
   }
+}
 `;
 
 export default IndexTemplate;

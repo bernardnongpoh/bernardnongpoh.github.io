@@ -4,8 +4,28 @@ template: "page"
 socialImage: "/media/image-2.jpg"
 ---
 
-I am Bernard Nongpoh, a post-doctorate researcher at CEA LIST, France and a Member of the Binsec Team @CEA LIST.
+<style>
+  
+    #theImage {
+     
+        height: 600;
+    }
+    #container {
+        
+       height: '100%',
+        margin: 0 auto;
+    }
+}
+ 
+</style>
 
-[Binsec Website](https://binsec.github.io/)
+
+- I Belong to the Khasi Tribe [Matrilineal society of Meghalaya](https://en.wikipedia.org/wiki/Matrilineal_society_of_Meghalaya)
+- My Family
+
+
+
+ ![Alt text](/family.jpg)
+
 
 

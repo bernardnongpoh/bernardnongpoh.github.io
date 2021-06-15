@@ -4,7 +4,7 @@ date: "2021-05-21T22:40:32.169Z"
 template: "post"
 draft: false
 slug: "llvm"
-category: "llvm"
+category: "🗜️  LLVM"
 tags:
   - "llvm"
 description: "Installing LLVM Compiler Infrastructure"

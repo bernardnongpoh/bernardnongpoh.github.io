@@ -27,6 +27,8 @@ const createPages = async ({ graphql, actions }) => {
     component: path.resolve('./src/templates/categories-list-template.js')
   });
 
+  
+
   // Posts and pages from markdown
   const result = await graphql(`
     {
@@ -60,6 +62,13 @@ const createPages = async ({ graphql, actions }) => {
       createPage({
         path: edge.node.fields.slug,
         component: path.resolve('./src/templates/post-template.js'),
+        context: { slug: edge.node.fields.slug }
+      });
+    }
+    else if (_.get(edge, 'node.frontmatter.template') === 'writeups') {
+      createPage({
+        path: edge.node.fields.slug,
+        component: path.resolve('./src/templates/writeups-template.js'),
         context: { slug: edge.node.fields.slug }
       });
     }
