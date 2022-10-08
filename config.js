@@ -4,7 +4,7 @@ module.exports = {
   url: 'https://bernardnongpoh.github.io',
   pathPrefix: '/',
   title: 'Bernard Nongpoh',
-  subtitle: 'Security Researcher',
+  subtitle: 'Senior Lead Engineer, Qualcomm, Hyderabad',
   copyright: '© All rights reserved.',
   disqusShortname: '',
   postsPerPage: 4,
@@ -43,7 +43,7 @@ module.exports = {
   author: {
     name: 'Bernard Nongpoh',
     photo: 'photo.jpg',
-    bio: 'Security Researcher @CEA LIST, Paris, France',
+    bio: 'Senior Lead Engineer @Qualcomm, Hyderabad, India',
     contacts: {
       email: 'bernard.nongpoh@gmail.com',
       facebook: '#',
