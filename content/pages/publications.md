@@ -14,6 +14,13 @@ socialImage: "/media/image-4.jpg"
 
 ### Journals
 
+Fine-Grained Coverage-Based Fuzzing
+Wei-Cheng Wu, **Bernard Nongpoh**, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser
+ACM Transactions on Software Engineering and Methodology
+CORE RANKING: A*
+[PDF](https://binsec.github.io/assets/publications/papers/2023-tosem.pdf) [Artefact](https://git.frama-c.com/bnongpoh/cannotate) [Slide](https://binsec.github.io/assets/publications/slides/2023-tosem.pdf) [Benchmark](https://zenodo.org/record/7275184)
+
+
 **B. Nongpoh**, R. Ray, M. Das, and A. Banerjee, **Enhancing speculative execution with selective approximate computing**, ACM Trans. Des. Autom. Electron. Syst., vol. 24, no.
 2, 26:1–26:29, Feb. 2019, issn: 1084-4309. doi: 10.1145/3307651. [Online](
 http://doi.acm.org/10.1145/3307651) (page 12).
@@ -27,6 +34,11 @@ doi: 10.1109/TSE.2017.2654251 [[Paper](http://ieeexplore.ieee.org/document/78201
 
 ### Conferences
 
+ASE'23 (journal-first track): Fine-Grained Coverage-Based Fuzzing
+Wei-Cheng Wu, **Bernard Nongpoh**, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser
+ACM Transactions on Software Engineering and Methodology
+CORE RANKING: A*
+[PDF](https://binsec.github.io/assets/publications/papers/2023-tosem.pdf) [Artefact](https://git.frama-c.com/bnongpoh/cannotate) [Slide](https://binsec.github.io/assets/publications/slides/2023-tosem.pdf) [Benchmark](https://zenodo.org/record/7275184)
 
 **B Nongpoh**, R Ray, A Banerjee, **Approximate computing for multithreaded programs in shared memory architectures**, Proceedings of the 17th ACM-IEEE International Conference on Formal Methods and Models for System Design, 2019 [[Paper] ](https://dl.acm.org/doi/abs/10.1145/3359986.3361209)[[Slide]](/documents/Memocode_19_Slide.pdf).
 
