@@ -9,7 +9,8 @@ I am Bernard Nongpoh, a Security Lead Engineer at Qualcomm, Hyderabad. Previousl
 - Check [these photos ](https://www.shutterstock.com/search/meghalaya) if you would like to visit **Meghalaya**.
 
 ## Events
-- **July 2022** -  Joined Qualcomm, Hyderabad as a Senior Lead Engineer working on Product Security.
+- **December 2024** -  Promoted to Staff Engineer, QPSI Team, Qualcomm, Hyderabad.
+- **July 2022** -  Joined Qualcomm, Hyderabad as a Senior Lead Engineer working on Product Security with QPSI team.
  - **May 3, 2021** - Joined as a Post Doctorate Researcher at **CEA LIST**, University of Paris, Saclay, France 🇫🇷.
  - **February 11, 2020** - Defended my PhD Thesis.
  - **July , 2019** - Joined **NIC Meghalaya** as a Senior Programmer.
