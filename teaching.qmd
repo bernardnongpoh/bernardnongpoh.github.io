@@ -2,4 +2,10 @@
 title: "Teaching"
 ---
 
-Courses and teaching materials.
+Courses at the Department of Computer Science & Engineering, IIT Guwahati.
+
+## Current Semester
+
+### CS1214 — Object Oriented Programming and Data Structure Lab
+
+A laboratory course covering object-oriented programming principles and the design, implementation, and analysis of fundamental data structures — classes, inheritance, polymorphism, templates, lists, stacks, queues, trees, heaps, and hash tables.

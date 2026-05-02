@@ -1,0 +1,35 @@
+---
+title: "Computer Architecture Summer School (CASS) 2018, IIT Kanpur"
+date: "2018-08-19"
+categories: [Summer School]
+description: "My experience attending the first Computer Architecture Summer School at IIT Kanpur."
+image: /static/media/images/cass/cass.png
+---
+
+![CASS 2018 banner](/static/media/images/cass/cass.png)
+
+If you're reading this, you might be looking for information about computer architecture or you followed some link that led you to this post. This short blog is about my experience attending [the first Computer Architecture Summer School (CASS) 2018](https://www.cse.iitk.ac.in/users/biswap/CASS18/cass.html), organised by top researchers and architects at IIT Kanpur. Listening to their lectures and talking to them personally gives you a feel for the state of the art — what can be done, what cannot, and what it really means to pull up our socks and pursue research in computer systems. It ignites our minds with ideas and the striving for excellence. Coming from the northeastern region of India, I felt lucky and grateful to the organisers for selecting me to participate in CASS 2018.
+
+I applied for the school and informed my friend Phrangboklang Thangkhiew (Phrang), who applied subsequently. We booked our train tickets and reached Kanpur on July 1st, Sunday at noon. We were expecting temperatures close to 40 °C, but Kanpur welcomed us with pleasant weather and a little rainfall. From Kanpur Central Station we made our way to IIT Kanpur. I was allocated `Room 313` at Hall-VII. Phrang and I went straight to the mess for lunch — what surprised me was the cost of juice, just ₹12, which would easily cost ₹80 or more back in Shillong. That first day we walked from Hall-VII to the [Rajeev Motwani](https://en.wikipedia.org/wiki/Rajeev_Motwani) Building (about 1.5 km) where the summer school was held.
+
+![Rajeev Motwani Building](/static/media/images/cass/RA.jpg)
+
+[Lavanya](https://faculty.iiit.ac.in/~lavanya.r/) delivered a tutorial on performance metrics, moved on to ISA, and finally introduced us to `RISC-V`. [Biswa](https://www.cse.iitk.ac.in/users/biswap/) walked us through the memory hierarchy. I really enjoyed Biswa's teaching style — he kept asking question after question before giving the answer. This was great: it forced us to think and use our neurons, rather than being spoon-fed information we could never apply. Thanks, Biswa — I'll apply your style if I secure a teaching position.
+
+In one of the discussions, a question was raised on how to read a research paper. [Mainak](https://www.cse.iitk.ac.in/users/mainakc/) offered another angle: while reading a paper, before reading the solution, first think about what *your* own solution would be — another way to exercise the brain. The teaching assistants were great: [Nayan](http://ndesh26.github.io/) (follow the link, his blog is interesting) and [Sudhanshu](https://www.linkedin.com/in/sudhanshu-gupta-in/) — really an amazing experience with you folks.
+
+On Day 2, Manu had us explore out-of-order pipelines and the components needed to make the pipeline OOO. The assignment was great — we pulled the [ChampSim simulator](https://github.com/ChampSim) and ran it on our laptops, tweaking it. It was a great pleasure to meet [Arka](https://drona.csa.iisc.ac.in/~arkapravab/), co-author of the [gem5 simulator](http://gem5.org/Main_Page). Discussing with Arka really helped, giving exact direction on what can and cannot be done. The hands-on session was amazing, and Sudhanshu helped figure out the GPU bug in the Day 4 assignment — I was amazed by his skill at locating it so quickly.
+
+Day 3: Arka introduced us to virtual memory concepts and how they interact with the OS. [Govind](http://www.serc.iisc.ernet.in/~govind/) gave an in-depth discussion on DRAM organisation. We were convinced that `DRAM` was the main component degrading throughput due to both the `memory` and `bandwidth` wall. The `TLB` hands-on session was an eye-opener on how we can control the page size in real systems.
+
+Day 4: Mainak discussed shared-memory architecture and issues relating to the memory consistency model. We were excited about the industry talk, where [Anasua](https://www.linkedin.com/in/anasua-bhowmik-b1896610/) presented on [AMD's Ryzen processor design and architecture](https://www.amd.com/en/technologies/zen-core).
+
+![AMD Ryzen](/static/media/images/cass/ryzen.png)
+
+We were moved by the amount of work AMD has been doing over the years and its ability to capture the market and compete with Intel. On the last day the hands-on session was amazing — it was my first time programming for a GPU system. [Kanishka](https://www.linkedin.com/in/kanishka-lahiri-478713/) showed us how industry (in particular AMD) was doing performance analysis. He pinpointed why trace-driven simulation won't work for real performance analysis and directed us on how to approach it — one example being event-driven simulation to capture server workloads where the dynamics of the system change. [Kanishka's personal life](https://www.thebetterindia.com/74187/kanishka-lahiri-cancer-survivor-runs-half-marathons-climbs-mountains-trekking-one-lung-runner/) was itself a great motivation: don't give up. Finally, there was a panel discussion that gave us direction on where to publish a research paper in top-tier conferences and journals. The following picture shows the list from the panel.
+
+![Top-tier publications.](/static/media/images/cass/PUB.jpg)
+
+![Group photo.](/static/media/images/cass/cass.jpg)
+
+Thanks to [Moumita Das](https://sites.google.com/site/sitemoumitait/) for informing us about the course, and to Biswa and the organisers for selecting me to be one of the students at the 1st CASS 2018 at IIT Kanpur.

@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2021-05-21">
+<meta name="description" content="A walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.">
 
-<title>Publications – Bernard Nongpoh</title>
+<title>Installing &amp; Building RISC-V Toolchain – Bernard Nongpoh</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,26 +25,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -82,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Bernard Nongpoh</span>
     </a>
   </div>
@@ -93,31 +130,31 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./publications.html" aria-current="page"> 
+    <a class="nav-link" href="../publications.html"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./teaching.html"> 
+    <a class="nav-link" href="../teaching.html"> 
 <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./students.html"> 
+    <a class="nav-link" href="../students.html"> 
 <span class="menu-text">Students</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./posts/index.html"> 
+    <a class="nav-link" href="../posts/index.html"> 
 <span class="menu-text">Writeups</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./talks.html"> 
+    <a class="nav-link" href="../talks.html"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./travels.html"> 
+    <a class="nav-link" href="../travels.html"> 
 <span class="menu-text">Travels</span></a>
   </li>  
 </ul>
@@ -136,10 +173,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#journals" id="toc-journals" class="nav-link active" data-scroll-target="#journals">Journals</a></li>
-  <li><a href="#conferences" id="toc-conferences" class="nav-link" data-scroll-target="#conferences">Conferences</a></li>
-  <li><a href="#workshops" id="toc-workshops" class="nav-link" data-scroll-target="#workshops">Workshops</a></li>
-  <li><a href="#posters" id="toc-posters" class="nav-link" data-scroll-target="#posters">Posters</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#create-a-directory-and-clone" id="toc-create-a-directory-and-clone" class="nav-link" data-scroll-target="#create-a-directory-and-clone">Create a directory and clone</a></li>
+  <li><a href="#create-a-directory-in-opt" id="toc-create-a-directory-in-opt" class="nav-link" data-scroll-target="#create-a-directory-in-opt">Create a directory in <code>/opt</code></a></li>
+  <li><a href="#configure-and-make" id="toc-configure-and-make" class="nav-link" data-scroll-target="#configure-and-make">Configure and make</a></li>
+  <li><a href="#add-optriscvbin-to-path" id="toc-add-optriscvbin-to-path" class="nav-link" data-scroll-target="#add-optriscvbin-to-path">Add <code>/opt/riscv/bin</code> to <code>PATH</code></a></li>
   </ul>
 </nav>
     </div>
@@ -148,14 +186,28 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Publications</h1>
-</div>
+<h1 class="title">Installing &amp; Building RISC-V Toolchain</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">RISC-V</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    A walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 21, 2021</p>
+    </div>
+  </div>
   
     
   </div>
@@ -165,62 +217,45 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="https://scholar.google.co.in/citations?user=T0yqLoUAAAAJ&amp;hl=en">Google Scholar</a> · <a href="https://dblp.org/pers/hd/n/Nongpoh:Bernard">DBLP</a></p>
-<section id="journals" class="level2">
-<h2 class="anchored" data-anchor-id="journals">Journals</h2>
-<ol type="1">
-<li><p><strong>Fine-Grained Coverage-Based Fuzzing.</strong><br>
-Wei-Cheng Wu, <strong>Bernard Nongpoh</strong>, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser.<br>
-<em>ACM Transactions on Software Engineering and Methodology · CORE Ranking A*</em>.<br>
-<a href="https://binsec.github.io/assets/publications/papers/2023-tosem.pdf">PDF</a> · <a href="https://git.frama-c.com/bnongpoh/cannotate">Artefact</a> · <a href="https://binsec.github.io/assets/publications/slides/2023-tosem.pdf">Slides</a> · <a href="https://zenodo.org/record/7275184">Benchmark</a></p></li>
-<li><p><strong>Enhancing speculative execution with selective approximate computing.</strong><br>
-<strong>B. Nongpoh</strong>, R. Ray, M. Das, and A. Banerjee.<br>
-<em>ACM Trans. Des. Autom. Electron. Syst.</em>, vol.&nbsp;24, no. 2, 26:1–26:29, Feb.&nbsp;2019.<br>
-<a href="http://doi.acm.org/10.1145/3307651">doi:10.1145/3307651</a></p></li>
-<li><p><strong>AutoSense: A Framework for Automated Sensitivity Analysis of Program Data.</strong><br>
-<strong>B. Nongpoh</strong>, R. Ray, S. Dutta, A. Banerjee.<br>
-<em>IEEE Transactions on Software Engineering</em>.<br>
-<a href="http://ieeexplore.ieee.org/document/7820185/">Paper</a></p></li>
-</ol>
+<p>This post walks you through how to install and build the <a href="https://github.com/riscv/riscv-gnu-toolchain">RISC-V toolchain</a> from scratch.</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Install <code>git</code> on your system:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git-all</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>A Linux machine (tested on Ubuntu 20 LTS).</li>
+<li>Sufficient storage — around 30 GB free.</li>
+<li>Install a few dependencies:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install autoconf automake autotools-dev curl python3 <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="conferences" class="level2">
-<h2 class="anchored" data-anchor-id="conferences">Conferences</h2>
-<ol type="1">
-<li><p><strong>Fine-Grained Coverage-Based Fuzzing.</strong><br>
-Wei-Cheng Wu, <strong>Bernard Nongpoh</strong>, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser.<br>
-<em>ASE’23 (journal-first track) · CORE Ranking A*</em>.<br>
-<a href="https://binsec.github.io/assets/publications/papers/2023-tosem.pdf">PDF</a> · <a href="https://git.frama-c.com/bnongpoh/cannotate">Artefact</a> · <a href="https://binsec.github.io/assets/publications/slides/2023-tosem.pdf">Slides</a> · <a href="https://zenodo.org/record/7275184">Benchmark</a></p></li>
-<li><p><strong>Approximate computing for multithreaded programs in shared memory architectures.</strong><br>
-<strong>B. Nongpoh</strong>, R. Ray, A. Banerjee.<br>
-<em>17th ACM-IEEE International Conference on Formal Methods and Models for System Design, 2019.</em><br>
-<a href="https://dl.acm.org/doi/abs/10.1145/3359986.3361209">Paper</a> · <a href="static/documents/Memocode_19_Slide.pdf">Slides</a></p></li>
-<li><p><strong>AutoSense: A Framework for Automated Sensitivity Analysis of Program Data.</strong><br>
-<strong>B. Nongpoh</strong>, R. Ray, S. Dutta, A. Banerjee.<br>
-<em>Invited as Journal-first paper at ESEC/FSE 2017.</em><br>
-<a href="static/documents/FSE-2017-slide.pdf">Slides</a> · <a href="static/documents/FSE-2017-poster.pdf">Poster</a></p></li>
-<li><p><strong>Anomaly based intrusion detection using meta ensemble classifier.</strong><br>
-Debojit Boro, <strong>Bernard Nongpoh</strong>, Dhruba K. Bhattacharyya.<br>
-<em>SIN ’12, ACM, New York, NY, USA, 143–147.</em><br>
-<a href="http://dl.acm.org/citation.cfm?id=2388596">Paper</a></p></li>
-</ol>
+<section id="create-a-directory-and-clone" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-directory-and-clone">Create a directory and clone</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> risc-v</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> risc-v</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/riscv/riscv-gnu-toolchain</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="workshops" class="level2">
-<h2 class="anchored" data-anchor-id="workshops">Workshops</h2>
-<ol type="1">
-<li><strong>Fine-Grained Coverage-Based Fuzzing.</strong><br>
-<strong>Bernard Nongpoh</strong>, Marwan Nour, Michaël Marcozzi, Sébastien Bardin.<br>
-<em>1st International Fuzzing Workshop 2022, co-located with NDSS’22, San Diego, California, April 24 2022.</em><br>
-<a href="https://binsec.github.io/assets/publications/papers/2022-fuzzing.pdf">Paper</a> · <a href="https://binsec.github.io/assets/publications/slides/2022-fuzzing.pdf">Slides</a></li>
-</ol>
+<section id="create-a-directory-in-opt" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-directory-in-opt">Create a directory in <code>/opt</code></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> /opt/riscv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="posters" class="level2">
-<h2 class="anchored" data-anchor-id="posters">Posters</h2>
-<ol type="1">
-<li><strong>Enhancing Speculative Execution with Selective Approximate Computing.</strong><br>
-<strong>B. Nongpoh</strong>, R. Ray, Moumita Das, A. Banerjee.<br>
-<em>Workshop on Program Analysis, Software Engineering and Formal Methods, 6 November 2017, Department of CSE, NIT Meghalaya.</em><br>
-<a href="static/documents/NIT-CSE-Poster.pdf">Poster</a></li>
-</ol>
+<section id="configure-and-make" class="level2">
+<h2 class="anchored" data-anchor-id="configure-and-make">Configure and make</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span>/opt/riscv</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> linux</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This might take several hours depending on your machine configuration. The tool will be available in <code>/opt/riscv/bin</code>.</p>
+</section>
+<section id="add-optriscvbin-to-path" class="level2">
+<h2 class="anchored" data-anchor-id="add-optriscvbin-to-path">Add <code>/opt/riscv/bin</code> to <code>PATH</code></h2>
+<p>Open <code>~/.bashrc</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> gedit ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add near the end of the file and save:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$PATH</span><span class="st">:/opt/riscv/bin"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now the RISC-V tools will be available without specifying the path.</p>
 
 
 </section>

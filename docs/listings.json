@@ -2,7 +2,9 @@
   {
     "listing": "/posts/index.html",
     "items": [
-      "/posts/welcome.html"
+      "/posts/llvm.html",
+      "/posts/riscv.html",
+      "/posts/summer-school-iitkanpur.html"
     ]
   }
 ]

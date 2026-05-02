@@ -2,4 +2,66 @@
 title: "Publications"
 ---
 
-List of publications.
+[Google Scholar](https://scholar.google.co.in/citations?user=T0yqLoUAAAAJ&hl=en) · [DBLP](https://dblp.org/pers/hd/n/Nongpoh:Bernard)
+
+## Journals
+
+1. **Fine-Grained Coverage-Based Fuzzing.** \
+   Wei-Cheng Wu, **Bernard Nongpoh**, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser. \
+   *ACM Transactions on Software Engineering and Methodology · CORE Ranking A\**. \
+   [PDF](https://binsec.github.io/assets/publications/papers/2023-tosem.pdf) ·
+   [Artefact](https://git.frama-c.com/bnongpoh/cannotate) ·
+   [Slides](https://binsec.github.io/assets/publications/slides/2023-tosem.pdf) ·
+   [Benchmark](https://zenodo.org/record/7275184)
+
+2. **Enhancing speculative execution with selective approximate computing.** \
+   **B. Nongpoh**, R. Ray, M. Das, and A. Banerjee. \
+   *ACM Trans. Des. Autom. Electron. Syst.*, vol. 24, no. 2, 26:1–26:29, Feb. 2019. \
+   [doi:10.1145/3307651](http://doi.acm.org/10.1145/3307651)
+
+3. **AutoSense: A Framework for Automated Sensitivity Analysis of Program Data.** \
+   **B. Nongpoh**, R. Ray, S. Dutta, A. Banerjee. \
+   *IEEE Transactions on Software Engineering*. \
+   [Paper](http://ieeexplore.ieee.org/document/7820185/)
+
+## Conferences
+
+1. **Fine-Grained Coverage-Based Fuzzing.** \
+   Wei-Cheng Wu, **Bernard Nongpoh**, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser. \
+   *ASE'23 (journal-first track) · CORE Ranking A\**. \
+   [PDF](https://binsec.github.io/assets/publications/papers/2023-tosem.pdf) ·
+   [Artefact](https://git.frama-c.com/bnongpoh/cannotate) ·
+   [Slides](https://binsec.github.io/assets/publications/slides/2023-tosem.pdf) ·
+   [Benchmark](https://zenodo.org/record/7275184)
+
+2. **Approximate computing for multithreaded programs in shared memory architectures.** \
+   **B. Nongpoh**, R. Ray, A. Banerjee. \
+   *17th ACM-IEEE International Conference on Formal Methods and Models for System Design, 2019.* \
+   [Paper](https://dl.acm.org/doi/abs/10.1145/3359986.3361209) ·
+   [Slides](static/documents/Memocode_19_Slide.pdf)
+
+3. **AutoSense: A Framework for Automated Sensitivity Analysis of Program Data.** \
+   **B. Nongpoh**, R. Ray, S. Dutta, A. Banerjee. \
+   *Invited as Journal-first paper at ESEC/FSE 2017.* \
+   [Slides](static/documents/FSE-2017-slide.pdf) ·
+   [Poster](static/documents/FSE-2017-poster.pdf)
+
+4. **Anomaly based intrusion detection using meta ensemble classifier.** \
+   Debojit Boro, **Bernard Nongpoh**, Dhruba K. Bhattacharyya. \
+   *SIN '12, ACM, New York, NY, USA, 143–147.* \
+   [Paper](http://dl.acm.org/citation.cfm?id=2388596)
+
+## Workshops
+
+1. **Fine-Grained Coverage-Based Fuzzing.** \
+   **Bernard Nongpoh**, Marwan Nour, Michaël Marcozzi, Sébastien Bardin. \
+   *1st International Fuzzing Workshop 2022, co-located with NDSS'22, San Diego, California, April 24 2022.* \
+   [Paper](https://binsec.github.io/assets/publications/papers/2022-fuzzing.pdf) ·
+   [Slides](https://binsec.github.io/assets/publications/slides/2022-fuzzing.pdf)
+
+## Posters
+
+1. **Enhancing Speculative Execution with Selective Approximate Computing.** \
+   **B. Nongpoh**, R. Ray, Moumita Das, A. Banerjee. \
+   *Workshop on Program Analysis, Software Engineering and Formal Methods, 6 November 2017, Department of CSE, NIT Meghalaya.* \
+   [Poster](static/documents/NIT-CSE-Poster.pdf)

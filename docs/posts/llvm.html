@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-05-02">
-<meta name="description" content="First post on the new Quarto site.">
+<meta name="dcterms.date" content="2021-05-21">
+<meta name="description" content="Steps for installing the LLVM Compiler Infrastructure from source, including common build errors.">
 
-<title>Welcome – Bernard Nongpoh</title>
+<title>Installing LLVM Compiler Infrastructure – Bernard Nongpoh</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -99,24 +134,28 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../publications.html"> 
 <span class="menu-text">Publications</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../talks.html"> 
-<span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../teaching.html"> 
 <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../students.html"> 
+<span class="menu-text">Students</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../posts/index.html"> 
-<span class="menu-text">Blog</span></a>
+<span class="menu-text">Writeups</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../travels.html"> 
+<span class="menu-text">Travels</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -129,20 +168,35 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#clone-the-llvm-source" id="toc-clone-the-llvm-source" class="nav-link" data-scroll-target="#clone-the-llvm-source">Clone the LLVM source</a></li>
+  <li><a href="#configure-and-build-llvm-and-clang" id="toc-configure-and-build-llvm-and-clang" class="nav-link" data-scroll-target="#configure-and-build-llvm-and-clang">Configure and build LLVM and Clang</a>
+  <ul class="collapse">
+  <li><a href="#install-ninja" id="toc-install-ninja" class="nav-link" data-scroll-target="#install-ninja">Install Ninja</a></li>
+  <li><a href="#building-llvm-and-clang" id="toc-building-llvm-and-clang" class="nav-link" data-scroll-target="#building-llvm-and-clang">Building LLVM and Clang</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Welcome</h1>
-</div>
+<h1 class="title">Installing LLVM Compiler Infrastructure</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">LLVM</div>
+  </div>
+  </div>
 
 <div>
   <div class="description">
-    First post on the new Quarto site.
+    Steps for installing the LLVM Compiler Infrastructure from source, including common build errors.
   </div>
 </div>
 
@@ -153,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 2, 2026</p>
+      <p class="date">May 21, 2021</p>
     </div>
   </div>
   
@@ -165,9 +219,66 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This is the first post on the new site.</p>
+<p>This post walks you through how to install the <code>LLVM Compiler Infrastructure</code> from scratch.</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Install <code>git</code> on your system:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git-all</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>A Linux machine (tested on Ubuntu 20 LTS).</li>
+<li>Make sure you have sufficient storage (around 20 GB free).</li>
+<li>While building, your CPU might freeze — close other programs before installation.</li>
+</ul>
+</section>
+<section id="clone-the-llvm-source" class="level2">
+<h2 class="anchored" data-anchor-id="clone-the-llvm-source">Clone the LLVM source</h2>
+<p>To save space we do a shallow clone. This also pulls LLVM subprojects such as Clang. See <a href="https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm">Getting the source code and building LLVM</a> for the full source.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> llvm</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llvm</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 https://github.com/llvm/llvm-project.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="configure-and-build-llvm-and-clang" class="level2">
+<h2 class="anchored" data-anchor-id="configure-and-build-llvm-and-clang">Configure and build LLVM and Clang</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llvm-project</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-G</span> Ninja ../llvm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>Note that <code>-G Ninja</code> is a build-system generator — you can choose others too. Check the <a href="https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm">official documentation</a> if you would like to use something other than Ninja.</p>
+</blockquote>
+<p>If you haven’t installed <code>cmake</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install cmake</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-G</span> Ninja ../llvm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If Ninja is missing, you’ll see errors like:</p>
+<pre><code>Error: CMake was unable to find a build program corresponding to "Ninja".
+CMAKE_MAKE_PROGRAM is not set. You probably need to select a different build tool.
+Error: CMAKE_C_COMPILER not set, after EnableLanguage
+Error: CMAKE_CXX_COMPILER not set, after EnableLanguage
+Error: CMAKE_ASM_COMPILER not set, after EnableLanguage
+-- Configuring incomplete, errors occurred!</code></pre>
+<section id="install-ninja" class="level3">
+<h3 class="anchored" data-anchor-id="install-ninja">Install Ninja</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install <span class="at">-y</span> ninja-build</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then generate the build files:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-G</span> Ninja ../llvm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="building-llvm-and-clang" class="level3">
+<h3 class="anchored" data-anchor-id="building-llvm-and-clang">Building LLVM and Clang</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This might take hours depending on your machine. It took about 1 hour on my machine (Intel Xeon, 32 GB RAM).</p>
+<p>I also encountered a linking error similar to:</p>
+<pre><code>FAILED: lib/libLTO.so.13git</code></pre>
+<p>Do the following — see <a href="https://stackoverflow.com/questions/65633304/not-able-to-build-llvm-from-its-source-code">this Stack Overflow answer</a>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-G</span> Ninja <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>Release <span class="at">-DLLVM_PARALLEL_LINK_JOBS</span><span class="op">=</span>1 ../llvm</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This error likely happens because you are running out of memory.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

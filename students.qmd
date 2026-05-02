@@ -1,0 +1,34 @@
+---
+title: "Students"
+---
+
+I work with students at IIT Guwahati on systems, security, and program analysis.
+
+## Current Students
+
+### Rohit Patil
+
+- **Programme:** M.Tech (CSE), 2026 Batch
+- **Project:** USB Driver Fuzzing
+
+Working on techniques to automatically discover vulnerabilities in USB device drivers.
+
+## Incoming Interns
+
+### Bornov Shyam Kalita
+
+- **Role:** Incoming Intern
+
+## Past Interns
+
+### Shreyas Gupta
+
+- **Role:** Intern
+
+### Das Aemili
+
+- **Role:** Intern
+
+## Joining the Group
+
+If you are an M.Tech or Ph.D. student (or prospective) at IIT Guwahati interested in systems security, fuzzing, program analysis, compilers, or operating systems, please get in touch via [email](mailto:bnongpoh@iitg.ac.in).

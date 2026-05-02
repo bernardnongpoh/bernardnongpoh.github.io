@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - "static/**"
 
 website:
   title: "Bernard Nongpoh"
@@ -8,16 +10,18 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: about.qmd
-        text: About
       - href: publications.qmd
         text: Publications
-      - href: talks.qmd
-        text: Talks
       - href: teaching.qmd
         text: Teaching
+      - href: students.qmd
+        text: Students
       - href: posts/index.qmd
-        text: Blog
+        text: Writeups
+      - href: talks.qmd
+        text: Talks
+      - href: travels.qmd
+        text: Travels
 
 format:
   html:

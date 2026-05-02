@@ -1,51 +1,212 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
     "section": "",
-    "text": "Short bio goes here."
+    "text": "Google Scholar · DBLP"
+  },
+  {
+    "objectID": "publications.html#journals",
+    "href": "publications.html#journals",
+    "title": "Publications",
+    "section": "Journals",
+    "text": "Journals\n\nFine-Grained Coverage-Based Fuzzing.\nWei-Cheng Wu, Bernard Nongpoh, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser.\nACM Transactions on Software Engineering and Methodology · CORE Ranking A*.\nPDF · Artefact · Slides · Benchmark\nEnhancing speculative execution with selective approximate computing.\nB. Nongpoh, R. Ray, M. Das, and A. Banerjee.\nACM Trans. Des. Autom. Electron. Syst., vol. 24, no. 2, 26:1–26:29, Feb. 2019.\ndoi:10.1145/3307651\nAutoSense: A Framework for Automated Sensitivity Analysis of Program Data.\nB. Nongpoh, R. Ray, S. Dutta, A. Banerjee.\nIEEE Transactions on Software Engineering.\nPaper"
+  },
+  {
+    "objectID": "publications.html#conferences",
+    "href": "publications.html#conferences",
+    "title": "Publications",
+    "section": "Conferences",
+    "text": "Conferences\n\nFine-Grained Coverage-Based Fuzzing.\nWei-Cheng Wu, Bernard Nongpoh, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser.\nASE’23 (journal-first track) · CORE Ranking A*.\nPDF · Artefact · Slides · Benchmark\nApproximate computing for multithreaded programs in shared memory architectures.\nB. Nongpoh, R. Ray, A. Banerjee.\n17th ACM-IEEE International Conference on Formal Methods and Models for System Design, 2019.\nPaper · Slides\nAutoSense: A Framework for Automated Sensitivity Analysis of Program Data.\nB. Nongpoh, R. Ray, S. Dutta, A. Banerjee.\nInvited as Journal-first paper at ESEC/FSE 2017.\nSlides · Poster\nAnomaly based intrusion detection using meta ensemble classifier.\nDebojit Boro, Bernard Nongpoh, Dhruba K. Bhattacharyya.\nSIN ’12, ACM, New York, NY, USA, 143–147.\nPaper"
+  },
+  {
+    "objectID": "publications.html#workshops",
+    "href": "publications.html#workshops",
+    "title": "Publications",
+    "section": "Workshops",
+    "text": "Workshops\n\nFine-Grained Coverage-Based Fuzzing.\nBernard Nongpoh, Marwan Nour, Michaël Marcozzi, Sébastien Bardin.\n1st International Fuzzing Workshop 2022, co-located with NDSS’22, San Diego, California, April 24 2022.\nPaper · Slides"
+  },
+  {
+    "objectID": "publications.html#posters",
+    "href": "publications.html#posters",
+    "title": "Publications",
+    "section": "Posters",
+    "text": "Posters\n\nEnhancing Speculative Execution with Selective Approximate Computing.\nB. Nongpoh, R. Ray, Moumita Das, A. Banerjee.\nWorkshop on Program Analysis, Software Engineering and Formal Methods, 6 November 2017, Department of CSE, NIT Meghalaya.\nPoster"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Bernard Nongpoh",
     "section": "",
-    "text": "Welcome to my personal website.\nThis site is built with Quarto."
+    "text": "I am Bernard Nongpoh, an Assistant Professor in the Department of Computer Science & Engineering at the Indian Institute of Technology Guwahati. My research interests lie at the intersection of systems, software security, program analysis, and approximate computing — with a current focus on fuzzing, vulnerability discovery, and secure systems software.\nPreviously, I was a Staff Engineer with the QPSI (Product Security) team at Qualcomm, Hyderabad, and before that a Post-Doctorate Researcher at CEA LIST, University of Paris-Saclay, France, where I was a member of the BINSEC Team headed by Sébastien Bardin and supervised by Michaël Marcozzi. I completed my Ph.D. at the National Institute of Technology Meghalaya under the guidance of Dr. Rajarshi Ray and Dr. Ansuman Banerjee. You can read my Ph.D. thesis on Approximate Computing.\nMy hometown is in Meghalaya, India."
   },
   {
-    "objectID": "posts/welcome.html",
-    "href": "posts/welcome.html",
-    "title": "Welcome",
+    "objectID": "index.html#khublei-bonjour-namaste",
+    "href": "index.html#khublei-bonjour-namaste",
+    "title": "Bernard Nongpoh",
     "section": "",
-    "text": "This is the first post on the new site."
+    "text": "I am Bernard Nongpoh, an Assistant Professor in the Department of Computer Science & Engineering at the Indian Institute of Technology Guwahati. My research interests lie at the intersection of systems, software security, program analysis, and approximate computing — with a current focus on fuzzing, vulnerability discovery, and secure systems software.\nPreviously, I was a Staff Engineer with the QPSI (Product Security) team at Qualcomm, Hyderabad, and before that a Post-Doctorate Researcher at CEA LIST, University of Paris-Saclay, France, where I was a member of the BINSEC Team headed by Sébastien Bardin and supervised by Michaël Marcozzi. I completed my Ph.D. at the National Institute of Technology Meghalaya under the guidance of Dr. Rajarshi Ray and Dr. Ansuman Banerjee. You can read my Ph.D. thesis on Approximate Computing.\nMy hometown is in Meghalaya, India."
   },
   {
-    "objectID": "teaching.html",
-    "href": "teaching.html",
-    "title": "Teaching",
-    "section": "",
-    "text": "Courses and teaching materials."
+    "objectID": "index.html#prospective-students",
+    "href": "index.html#prospective-students",
+    "title": "Bernard Nongpoh",
+    "section": "Prospective Students",
+    "text": "Prospective Students\nI am looking for motivated M.Tech and Ph.D. students interested in systems security, fuzzing, program analysis, operating systems, and compilers. If that sounds like you, please get in touch via email."
   },
   {
-    "objectID": "posts/index.html",
-    "href": "posts/index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Welcome\n\n\nFirst post on the new Quarto site.\n\n\n\n\n\nMay 2, 2026\n\n\n\n\n\nNo matching items"
+    "objectID": "index.html#events",
+    "href": "index.html#events",
+    "title": "Bernard Nongpoh",
+    "section": "Events",
+    "text": "Events\n\nSeptember 2025 — Joined IIT Guwahati as an Assistant Professor in the Department of Computer Science & Engineering.\nDecember 2024 — Promoted to Staff Engineer, QPSI Team, Qualcomm, Hyderabad.\nJuly 2022 — Joined Qualcomm, Hyderabad as a Senior Lead Engineer with the QPSI team.\nMay 2021 — Joined CEA LIST, University of Paris-Saclay, France as a Post-Doctorate Researcher.\nFebruary 2020 — Defended my Ph.D. thesis.\nJuly 2019 — Joined NIC Meghalaya as a Senior Programmer."
   },
   {
     "objectID": "talks.html",
     "href": "talks.html",
     "title": "Talks",
     "section": "",
-    "text": "List of talks."
+    "text": "React 101 · Meghalaya Dev Community\nJune 5, 2021"
   },
   {
-    "objectID": "publications.html",
-    "href": "publications.html",
-    "title": "Publications",
+    "objectID": "posts/index.html",
+    "href": "posts/index.html",
+    "title": "Writeups",
     "section": "",
-    "text": "List of publications."
+    "text": "Notes and short posts, mostly about tooling and systems.\n\n\n\n\n\n\n\n\n\nInstalling LLVM Compiler Infrastructure\n\n\n\nLLVM\n\n\n\nSteps for installing the LLVM Compiler Infrastructure from source, including common build errors.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nInstalling & Building RISC-V Toolchain\n\n\n\nRISC-V\n\n\n\nA walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nComputer Architecture Summer School (CASS) 2018, IIT Kanpur\n\n\n\nSummer School\n\n\n\nMy experience attending the first Computer Architecture Summer School at IIT Kanpur.\n\n\n\n\n\nAug 19, 2018\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/llvm.html",
+    "href": "posts/llvm.html",
+    "title": "Installing LLVM Compiler Infrastructure",
+    "section": "",
+    "text": "This post walks you through how to install the LLVM Compiler Infrastructure from scratch."
+  },
+  {
+    "objectID": "posts/llvm.html#prerequisites",
+    "href": "posts/llvm.html#prerequisites",
+    "title": "Installing LLVM Compiler Infrastructure",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nInstall git on your system:\n\nsudo apt install git-all\n\nA Linux machine (tested on Ubuntu 20 LTS).\nMake sure you have sufficient storage (around 20 GB free).\nWhile building, your CPU might freeze — close other programs before installation."
+  },
+  {
+    "objectID": "posts/llvm.html#clone-the-llvm-source",
+    "href": "posts/llvm.html#clone-the-llvm-source",
+    "title": "Installing LLVM Compiler Infrastructure",
+    "section": "Clone the LLVM source",
+    "text": "Clone the LLVM source\nTo save space we do a shallow clone. This also pulls LLVM subprojects such as Clang. See Getting the source code and building LLVM for the full source.\nmkdir llvm\ncd llvm\ngit clone --depth 1 https://github.com/llvm/llvm-project.git"
+  },
+  {
+    "objectID": "posts/llvm.html#configure-and-build-llvm-and-clang",
+    "href": "posts/llvm.html#configure-and-build-llvm-and-clang",
+    "title": "Installing LLVM Compiler Infrastructure",
+    "section": "Configure and build LLVM and Clang",
+    "text": "Configure and build LLVM and Clang\ncd llvm-project\nmkdir build\ncd build\ncmake -G Ninja ../llvm\n\nNote that -G Ninja is a build-system generator — you can choose others too. Check the official documentation if you would like to use something other than Ninja.\n\nIf you haven’t installed cmake:\nsudo apt install cmake\nThen run:\ncmake -G Ninja ../llvm\nIf Ninja is missing, you’ll see errors like:\nError: CMake was unable to find a build program corresponding to \"Ninja\".\nCMAKE_MAKE_PROGRAM is not set. You probably need to select a different build tool.\nError: CMAKE_C_COMPILER not set, after EnableLanguage\nError: CMAKE_CXX_COMPILER not set, after EnableLanguage\nError: CMAKE_ASM_COMPILER not set, after EnableLanguage\n-- Configuring incomplete, errors occurred!\n\nInstall Ninja\nsudo apt-get install -y ninja-build\nThen generate the build files:\ncmake -G Ninja ../llvm\n\n\nBuilding LLVM and Clang\ncmake --build .\nThis might take hours depending on your machine. It took about 1 hour on my machine (Intel Xeon, 32 GB RAM).\nI also encountered a linking error similar to:\nFAILED: lib/libLTO.so.13git\nDo the following — see this Stack Overflow answer:\ncmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_PARALLEL_LINK_JOBS=1 ../llvm\ncmake --build .\nThis error likely happens because you are running out of memory."
+  },
+  {
+    "objectID": "teaching.html",
+    "href": "teaching.html",
+    "title": "Teaching",
+    "section": "",
+    "text": "Courses at the Department of Computer Science & Engineering, IIT Guwahati."
+  },
+  {
+    "objectID": "teaching.html#current-semester",
+    "href": "teaching.html#current-semester",
+    "title": "Teaching",
+    "section": "Current Semester",
+    "text": "Current Semester\n\nCS1214 — Object Oriented Programming and Data Structure Lab\nA laboratory course covering object-oriented programming principles and the design, implementation, and analysis of fundamental data structures — classes, inheritance, polymorphism, templates, lists, stacks, queues, trees, heaps, and hash tables."
+  },
+  {
+    "objectID": "posts/summer-school-iitkanpur.html",
+    "href": "posts/summer-school-iitkanpur.html",
+    "title": "Computer Architecture Summer School (CASS) 2018, IIT Kanpur",
+    "section": "",
+    "text": "CASS 2018 banner\n\n\nIf you’re reading this, you might be looking for information about computer architecture or you followed some link that led you to this post. This short blog is about my experience attending the first Computer Architecture Summer School (CASS) 2018, organised by top researchers and architects at IIT Kanpur. Listening to their lectures and talking to them personally gives you a feel for the state of the art — what can be done, what cannot, and what it really means to pull up our socks and pursue research in computer systems. It ignites our minds with ideas and the striving for excellence. Coming from the northeastern region of India, I felt lucky and grateful to the organisers for selecting me to participate in CASS 2018.\nI applied for the school and informed my friend Phrangboklang Thangkhiew (Phrang), who applied subsequently. We booked our train tickets and reached Kanpur on July 1st, Sunday at noon. We were expecting temperatures close to 40 °C, but Kanpur welcomed us with pleasant weather and a little rainfall. From Kanpur Central Station we made our way to IIT Kanpur. I was allocated Room 313 at Hall-VII. Phrang and I went straight to the mess for lunch — what surprised me was the cost of juice, just ₹12, which would easily cost ₹80 or more back in Shillong. That first day we walked from Hall-VII to the Rajeev Motwani Building (about 1.5 km) where the summer school was held.\n\n\n\nRajeev Motwani Building\n\n\nLavanya delivered a tutorial on performance metrics, moved on to ISA, and finally introduced us to RISC-V. Biswa walked us through the memory hierarchy. I really enjoyed Biswa’s teaching style — he kept asking question after question before giving the answer. This was great: it forced us to think and use our neurons, rather than being spoon-fed information we could never apply. Thanks, Biswa — I’ll apply your style if I secure a teaching position.\nIn one of the discussions, a question was raised on how to read a research paper. Mainak offered another angle: while reading a paper, before reading the solution, first think about what your own solution would be — another way to exercise the brain. The teaching assistants were great: Nayan (follow the link, his blog is interesting) and Sudhanshu — really an amazing experience with you folks.\nOn Day 2, Manu had us explore out-of-order pipelines and the components needed to make the pipeline OOO. The assignment was great — we pulled the ChampSim simulator and ran it on our laptops, tweaking it. It was a great pleasure to meet Arka, co-author of the gem5 simulator. Discussing with Arka really helped, giving exact direction on what can and cannot be done. The hands-on session was amazing, and Sudhanshu helped figure out the GPU bug in the Day 4 assignment — I was amazed by his skill at locating it so quickly.\nDay 3: Arka introduced us to virtual memory concepts and how they interact with the OS. Govind gave an in-depth discussion on DRAM organisation. We were convinced that DRAM was the main component degrading throughput due to both the memory and bandwidth wall. The TLB hands-on session was an eye-opener on how we can control the page size in real systems.\nDay 4: Mainak discussed shared-memory architecture and issues relating to the memory consistency model. We were excited about the industry talk, where Anasua presented on AMD’s Ryzen processor design and architecture.\n\n\n\nAMD Ryzen\n\n\nWe were moved by the amount of work AMD has been doing over the years and its ability to capture the market and compete with Intel. On the last day the hands-on session was amazing — it was my first time programming for a GPU system. Kanishka showed us how industry (in particular AMD) was doing performance analysis. He pinpointed why trace-driven simulation won’t work for real performance analysis and directed us on how to approach it — one example being event-driven simulation to capture server workloads where the dynamics of the system change. Kanishka’s personal life was itself a great motivation: don’t give up. Finally, there was a panel discussion that gave us direction on where to publish a research paper in top-tier conferences and journals. The following picture shows the list from the panel.\n\n\n\nTop-tier publications.\n\n\n\n\n\nGroup photo.\n\n\nThanks to Moumita Das for informing us about the course, and to Biswa and the organisers for selecting me to be one of the students at the 1st CASS 2018 at IIT Kanpur."
+  },
+  {
+    "objectID": "posts/riscv.html",
+    "href": "posts/riscv.html",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "",
+    "text": "This post walks you through how to install and build the RISC-V toolchain from scratch."
+  },
+  {
+    "objectID": "posts/riscv.html#prerequisites",
+    "href": "posts/riscv.html#prerequisites",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nInstall git on your system:\n\nsudo apt install git-all\n\nA Linux machine (tested on Ubuntu 20 LTS).\nSufficient storage — around 30 GB free.\nInstall a few dependencies:\n\nsudo apt-get install autoconf automake autotools-dev curl python3 \\\n  libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison \\\n  flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev"
+  },
+  {
+    "objectID": "posts/riscv.html#create-a-directory-and-clone",
+    "href": "posts/riscv.html#create-a-directory-and-clone",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Create a directory and clone",
+    "text": "Create a directory and clone\nmkdir risc-v\ncd risc-v\ngit clone https://github.com/riscv/riscv-gnu-toolchain"
+  },
+  {
+    "objectID": "posts/riscv.html#create-a-directory-in-opt",
+    "href": "posts/riscv.html#create-a-directory-in-opt",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Create a directory in /opt",
+    "text": "Create a directory in /opt\nmkdir /opt/riscv"
+  },
+  {
+    "objectID": "posts/riscv.html#configure-and-make",
+    "href": "posts/riscv.html#configure-and-make",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Configure and make",
+    "text": "Configure and make\n./configure --prefix=/opt/riscv\nmake linux\nThis might take several hours depending on your machine configuration. The tool will be available in /opt/riscv/bin."
+  },
+  {
+    "objectID": "posts/riscv.html#add-optriscvbin-to-path",
+    "href": "posts/riscv.html#add-optriscvbin-to-path",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Add /opt/riscv/bin to PATH",
+    "text": "Add /opt/riscv/bin to PATH\nOpen ~/.bashrc:\nsudo gedit ~/.bashrc\nAdd near the end of the file and save:\nexport PATH=\"$PATH:/opt/riscv/bin\"\nNow the RISC-V tools will be available without specifying the path."
+  },
+  {
+    "objectID": "travels.html",
+    "href": "travels.html",
+    "title": "Travels",
+    "section": "",
+    "text": "Paris\nLourdes\nSan Diego, California\nHyderabad\nThailand\nGermany"
+  },
+  {
+    "objectID": "students.html",
+    "href": "students.html",
+    "title": "Students",
+    "section": "",
+    "text": "I work with students at IIT Guwahati on systems, security, and program analysis."
+  },
+  {
+    "objectID": "students.html#current-students",
+    "href": "students.html#current-students",
+    "title": "Students",
+    "section": "Current Students",
+    "text": "Current Students\n\nRohit Patil\n\nProgramme: M.Tech (CSE), 2026 Batch\nProject: USB Driver Fuzzing\n\nWorking on techniques to automatically discover vulnerabilities in USB device drivers."
+  },
+  {
+    "objectID": "students.html#incoming-interns",
+    "href": "students.html#incoming-interns",
+    "title": "Students",
+    "section": "Incoming Interns",
+    "text": "Incoming Interns\n\nBornov Shyam Kalita\n\nRole: Incoming Intern"
+  },
+  {
+    "objectID": "students.html#past-interns",
+    "href": "students.html#past-interns",
+    "title": "Students",
+    "section": "Past Interns",
+    "text": "Past Interns\n\nShreyas Gupta\n\nRole: Intern\n\n\n\nDas Aemili\n\nRole: Intern"
+  },
+  {
+    "objectID": "students.html#joining-the-group",
+    "href": "students.html#joining-the-group",
+    "title": "Students",
+    "section": "Joining the Group",
+    "text": "Joining the Group\nIf you are an M.Tech or Ph.D. student (or prospective) at IIT Guwahati interested in systems security, fuzzing, program analysis, compilers, or operating systems, please get in touch via email."
   }
 ]

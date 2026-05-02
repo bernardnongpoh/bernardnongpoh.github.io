@@ -2,4 +2,8 @@
 title: "Talks"
 ---
 
-List of talks.
+### React 101 · Meghalaya Dev Community
+
+*June 5, 2021*
+
+{{< video https://www.youtube.com/embed/TwHY6OWj-DU >}}

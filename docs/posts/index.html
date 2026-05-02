@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blog – Bernard Nongpoh</title>
+<title>Writeups – Bernard Nongpoh</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -82,9 +82,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -157,24 +157,28 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../publications.html"> 
 <span class="menu-text">Publications</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../talks.html"> 
-<span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../teaching.html"> 
 <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../students.html"> 
+<span class="menu-text">Students</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="../posts/index.html" aria-current="page"> 
-<span class="menu-text">Blog</span></a>
+<span class="menu-text">Writeups</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../travels.html"> 
+<span class="menu-text">Travels</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -187,15 +191,15 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    </div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TExWTQ==">LLVM <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UklTQy1W">RISC-V <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3VtbWVyJTIwU2Nob29s">Summer School <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
+<h1 class="title">Writeups</h1>
 </div>
 
 
@@ -212,25 +216,75 @@ window.Quarto = {
 </header>
 
 
+<p>Notes and short posts, mostly about tooling and systems.</p>
 
 
 
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1777660200000" data-listing-file-modified-sort="1777700355090" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
+<div class="quarto-post image-right" data-index="0" data-categories="TExWTQ==" data-listing-date-sort="1621535400000" data-listing-file-modified-sort="1777701205182" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="261">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="../posts/welcome.html" class="no-external">Welcome</a>
+<a href="../posts/llvm.html" class="no-external">Installing LLVM Compiler Infrastructure</a>
 </h3>
-<div class="delink listing-description"><a href="../posts/welcome.html" class="no-external">
-<p>First post on the new Quarto site.</p>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TExWTQ=='); return false;">LLVM</div>
+
+</div>
+<div class="delink listing-description"><a href="../posts/llvm.html" class="no-external">
+<p>Steps for installing the LLVM Compiler Infrastructure from source, including common build errors.</p>
 </a></div>
 </div>
 <div class="metadata">
-<a href="../posts/welcome.html" class="no-external">
+<a href="../posts/llvm.html" class="no-external">
 <div class="listing-date">
-May 2, 2026
+May 21, 2021
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="UklTQy1W" data-listing-date-sort="1621535400000" data-listing-file-modified-sort="1777701189953" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="129">
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/riscv.html" class="no-external">Installing &amp; Building RISC-V Toolchain</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UklTQy1W'); return false;">RISC-V</div>
+
+</div>
+<div class="delink listing-description"><a href="../posts/riscv.html" class="no-external">
+<p>A walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/riscv.html" class="no-external">
+<div class="listing-date">
+May 21, 2021
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="U3VtbWVyJTIwU2Nob29s" data-listing-date-sort="1534617000000" data-listing-file-modified-sort="1777701248857" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="739">
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/summer-school-iitkanpur.html" class="no-external">Computer Architecture Summer School (CASS) 2018, IIT Kanpur</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3VtbWVyJTIwU2Nob29s'); return false;">Summer School</div>
+
+</div>
+<div class="delink listing-description"><a href="../posts/summer-school-iitkanpur.html" class="no-external">
+<p>My experience attending the first Computer Architecture Summer School at IIT Kanpur.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/summer-school-iitkanpur.html" class="no-external">
+<div class="listing-date">
+Aug 19, 2018
 </div>
 </a>
 </div>
