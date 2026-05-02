@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Talks — Bernard Nongpoh</title>
+    <meta name="description" content="Talks and presentations by Bernard Nongpoh." />
+    <link rel="icon" href="/static/photo.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+              display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+            },
+            colors: {
+              gold: { 50:'#fffbeb', 100:'#fef3c7', 200:'#fde68a', 300:'#fcd34d', 400:'#fbbf24', 500:'#f5b400', 600:'#d97706', 700:'#a87900', 800:'#92400e', 900:'#78350f' },
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body class="bg-white text-stone-800 antialiased">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <div class="site-title"><a href="/">Bernard Nongpoh</a></div>
+        <nav class="site-nav">
+          <a href="/">Home</a>
+          <a href="/publications.html">Publications</a>
+          <a href="/teaching.html">Teaching</a>
+          <a href="/students.html">Students</a>
+          <a href="/writeups.html">Writeups</a>
+          <a href="/talks.html" class="is-active">Talks</a>
+          <a href="/travels.html">Travels</a>
+        </nav>
+      </div>
+    </header>
+
+
+    <div class="mx-auto max-w-6xl px-6 py-10 md:py-14 lg:grid lg:grid-cols-[240px_1fr] lg:gap-12">
+      <aside class="lg:sticky lg:top-10 lg:self-start">
+        <div class="site-avatar">
+          <img src="/static/photo.jpg" alt="Bernard Nongpoh" />
+        </div>
+        <h1 class="mt-5 text-xl font-semibold text-slate-900">Bernard Nongpoh</h1>
+        <p class="mt-1 text-sm text-slate-600">Assistant Professor</p>
+        <hr class="my-4 border-slate-200" />
+        <p class="text-sm text-slate-600 leading-relaxed">Department of Computer Science &amp; Engineering</p>
+        <p class="mt-1 text-sm text-slate-600 leading-relaxed">Indian Institute of Technology Guwahati</p>
+        <hr class="my-4 border-slate-200" />
+        <ul class="contact-list space-y-1.5 text-sm text-slate-600">
+          <li><a class="hover:text-slate-900" href="mailto:bnongpoh@iitg.ac.in">bnongpoh@iitg.ac.in</a></li>
+          <li><a class="hover:text-slate-900" href="https://github.com/bernardnongpoh" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a class="hover:text-slate-900" href="https://twitter.com/bernardnongpoh" target="_blank" rel="noopener">Twitter</a></li>
+          <li><a class="hover:text-slate-900" href="https://www.linkedin.com/in/bernard-nongpoh" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a class="hover:text-slate-900" href="https://scholar.google.co.in/citations?user=T0yqLoUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a></li>
+          <li><a class="hover:text-slate-900" href="https://dblp.org/pers/hd/n/Nongpoh:Bernard" target="_blank" rel="noopener">DBLP</a></li>
+        </ul>
+        <p class="mt-6 text-xs text-slate-400">© Bernard Nongpoh</p>
+      </aside>
+
+      <main class="mt-10 lg:mt-0">
+        <h2 class="text-3xl font-semibold tracking-tight text-slate-900">Talks</h2>
+
+        <article class="mt-8">
+          <div class="aspect-video w-full overflow-hidden rounded-lg border border-slate-200">
+            <iframe class="h-full w-full" src="https://www.youtube.com/embed/TwHY6OWj-DU" title="React 101 — Meghalaya Dev Community" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-slate-900">React 101 · Meghalaya Dev Community</h3>
+          <p class="mt-1 text-sm text-slate-500">June 5, 2021</p>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

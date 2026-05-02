@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Installing &amp; Building RISC-V Toolchain — Bernard Nongpoh</title>
+    <meta name="description" content="Walkthrough for installing and building the RISC-V toolchain from scratch." />
+    <link rel="icon" href="/static/photo.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+              display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+            },
+            colors: {
+              gold: { 50:'#fffbeb', 100:'#fef3c7', 200:'#fde68a', 300:'#fcd34d', 400:'#fbbf24', 500:'#f5b400', 600:'#d97706', 700:'#a87900', 800:'#92400e', 900:'#78350f' },
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body class="bg-white text-stone-800 antialiased">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <div class="site-title"><a href="/">Bernard Nongpoh</a></div>
+        <nav class="site-nav">
+          <a href="/">Home</a>
+          <a href="/publications.html">Publications</a>
+          <a href="/teaching.html">Teaching</a>
+          <a href="/students.html">Students</a>
+          <a href="/writeups.html" class="is-active">Writeups</a>
+          <a href="/talks.html">Talks</a>
+          <a href="/travels.html">Travels</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="site-banner" aria-hidden="true"></div>
+
+    <div class="mx-auto max-w-6xl px-6 py-10 md:py-14 lg:grid lg:grid-cols-[240px_1fr] lg:gap-12">
+      <aside class="lg:sticky lg:top-10 lg:self-start">
+        <div class="site-avatar">
+          <img src="/static/photo.jpg" alt="Bernard Nongpoh" />
+        </div>
+        <h1 class="mt-5 text-xl font-semibold text-slate-900">Bernard Nongpoh</h1>
+        <p class="mt-1 text-sm text-slate-600">Assistant Professor</p>
+        <hr class="my-4 border-slate-200" />
+        <p class="text-sm text-slate-600 leading-relaxed">Department of Computer Science &amp; Engineering</p>
+        <p class="mt-1 text-sm text-slate-600 leading-relaxed">Indian Institute of Technology Guwahati</p>
+        <hr class="my-4 border-slate-200" />
+        <ul class="contact-list space-y-1.5 text-sm text-slate-600">
+          <li><a class="hover:text-slate-900" href="mailto:bnongpoh@iitg.ac.in">bnongpoh@iitg.ac.in</a></li>
+          <li><a class="hover:text-slate-900" href="https://github.com/bernardnongpoh" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a class="hover:text-slate-900" href="https://twitter.com/bernardnongpoh" target="_blank" rel="noopener">Twitter</a></li>
+          <li><a class="hover:text-slate-900" href="https://www.linkedin.com/in/bernard-nongpoh" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="mt-6 text-xs text-slate-400">© Bernard Nongpoh</p>
+      </aside>
+
+      <main class="mt-10 lg:mt-0">
+        <p class="text-xs uppercase tracking-wide text-slate-500"><a href="/writeups.html" class="hover:text-slate-900">← Writeups</a></p>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-slate-900">Installing &amp; Building RISC-V Toolchain</h2>
+        <p class="mt-2 text-sm text-slate-500">May 21, 2021 · RISC-V</p>
+
+        <article class="prose prose-slate mt-8 max-w-none">
+          <p>This post walks you through how to install and build the RISC-V toolchain from scratch.<sup><a href="#fn1">1</a></sup></p>
+
+          <h3>Prerequisites</h3>
+          <ul>
+            <li>Install <code>git</code> on your system:</li>
+          </ul>
+<pre><code>sudo apt install git-all</code></pre>
+          <ul>
+            <li>A Linux machine (tested on Ubuntu 20 LTS).</li>
+            <li>Sufficient storage — around 30 GB free.</li>
+            <li>Install a few dependencies:</li>
+          </ul>
+<pre><code>sudo apt-get install autoconf automake autotools-dev curl python3 \
+  libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison \
+  flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev</code></pre>
+
+          <h3>Create a directory and clone</h3>
+<pre><code>mkdir risc-v
+cd risc-v
+git clone https://github.com/riscv/riscv-gnu-toolchain</code></pre>
+
+          <h3>Create a directory in <code>/opt</code></h3>
+<pre><code>mkdir /opt/riscv</code></pre>
+
+          <h3>Configure and make</h3>
+<pre><code>./configure --prefix=/opt/riscv
+make linux</code></pre>
+          <p>This might take several hours depending on your machine configuration. The tool will be available in <code>/opt/riscv/bin</code>.</p>
+
+          <h3>Add <code>/opt/riscv/bin</code> to <code>PATH</code></h3>
+          <p>Open <code>~/.bashrc</code>:</p>
+<pre><code>sudo gedit ~/.bashrc</code></pre>
+          <p>Add near the end of the file and save:</p>
+<pre><code>export PATH="$PATH:/opt/riscv/bin"</code></pre>
+          <p>Now the RISC-V tools will be available without specifying the path.</p>
+
+          <hr />
+          <ol class="text-sm">
+            <li id="fn1"><a href="https://github.com/riscv/riscv-gnu-toolchain">https://github.com/riscv/riscv-gnu-toolchain</a></li>
+          </ol>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
