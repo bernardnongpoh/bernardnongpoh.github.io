@@ -1,0 +1,16 @@
+---
+title: "Bernard Nongpoh"
+about:
+  template: trestles
+  links:
+    - icon: github
+      text: GitHub
+      href: https://github.com/bernardnongpoh
+    - icon: envelope
+      text: Email
+      href: mailto:bernard.nongpoh@gmail.com
+---
+
+Welcome to my personal website.
+
+This site is built with [Quarto](https://quarto.org/).

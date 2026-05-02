@@ -1,8 +1,6 @@
-node_modules/
-.cache/
-public/
-npm-debug.log
-.eslintcache
-.gatsby-context.js
+/.quarto/
+.DS_Store
 .idea
-gatsby-starter-lumen.iml
+*.log
+
+**/*.quarto_ipynb
