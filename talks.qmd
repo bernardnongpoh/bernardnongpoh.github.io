@@ -2,8 +2,35 @@
 title: "Talks"
 ---
 
-### React 101 · Meghalaya Dev Community
+## 2026
 
-*June 5, 2021*
+1. **Cyber Security Landscape in Today's Technology Scenario.** \
+   Workshop on Cyber Security in the Era of Emerging Technologies, IIT Guwahati. \
+   *7 May 2026.* \
+   [Slides](static/documents/CDAC-May-2026.pdf)
 
-{{< video https://www.youtube.com/embed/TwHY6OWj-DU >}}
+2. **AI Can Code. So Why Should You Learn CS?** \
+   World Creativity and Innovation Day, St. Edmund's College, Shillong. \
+   *18 April 2026.* \
+   [Slides](static/documents/StEdmunds-College-April-2026.pdf)
+
+## 2025
+
+1. **Introduction to Software Security: Why It Matters.** \
+   Invited talk, Research and Industrial Conclave 2025, IIT Guwahati. \
+   [Slides](static/documents/RIC-2025.pdf)
+
+## 2022
+
+1. **Introduction to Fuzzing.** \
+   Invited talk, Department of Computer Application, St. Edmund's College, Shillong. \
+   *19 October 2022.* \
+   [Slides](static/documents/Introduction-to-Fuzzing.pdf) ·
+   [Video](https://youtu.be/_f7yUElQZZ4?si=fJzvyLiUU4YVM_bs)
+
+## 2021
+
+1. **React 101.** \
+   Meghalaya Dev Community. \
+   *5 June 2021.* \
+   [Video](https://www.youtube.com/embed/TwHY6OWj-DU)
