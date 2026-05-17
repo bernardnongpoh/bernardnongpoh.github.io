@@ -1,80 +1,59 @@
 # bernardnongpoh.github.io
 
-Follow this https://mikedodds.org/publications/
-
-Personal website for Bernard Nongpoh — plain HTML with [Tailwind CSS](https://tailwindcss.com/) via CDN. No build step, no framework, no dependencies.
-
-Hosted by GitHub Pages at <https://bernardnongpoh.github.io>.
+Personal website for Bernard Nongpoh, built with [Quarto](https://quarto.org/) and hosted by GitHub Pages at <https://bernardnongpoh.github.io>.
 
 ## Structure
 
 ```
 .
-├── index.html              # Home
-├── publications.html
-├── teaching.html
-├── students.html
-├── writeups.html           # Blog index
-├── talks.html
-├── travels.html
-├── 404.html
-├── posts/                  # Individual writeups
-│   ├── llvm.html
-│   ├── riscv.html
-│   └── summer-school-iitkanpur.html
-├── assets/
-│   └── site.css            # Shared prose / code styles
-├── static/                 # Images, PDFs, documents
-│   ├── photo.jpg
-│   ├── media/
-│   ├── pdf/
-│   └── documents/
-└── .nojekyll               # Skip Jekyll on GitHub Pages
+├── _quarto.yml           # Site config (navbar, theme, output-dir)
+├── index.qmd             # Home
+├── publications.qmd
+├── teaching.qmd
+├── students.qmd
+├── talks.qmd
+├── travels.qmd
+├── posts/                # Writeups (index.qmd + per-post .qmd files)
+├── static/               # Source images, PDFs, documents
+├── styles.css
+└── docs/                 # Rendered output — this is what GitHub Pages serves
 ```
 
-Each page is self-contained — the sidebar (photo, nav, contacts) is inlined in every file. To change a nav link or contact, update each HTML file.
+GitHub Pages is configured to serve from the `docs/` folder on `master`. Source `.qmd` files are **not** what gets published — the rendered HTML in `docs/` is.
 
-## Run locally
+## Edit and publish
 
-You need a local HTTP server so that absolute paths like `/static/photo.jpg` resolve. Opening the files directly with `file://` will break asset paths.
+1. Edit the relevant `.qmd` file (or drop assets into `static/`).
+2. **Re-render the site** — this is the step that's easy to forget:
 
-### Python 3 (no install)
+   ```
+   quarto render
+   ```
 
-```
-python3 -m http.server 8000
-```
+   This regenerates `docs/`. Without this, your changes won't appear on the live site even after pushing.
 
-Then open <http://localhost:8000>.
+3. Commit and push both the source change and the regenerated `docs/`:
 
-### Node (no install)
+   ```
+   git add -A
+   git commit -m "Describe the change"
+   git push
+   ```
 
-```
-npx serve .
-```
+GitHub Pages picks up the new `docs/` within ~30–60 seconds. Hard-refresh (Cmd+Shift+R) to bypass browser cache.
 
-### VS Code
-
-Install the **Live Server** extension and right-click `index.html` → *Open with Live Server*.
-
-## Edit content
-
-- **Text / links** — edit the relevant `*.html` file directly.
-- **New writeup** — add `posts/<slug>.html` (copy an existing post as a template) and link it from `writeups.html`.
-- **Images / PDFs** — drop into `static/` and reference as `/static/<path>`.
-- **Global styles** — edit `assets/site.css`.
-- **Tailwind classes** — apply inline; Tailwind is loaded via `<script src="https://cdn.tailwindcss.com"></script>` in each page.
-
-## Deploy
-
-GitHub Pages serves the `master` branch root automatically (user site).
+## Preview locally
 
 ```
-git add -A
-git commit -m "Update site"
-git push
+quarto preview
 ```
 
-Changes are live within a minute.
+Opens a live-reloading preview at <http://localhost:4848> (or similar). Use this before `quarto render` if you want to iterate without rebuilding `docs/` each time.
+
+## Notes
+
+- `docs/.nojekyll` must exist — it tells GitHub Pages to skip Jekyll processing, which would otherwise strip Quarto's `site_libs/` assets. `quarto render` does not always recreate it; if you see broken styles after a publish, check that this file is present.
+- Asset paths in `.qmd` files should be relative (e.g. `static/documents/foo.pdf`), and `static/**` is declared as a resource in `_quarto.yml` so Quarto copies it into `docs/` on render.
 
 ## License
 
