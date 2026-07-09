@@ -21,6 +21,7 @@
         <li><a href="#syllabus">Syllabus</a></li>
         <li><a href="#logistics">Logistics</a></li>
         <li><a href="#grading">Grading</a></li>
+        <li><a href="#project">Project</a></li>
         <li><a href="#staff">Staff</a></li>
         <li><a href="#policies">Policies</a></li>
       </ul>
@@ -280,6 +281,7 @@
             <td class="cell">
               <span class="tag topic">Topic 4</span>
               <span class="tag hw">HW 3 out</span>
+              <span class="tag deadline">Project proposal due Sep 20</span>
             </td>
           </tr>
 
@@ -418,7 +420,10 @@
               <span class="lec-title"><a href="lectures.html#L42">L42. LLM + static/dynamic integration; wrap-up</a></span>
               <div style="font-size:11px;color:var(--text-faint);">Last day of instruction</div>
             </td>
-            <td class="cell"><span class="tag topic">Topic 9</span></td>
+            <td class="cell">
+              <span class="tag topic">Topic 9</span>
+              <span class="tag deadline">Project paper + repo due Nov 13</span>
+            </td>
           </tr>
 
           <!-- ================= END-SEM ============================== -->
@@ -478,11 +483,75 @@
     <section id="grading">
       <h2>Grading</h2>
       <dl class="info-grid">
-        <dt>Assignments (4)</dt><dd>40 %</dd>
-        <dt>Mid-semester exam</dt><dd>20 %</dd>
-        <dt>End-semester exam</dt><dd>25 %</dd>
-        <dt>Course project</dt><dd>15 %</dd>
+        <dt>End-semester exam</dt><dd>40 %</dd>
+        <dt>Mid-semester exam</dt><dd>25 %</dd>
+        <dt>Term project</dt><dd>25 % &nbsp;<span style="font-size:12px;color:var(--text-faint);">(see <a href="#project">Project</a> for internal breakdown)</span></dd>
+        <dt>H/W assignments</dt><dd>10 %</dd>
+        <dt><b>Total</b></dt><dd><b>100 %</b></dd>
       </dl>
+    </section>
+
+    <!-- Project -->
+    <section id="project">
+      <h2>Term Project (25 %)</h2>
+      <p>
+        The project is where the course meets the real world. You'll pick a
+        <em>widely-used</em> open-source target, build or adapt a program-analysis
+        tool from the course, and try to find <strong>real bugs</strong> that get
+        <strong>accepted upstream</strong>. Outcome is a short paper in FSE format
+        with a reproducible GitHub artifact.
+      </p>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Internal weighting (of the 25 %)</h3>
+      <dl class="info-grid">
+        <dt>Implementation &amp; impact</dt><dd>40 % &nbsp;<span style="font-size:12px;color:var(--text-faint);">(full marks on this component require a bug <b>accepted by upstream maintainers</b>)</span></dd>
+        <dt>Report (FSE format)</dt><dd>30 %</dd>
+        <dt>Viva &amp; understanding</dt><dd>30 %</dd>
+      </dl>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Team &amp; individual accountability</h3>
+      <ul>
+        <li><b>Group size:</b> up to <b>5</b> students. Solo and smaller groups allowed; expectations scale with team size.</li>
+        <li>Each member must <b>justify their contribution</b> (a signed statement in the report plus commit history in the repo).</li>
+        <li>At viva, <b>every member must be able to answer any question about any part of the project</b>. &ldquo;That was X's part&rdquo; is not an acceptable answer.</li>
+      </ul>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Timeline</h3>
+      <dl class="info-grid">
+        <dt>Proposal submitted</dt><dd>Immediately after the mid-semester exam &middot; <b>by Sun 20 Sep 2026</b></dd>
+        <dt>Proposal approved</dt><dd>Within one week &middot; <b>do not start work before written approval</b></dd>
+        <dt>Progress check</dt><dd>Informal check-in in a lecture slot &middot; late October</dd>
+        <dt>Final artifact</dt><dd>Paper (PDF) + public GitHub repo + reproducibility instructions &middot; <b>before end-sem week</b></dd>
+        <dt>Viva</dt><dd>Scheduled with the instructor after final submission</dd>
+      </dl>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Target open-source project</h3>
+      <ul>
+        <li>Must be <b>widely used</b> &mdash; think <span class="tag paper">Linux kernel</span> <span class="tag paper">Chromium/V8</span> <span class="tag paper">FFmpeg</span> <span class="tag paper">OpenSSL</span> <span class="tag paper">SQLite</span> <span class="tag paper">Postgres</span> <span class="tag paper">Node.js</span> <span class="tag paper">CPython</span> <span class="tag paper">LLVM</span> and similar. Popular runtimes, browsers, kernels, media libraries, cryptography libraries, and databases are on-scope.</li>
+        <li>You <em>cannot</em> pick an obscure repo and simply point your tool at it. Rule of thumb: the project should have a large public user base and a functioning security / bug-triage process.</li>
+        <li>Get the target on the proposal so I can green-light it before you invest time.</li>
+      </ul>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Deliverables</h3>
+      <ol>
+        <li><b>Proposal (2 pages):</b> problem, target OSS project, technique, plan, team &amp; role split. Sent to the instructor by 20 Sep 2026.</li>
+        <li><b>Paper</b> in FSE format: motivation, technique, implementation, evaluation, related work, threats to validity. Use the <a href="https://www.acm.org/publications/proceedings-template">ACM Primary Article Template</a> (LaTeX <code>sigconf</code>). PDF submitted with the artifact.</li>
+        <li><b>Public GitHub repo</b> containing:
+          <ul>
+            <li>Source code with a permissive license</li>
+            <li><code>README.md</code> with build + run instructions, exact dependencies, and one-command reproduction of the headline result</li>
+            <li>Docker image or CI workflow that reproduces the evaluation from scratch</li>
+            <li>Bug reports / PRs / patches you filed upstream, linked with their state (open / acknowledged / merged)</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">What earns full marks on the &ldquo;implementation&rdquo; component</h3>
+      <ul>
+        <li>Your tool finds <b>at least one real, previously-unknown bug</b> in the target project <em>and</em></li>
+        <li>The bug report / patch is <b>accepted by upstream maintainers</b> (merged PR, accepted CVE, or acknowledged advisory).</li>
+        <li>Partial credit is available for high-quality tooling and reproducible evaluation even if no bug lands; the ceiling on this component is capped without an upstream-accepted finding.</li>
+      </ul>
     </section>
 
     <!-- Staff -->
