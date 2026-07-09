@@ -4,8 +4,9 @@ Lightweight static site for the course — plain HTML + one CSS file, no build
 step, no framework. Open `index.html` in a browser to preview.
 
 Schedule follows the official IITG Academic Calendar 2026 (Monsoon Semester
-of AY 2026-2027). Course meets **Mon / Wed / Thu** and totals **42 lectures**
-mapped to the 9-topic 42-lecture syllabus.
+of AY 2026-2027). Course meets **Mon / Tue / Wed** across 15 teaching weeks
+and totals **42 lectures** mapped to the 9-topic 42-lecture syllabus. Two
+in-class quizzes (Wed 9 Sep before mid-sem, Tue 10 Nov before end-sem).
 
 ## Files
 
