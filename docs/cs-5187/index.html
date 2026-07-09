@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 5187 &mdash; Software Analysis (Monsoon 2026)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+
+  <!-- ========================= SIDEBAR ========================= -->
+  <aside class="sidebar">
+    <h1>CS 5187</h1>
+    <div class="term">Monsoon 2026 &middot; IIT Guwahati</div>
+
+    <nav>
+      <h2>Course</h2>
+      <ul>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#syllabus">Syllabus</a></li>
+        <li><a href="#logistics">Logistics</a></li>
+        <li><a href="#grading">Grading</a></li>
+        <li><a href="#staff">Staff</a></li>
+        <li><a href="#policies">Policies</a></li>
+      </ul>
+
+      <h2>Content</h2>
+      <ul>
+        <li><a href="lectures.html">All lectures &amp; readings</a></li>
+      </ul>
+
+      <h2>Assignments</h2>
+      <ul>
+        <li class="notes-slot">HW 1 &mdash; TBA</li>
+        <li class="notes-slot">HW 2 &mdash; TBA</li>
+        <li class="notes-slot">HW 3 &mdash; TBA</li>
+        <li class="notes-slot">HW 4 &mdash; TBA</li>
+      </ul>
+
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="https://llvm.org/docs/">LLVM docs</a></li>
+        <li><a href="https://klee-se.org/">KLEE</a></li>
+        <li><a href="https://github.com/AFLplusplus/AFLplusplus">AFL++</a></li>
+        <li><a href="https://www.fuzzingbook.org/">Fuzzing Book</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ========================= MAIN =========================== -->
+  <main>
+
+    <header class="course">
+      <h1>CS 5187 &mdash; Software Analysis</h1>
+      <div class="subtitle">Monsoon Semester 2026 &middot; 23 July &ndash; 12 November 2026 &middot; Dept. of CSE, IIT Guwahati</div>
+    </header>
+
+    <!-- Overview -->
+    <section id="overview">
+      <p>
+        A graduate course on <strong>static, dynamic, and hybrid program analysis</strong>
+        and its use in finding bugs and vulnerabilities in real software.
+        We cover foundations (soundness, precision, IRs), dataflow and abstract
+        interpretation, pointer analysis, constraint-based analysis, type systems,
+        symbolic execution, automated test generation, fuzzing, and modern
+        LLM-assisted analysis. Lab work is built around LLVM, KLEE, and modern
+        fuzzers.
+      </p>
+    </section>
+
+    <!-- =========================================================
+         SCHEDULE — dates from IITG Academic Calendar 2026.
+         Course meets Mon / Wed / Thu &rarr; 42 sessions total.
+         ========================================================= -->
+    <section id="schedule">
+      <h2>Schedule</h2>
+      <p style="font-size:13px;color:var(--text-muted);">
+        Course meets <b>Mon / Wed / Thu</b>. Dates follow the
+        <a href="https://iitg.ac.in/acad/academic_calendar.php">IITG Academic
+        Calendar 2026</a>. Click a lecture to jump to its materials on the
+        <a href="lectures.html">lectures page</a>.
+      </p>
+
+      <table class="schedule">
+        <thead>
+          <tr>
+            <th style="width:50px;">Wk</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th style="width:180px;">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ================= WEEK 1 (Jul 20 – 26) ================= -->
+          <tr>
+            <td class="week">1</td>
+            <td class="cell notes-slot"><span class="date">Jul 20</span>Reg / no class</td>
+            <td class="cell notes-slot"><span class="date">Jul 21</span>Reg / no class</td>
+            <td class="cell notes-slot"><span class="date">Jul 22</span>Reg / no class</td>
+            <td class="cell">
+              <span class="date">Jul 23 &middot; Thur-1</span>
+              <span class="lec-title"><a href="lectures.html#L01">L1. Course intro &amp; motivation</a></span>
+            </td>
+            <td class="cell"><span class="tag topic">Topic 1</span> First day of instruction</td>
+          </tr>
+
+          <!-- ================= WEEK 2 (Jul 27 – Aug 2) =============== -->
+          <tr>
+            <td class="week">2</td>
+            <td class="cell">
+              <span class="date">Jul 27 &middot; Mon-1</span>
+              <span class="lec-title"><a href="lectures.html#L02">L2. Static / dynamic / hybrid analysis</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Jul 29 &middot; Wed-1</span>
+              <span class="lec-title"><a href="lectures.html#L03">L3. Soundness, completeness, undecidability</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Jul 30 &middot; Thur-2</span>
+              <span class="lec-title"><a href="lectures.html#L04">L4. Precision, recall, F-measure</a></span>
+            </td>
+            <td class="cell"><span class="tag topic">Topic 1</span></td>
+          </tr>
+
+          <!-- ================= WEEK 3 (Aug 3 – 9) =================== -->
+          <tr>
+            <td class="week">3</td>
+            <td class="cell">
+              <span class="date">Aug 3 &middot; Mon-2</span>
+              <span class="lec-title"><a href="lectures.html#L05">L5. AST, CFG, IRs</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Aug 5 &middot; Wed-2</span>
+              <span class="lec-title"><a href="lectures.html#L06">L6. LLVM IR crash course</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Aug 6 &middot; Thur-3</span>
+              <span class="lec-title"><a href="lectures.html#L07">L7. Specifications, safety &amp; liveness</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 1</span>
+              <span class="tag hw">HW 1 out</span>
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 4 (Aug 10 – 16) ================= -->
+          <tr>
+            <td class="week">4</td>
+            <td class="cell">
+              <span class="date">Aug 10 &middot; Mon-3</span>
+              <span class="lec-title"><a href="lectures.html#L08">L8. Invariants, coverage, mutation</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Aug 12 &middot; Wed-3</span>
+              <span class="lec-title"><a href="lectures.html#L09">L9. Fuzz testing overview</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Aug 13 &middot; Thur-4</span>
+              <span class="lec-title"><a href="lectures.html#L10">L10. Grammar-based fuzzing</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 2</span>
+              Aug 15 &middot; Independence Day
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 5 (Aug 17 – 23) ================= -->
+          <tr>
+            <td class="week">5</td>
+            <td class="cell">
+              <span class="date">Aug 17 &middot; Mon-4</span>
+              <span class="lec-title"><a href="lectures.html#L11">L11. Coverage-guided fuzzing</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Aug 19 &middot; Wed-4</span>
+              <span class="lec-title"><a href="lectures.html#L12">L12. Concurrency testing</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Aug 20 &middot; Thur-5</span>
+              <span class="lec-title"><a href="lectures.html#L13">L13. Lattices &amp; fixed points</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 2 &rarr; 3</span>
+              <span class="tag deadline">HW 1 due Aug 21</span>
+              <span class="tag hw">HW 2 out</span>
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 6 (Aug 24 – 30) ================= -->
+          <tr>
+            <td class="week">6</td>
+            <td class="cell">
+              <span class="date">Aug 24 &middot; Mon-5</span>
+              <span class="lec-title"><a href="lectures.html#L14">L14. Worklist algorithms</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell notes-slot"><span class="date">Aug 26</span>Holiday (Janmashtami)</td>
+            <td class="cell">
+              <span class="date">Aug 27 &middot; Wed-5*</span>
+              <span class="lec-title"><a href="lectures.html#L15">L15. Reaching definitions</a></span>
+              <div style="font-size:11px;color:var(--text-faint);">(Thu follows Wed timetable)</div>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 3</span>
+              Aug 28&ndash;30 &middot; Techniche
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 7 (Aug 31 – Sep 6) ============== -->
+          <tr>
+            <td class="week">7</td>
+            <td class="cell">
+              <span class="date">Aug 31 &middot; Mon-6</span>
+              <span class="lec-title"><a href="lectures.html#L16">L16. Available expressions</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Sep 2 &middot; Wed-6</span>
+              <span class="lec-title"><a href="lectures.html#L17">L17. Very busy expressions</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Sep 3 &middot; Thur-6</span>
+              <span class="lec-title"><a href="lectures.html#L18">L18. Live variables &amp; DCE</a></span>
+            </td>
+            <td class="cell"><span class="tag topic">Topic 3</span></td>
+          </tr>
+
+          <!-- ================= WEEK 8 (Sep 7 – 13) ================== -->
+          <tr>
+            <td class="week">8</td>
+            <td class="cell">
+              <span class="date">Sep 7 &middot; Mon-7</span>
+              <span class="lec-title"><a href="lectures.html#L19">L19. Interval analysis</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Sep 9 &middot; Wed-7</span>
+              <span class="lec-title"><a href="lectures.html#L20">L20. Widening &amp; abstract interpretation</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Sep 10 &middot; Thur-7</span>
+              <span class="lec-title"><a href="lectures.html#L21">L21. Pointer analysis: intro</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 3 &rarr; 4</span>
+              <span class="tag deadline">HW 2 due Sep 11</span>
+            </td>
+          </tr>
+
+          <!-- ================= MID-SEM WEEK ========================= -->
+          <tr class="holiday">
+            <td class="week">&mdash;</td>
+            <td colspan="5"><span class="tag exam">Sep 13&ndash;20</span> Mid-Semester Examinations (break on Sep 17)</td>
+          </tr>
+
+          <!-- ================= WEEK 10 (Sep 21 – 27) ================ -->
+          <tr>
+            <td class="week">10</td>
+            <td class="cell">
+              <span class="date">Sep 21 &middot; Mon-8</span>
+              <span class="lec-title"><a href="lectures.html#L22">L22. Andersen's algorithm</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Sep 23 &middot; Wed-8</span>
+              <span class="lec-title"><a href="lectures.html#L23">L23. Steensgaard's algorithm</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Sep 24 &middot; Thur-8</span>
+              <span class="lec-title"><a href="lectures.html#L24">L24. Flow/context sensitivity, heap, CFI</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 4</span>
+              <span class="tag hw">HW 3 out</span>
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 11 (Sep 28 – Oct 4) ============== -->
+          <tr>
+            <td class="week">11</td>
+            <td class="cell">
+              <span class="date">Sep 28 &middot; Mon-9</span>
+              <span class="lec-title"><a href="lectures.html#L25">L25. Datalog for program analysis</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Sep 30 &middot; Wed-9</span>
+              <span class="lec-title"><a href="lectures.html#L26">L26. Intra vs inter-procedural analysis</a></span>
+            </td>
+            <td class="cell notes-slot"><span class="date">Oct 1</span>Runs Fri timetable</td>
+            <td class="cell">
+              <span class="tag topic">Topic 5</span>
+              Oct 2 &middot; Gandhi Jayanti
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 12 (Oct 5 – 11) ================== -->
+          <tr>
+            <td class="week">12</td>
+            <td class="cell">
+              <span class="date">Oct 5 &middot; Mon-10</span>
+              <span class="lec-title"><a href="lectures.html#L27">L27. Context sensitivity (k-CFA, obj-sens)</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Oct 7 &middot; Wed-10</span>
+              <span class="lec-title"><a href="lectures.html#L28">L28. SAT &amp; SMT solvers</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Oct 8 &middot; Thur-9</span>
+              <span class="lec-title"><a href="lectures.html#L29">L29. Type rules &amp; type checking</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 5 &rarr; 6</span>
+              <span class="tag deadline">HW 3 due Oct 9</span>
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 13 (Oct 12 – 18) ================= -->
+          <tr>
+            <td class="week">13</td>
+            <td class="cell">
+              <span class="date">Oct 12 &middot; Mon-11</span>
+              <span class="lec-title"><a href="lectures.html#L30">L30. Type soundness</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Oct 14 &middot; Wed-11</span>
+              <span class="lec-title"><a href="lectures.html#L31">L31. Type inference &amp; constraint solving</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Oct 15 &middot; Thur-10</span>
+              <span class="lec-title"><a href="lectures.html#L32">L32. Flow-/path-sensitive type analyses</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 6</span>
+              <span class="tag hw">HW 4 out</span>
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 14 (Oct 19 – 25) ================= -->
+          <tr>
+            <td class="week">14</td>
+            <td class="cell notes-slot"><span class="date">Oct 19</span>Holiday</td>
+            <td class="cell notes-slot"><span class="date">Oct 20</span>Diwali</td>
+            <td class="cell">
+              <span class="date">Oct 21 &middot; Wed-12</span>
+              <span class="lec-title"><a href="lectures.html#L33">L33. Symbolic values &amp; path conditions</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Oct 22 &middot; Thur-11</span>
+              <span class="lec-title"><a href="lectures.html#L34">L34. Computation trees, static SymExec</a></span>
+            </td>
+            <td class="cell"><span class="tag topic">Topic 7</span></td>
+          </tr>
+
+          <!-- ================= WEEK 15 (Oct 26 – Nov 1) ============== -->
+          <tr>
+            <td class="week">15</td>
+            <td class="cell">
+              <span class="date">Oct 26 &middot; Mon-12</span>
+              <span class="lec-title"><a href="lectures.html#L35">L35. Dynamic symbolic exec (DART/KLEE)</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Oct 28 &middot; Wed-13</span>
+              <span class="lec-title"><a href="lectures.html#L36">L36. SymExec for vuln detection</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Oct 29 &middot; Thur-12</span>
+              <span class="lec-title"><a href="lectures.html#L37">L37. Specification-guided generation</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag topic">Topic 7 &rarr; 8</span>
+              <span class="tag deadline">HW 4 due Oct 30</span>
+            </td>
+          </tr>
+
+          <!-- ================= WEEK 16 (Nov 2 – 8) ================== -->
+          <tr>
+            <td class="week">16</td>
+            <td class="cell">
+              <span class="date">Nov 2 &middot; Mon-13</span>
+              <span class="lec-title"><a href="lectures.html#L38">L38. Random test generation (QuickCheck)</a></span>
+            </td>
+            <td class="cell notes-slot">&mdash;</td>
+            <td class="cell">
+              <span class="date">Nov 4 &middot; Wed-14</span>
+              <span class="lec-title"><a href="lectures.html#L39">L39. Systematic test generation</a></span>
+            </td>
+            <td class="cell">
+              <span class="date">Nov 5 &middot; Thur-13</span>
+              <span class="lec-title"><a href="lectures.html#L40">L40. LLM-guided test generation</a></span>
+            </td>
+            <td class="cell"><span class="tag topic">Topic 8 &rarr; 9</span></td>
+          </tr>
+
+          <!-- ================= WEEK 17 (Nov 9 – 12) ================== -->
+          <tr>
+            <td class="week">17</td>
+            <td class="cell notes-slot"><span class="date">Nov 9</span>Holiday</td>
+            <td class="cell notes-slot"><span class="date">Nov 10</span>&mdash;</td>
+            <td class="cell">
+              <span class="date">Nov 11 &middot; Mon-14*</span>
+              <span class="lec-title"><a href="lectures.html#L41">L41. LLM-based vuln discovery</a></span>
+              <div style="font-size:11px;color:var(--text-faint);">(Wed follows Mon timetable)</div>
+            </td>
+            <td class="cell">
+              <span class="date">Nov 12 &middot; Thur-14</span>
+              <span class="lec-title"><a href="lectures.html#L42">L42. LLM + static/dynamic integration; wrap-up</a></span>
+              <div style="font-size:11px;color:var(--text-faint);">Last day of instruction</div>
+            </td>
+            <td class="cell"><span class="tag topic">Topic 9</span></td>
+          </tr>
+
+          <!-- ================= END-SEM ============================== -->
+          <tr class="holiday">
+            <td class="week">&mdash;</td>
+            <td colspan="5"><span class="tag exam">Nov 14&ndash;21</span> End-Semester Examinations (break on Nov 18)</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Syllabus summary -->
+    <section id="syllabus">
+      <h2>Syllabus</h2>
+      <table class="schedule">
+        <thead>
+          <tr>
+            <th style="width:30px;">#</th>
+            <th>Topic</th>
+            <th style="width:80px;">Lectures</th>
+            <th style="width:100px;">Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="week">1</td><td>Foundations &amp; Program Representation</td><td>L1&ndash;L8</td><td>8</td></tr>
+          <tr><td class="week">2</td><td>Testing (fuzzing, grammar-based, coverage-guided, concurrency)</td><td>L9&ndash;L12</td><td>4</td></tr>
+          <tr><td class="week">3</td><td>Dataflow Analysis</td><td>L13&ndash;L20</td><td>8</td></tr>
+          <tr><td class="week">4</td><td>Pointer Analysis</td><td>L21&ndash;L24</td><td>4</td></tr>
+          <tr><td class="week">5</td><td>Constraint-Based Analysis</td><td>L25&ndash;L28</td><td>4</td></tr>
+          <tr><td class="week">6</td><td>Type Systems</td><td>L29&ndash;L32</td><td>4</td></tr>
+          <tr><td class="week">7</td><td>Symbolic Execution</td><td>L33&ndash;L36</td><td>4</td></tr>
+          <tr><td class="week">8</td><td>Automated Test Generation</td><td>L37&ndash;L39</td><td>3</td></tr>
+          <tr><td class="week">9</td><td>LLM-Assisted Software Analysis</td><td>L40&ndash;L42</td><td>3</td></tr>
+          <tr><td class="week">&mdash;</td><td><b>Total</b></td><td>&mdash;</td><td><b>42</b></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13.5px;color:var(--text-muted);margin-top:8px;">
+        Full per-lecture materials and weekly research readings on the
+        <a href="lectures.html">lectures page</a>.
+      </p>
+    </section>
+
+    <!-- Logistics -->
+    <section id="logistics">
+      <h2>Logistics</h2>
+      <dl class="info-grid">
+        <dt>Lectures</dt><dd>Mon / Wed / Thu &middot; slot TBA &middot; CSE Dept.</dd>
+        <dt>Labs</dt><dd>To be scheduled &middot; CSE Lab TBA</dd>
+        <dt>Office hours</dt><dd>By appointment &middot; email the instructor</dd>
+        <dt>Discussion</dt><dd>Moodle forum / course email list</dd>
+        <dt>Prerequisites</dt><dd>Data structures, C/C++ or Java, basic OS &amp; compilers</dd>
+      </dl>
+    </section>
+
+    <!-- Grading -->
+    <section id="grading">
+      <h2>Grading</h2>
+      <dl class="info-grid">
+        <dt>Assignments (4)</dt><dd>40 %</dd>
+        <dt>Mid-semester exam</dt><dd>20 %</dd>
+        <dt>End-semester exam</dt><dd>25 %</dd>
+        <dt>Course project</dt><dd>15 %</dd>
+      </dl>
+    </section>
+
+    <!-- Staff -->
+    <section id="staff">
+      <h2>Staff</h2>
+      <dl class="info-grid">
+        <dt>Instructor</dt>
+        <dd><a href="../index.html">Bernard Nongpoh</a> &middot;
+          <a href="mailto:bnongpoh@iitg.ac.in">bnongpoh@iitg.ac.in</a></dd>
+        <dt>Teaching assistants</dt>
+        <dd class="notes-slot">TBA</dd>
+      </dl>
+    </section>
+
+    <!-- Policies -->
+    <section id="policies">
+      <h2>Policies</h2>
+      <p>
+        <strong>Collaboration.</strong> Discuss ideas freely; write up
+        assignments individually. Cite any external references you consulted.
+        <strong>Late work.</strong> Three late days total across the semester,
+        no single assignment more than two days late.
+        <strong>Academic honesty.</strong> Standard institute rules apply. LLM
+        use must be disclosed and cannot replace your own understanding of the
+        material.
+      </p>
+    </section>
+
+    <footer>
+      CS 5187 &middot; IIT Guwahati &middot; Monsoon Semester 2026 &middot;
+      last updated <time datetime="2026-07-09">2026-07-09</time>
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>
