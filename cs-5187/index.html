@@ -304,6 +304,7 @@
             <td class="cell">
               <span class="tag topic">Topic 5 &rarr; 6</span>
               <span class="tag deadline">HW 3 due Oct 9</span>
+              <span class="tag exam">Progress meeting 1 &middot; Oct 5&ndash;9</span>
             </td>
           </tr>
 
@@ -358,6 +359,7 @@
             <td class="cell">
               <span class="tag topic">Topic 7 &rarr; 8</span>
               <span class="tag deadline">HW 4 due Oct 30</span>
+              <span class="tag exam">Progress meeting 2 &middot; Oct 26&ndash;30</span>
             </td>
           </tr>
 
@@ -376,7 +378,10 @@
               <span class="date">Nov 4 &middot; Wed-14</span>
               <span class="lec-title"><a href="lectures.html#L40">L40. LLM-guided test generation</a></span>
             </td>
-            <td class="cell"><span class="tag topic">Topic 8 &rarr; 9</span></td>
+            <td class="cell">
+              <span class="tag topic">Topic 8 &rarr; 9</span>
+              <span class="tag exam">Progress meeting 3 &middot; Nov 2&ndash;6</span>
+            </td>
           </tr>
 
           <!-- ================= WEEK 15 (Nov 10 – 11) ================ -->
@@ -395,7 +400,8 @@
             <td class="cell">
               <span class="tag topic">Topic 9</span>
               <span class="tag exam">Quiz 2 &middot; Tue Nov 10 (in class)</span>
-              <span class="tag deadline">Project paper + repo due Nov 13</span>
+              <span class="tag exam">Final presentation &middot; Thu Nov 12</span>
+              <span class="tag deadline">Paper + repo due Fri Nov 13, 23:59 IST</span>
             </td>
           </tr>
 
@@ -479,7 +485,9 @@
         <dt>Lectures</dt><dd>Mon / Tue / Wed &middot; slot TBA &middot; CSE Dept.</dd>
         <dt>Labs</dt><dd>To be scheduled &middot; CSE Lab TBA</dd>
         <dt>Office hours</dt><dd>By appointment &middot; email the instructor</dd>
-        <dt>Discussion</dt><dd>Moodle forum / course email list</dd>
+        <dt>Discussion</dt><dd>Microsoft Teams (CS 5187 channel) &middot; course email list</dd>
+        <dt>Handouts &amp; slides</dt><dd>Microsoft Teams &middot; Files tab</dd>
+        <dt>Progress meetings</dt><dd>Microsoft Teams (scheduled 1:1 or per group)</dd>
         <dt>Prerequisites</dt><dd>Data structures, C/C++ or Java, basic OS &amp; compilers</dd>
       </dl>
     </section>
@@ -531,25 +539,38 @@
 
       <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Internal weighting (of the 25 %)</h3>
       <dl class="info-grid">
-        <dt>Implementation &amp; impact</dt><dd>40 % &nbsp;<span style="font-size:12px;color:var(--text-faint);">(full marks on this component require a bug <b>accepted by upstream maintainers</b>)</span></dd>
-        <dt>Report (FSE format)</dt><dd>30 %</dd>
-        <dt>Viva &amp; understanding</dt><dd>30 %</dd>
+        <dt>Implementation &amp; results</dt>
+        <dd><b>50 %</b> &mdash; Does the analyzer find real vulnerabilities and generate successful exploits or fixes?
+        <div style="font-size:12px;color:var(--text-faint);margin-top:2px;">Full marks on this component require a bug <b>accepted by upstream maintainers</b>.</div></dd>
+        <dt>Progress meetings &amp; final presentation</dt>
+        <dd><b>25 %</b> &mdash; Can you present and explain your work? Evaluated across 3 progress meetings + the final presentation.</dd>
+        <dt>Report (FSE format)</dt>
+        <dd><b>25 %</b> &mdash; Is the work clearly described and illustrated?</dd>
       </dl>
 
       <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Team &amp; individual accountability</h3>
       <ul>
         <li><b>Group size:</b> up to <b>5</b> students. Solo and smaller groups allowed; expectations scale with team size.</li>
         <li>Each member must <b>justify their contribution</b> (a signed statement in the report plus commit history in the repo).</li>
-        <li>At viva, <b>every member must be able to answer any question about any part of the project</b>. &ldquo;That was X's part&rdquo; is not an acceptable answer.</li>
+        <li>At every progress meeting and at the final presentation, <b>each member must be able to answer any question about any part of the project</b>. &ldquo;That was X's part&rdquo; is not an acceptable answer.</li>
       </ul>
 
       <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Timeline</h3>
       <dl class="info-grid">
-        <dt>Proposal submitted</dt><dd>Immediately after the mid-semester exam &middot; <b>by Sun 20 Sep 2026</b></dd>
-        <dt>Proposal approved</dt><dd>Within one week &middot; <b>do not start work before written approval</b></dd>
-        <dt>Progress check</dt><dd>Informal check-in in a lecture slot &middot; late October</dd>
-        <dt>Final artifact</dt><dd>Paper (PDF) + public GitHub repo + reproducibility instructions &middot; <b>before end-sem week</b></dd>
-        <dt>Viva</dt><dd>Scheduled with the instructor after final submission</dd>
+        <dt>Proposal submitted</dt>
+        <dd>Immediately after the mid-semester exam &middot; <b>by Sun 20 Sep 2026</b> via Microsoft Teams.</dd>
+        <dt>Proposal approved</dt>
+        <dd>Within one week &middot; <b>do not start work before written approval</b>.</dd>
+        <dt>Progress meeting 1</dt>
+        <dd><b>5 &ndash; 9 Oct 2026</b> &middot; scope firmed up, target OSS accessible, initial pipeline running. Book a slot on Teams.</dd>
+        <dt>Progress meeting 2</dt>
+        <dd><b>26 &ndash; 30 Oct 2026</b> &middot; first end-to-end results, first bug candidates, evaluation plan.</dd>
+        <dt>Progress meeting 3</dt>
+        <dd><b>2 &ndash; 6 Nov 2026</b> &middot; upstream reports/PRs filed, results consolidated, report draft.</dd>
+        <dt>Final presentation</dt>
+        <dd><b>Thu 12 Nov 2026</b> &middot; 10&ndash;15 min per group + Q&amp;A &middot; open session on Teams.</dd>
+        <dt>Paper + repo due</dt>
+        <dd><b>Fri 13 Nov 2026, 23:59 IST</b> &middot; PDF + public GitHub repo + reproducibility instructions submitted via Teams before end-sem week.</dd>
       </dl>
 
       <h3 style="font-size:16px;color:var(--blue-700);margin-top:18px;">Target open-source project</h3>
