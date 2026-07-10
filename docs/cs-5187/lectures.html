@@ -38,7 +38,7 @@
         <li><a href="#w13">Wk 13 &middot; Oct 26</a></li>
         <li><a href="#w14">Wk 14 &middot; Nov 2</a></li>
         <li><a href="#w15">Wk 15 &middot; Nov 10</a></li>
-        <li><a href="#industry">Industry talks (post end-sem)</a></li>
+        <li><a href="#industry">Industry talks (3)</a></li>
       </ul>
       <h2>References</h2>
       <ul>
@@ -413,22 +413,13 @@
       </div>
 
       <div class="lecture" id="L22">
-        <h3>L22. Andersen's algorithm</h3>
-        <div class="meta">Mon 21 Sep (Mon-8) &middot; Topic 4</div>
+        <h3>L22&ndash;L23. Andersen's &amp; Steensgaard's algorithms (combined session)</h3>
+        <div class="meta">Mon 21 Sep (Mon-8) &middot; Topic 4 &middot; Room 5405, 5:00&ndash;5:55 PM</div>
         <dl>
-          <dt>Follow</dt><dd>Andersen 1994, ch. 3</dd>
-          <dt>Paper</dt><dd>Andersen 1994.</dd>
-          <dt>Outline</dt><dd>Inclusion-based constraints; subset-based points-to; O(n&sup3;) worst case; cycle elimination.</dd>
-        </dl>
-      </div>
-
-      <div class="lecture" id="L23">
-        <h3>L23. Steensgaard's algorithm</h3>
-        <div class="meta">Tue 22 Sep (Tue-8) &middot; Topic 4</div>
-        <dl>
-          <dt>Follow</dt><dd>Steensgaard 1996</dd>
-          <dt>Paper</dt><dd>Steensgaard 1996.</dd>
-          <dt>Outline</dt><dd>Equality-based points-to via union-find; almost-linear time; precision trade-off vs Andersen.</dd>
+          <dt>Follow</dt><dd>Andersen 1994 ch. 3&ndash;4; Steensgaard 1996</dd>
+          <dt>Paper</dt><dd>Andersen 1994; Steensgaard 1996.</dd>
+          <dt>Outline</dt><dd>Inclusion-based (Andersen) vs equality-based (Steensgaard) points-to; subset constraints &amp; O(n&sup3;) worst case; union-find &amp; almost-linear time; precision trade-off; cycle elimination.</dd>
+          <dt>Note</dt><dd>Two lectures merged into one 55-min session to free the Tue 22 Sep slot for <a href="#IT1">Industry Talk 1</a>.</dd>
         </dl>
       </div>
 
@@ -681,22 +672,13 @@
       </div>
 
       <div class="lecture" id="L38">
-        <h3>L38. Random test generation (QuickCheck)</h3>
-        <div class="meta">Mon 2 Nov (Mon-13) &middot; Topic 8</div>
+        <h3>L38&ndash;L39. Random &amp; systematic test generation (combined session)</h3>
+        <div class="meta">Mon 2 Nov (Mon-13) &middot; Topic 8 &middot; Room 5405, 5:00&ndash;5:55 PM</div>
         <dl>
-          <dt>Follow</dt><dd>Claessen &amp; Hughes 2000</dd>
-          <dt>Paper</dt><dd>QuickCheck.</dd>
-          <dt>Outline</dt><dd>Property-based testing; generators &amp; shrinking; adaptation across languages.</dd>
-        </dl>
-      </div>
-
-      <div class="lecture" id="L39">
-        <h3>L39. Systematic test generation (Randoop, EvoSuite)</h3>
-        <div class="meta">Tue 3 Nov (Tue-13) &middot; Topic 8</div>
-        <dl>
-          <dt>Follow</dt><dd>Pacheco et al. 2007; Fraser &amp; Arcuri 2011</dd>
-          <dt>Paper</dt><dd>Randoop; EvoSuite; modern &mdash; Abdullin, Derakhshanfar, Panichella 2025 (see recent list).</dd>
-          <dt>Outline</dt><dd>Feedback-directed generation; search-based test generation; regression oracles.</dd>
+          <dt>Follow</dt><dd>Claessen &amp; Hughes 2000; Pacheco, Lahiri, Ernst, Ball 2007; Fraser &amp; Arcuri 2011</dd>
+          <dt>Paper</dt><dd>QuickCheck (ICFP 2000); Randoop (ICSE 2007); EvoSuite (FSE 2011); modern &mdash; Abdullin, Derakhshanfar, Panichella 2025 (see recent list).</dd>
+          <dt>Outline</dt><dd>Property-based testing with generators &amp; shrinking; feedback-directed random generation; search-based (genetic) test generation; regression oracles.</dd>
+          <dt>Note</dt><dd>Two lectures merged into one 55-min session to free the Tue 3 Nov slot for <a href="#IT2">Industry Talk 2</a>.</dd>
         </dl>
       </div>
 
@@ -752,26 +734,54 @@
       </div>
     </section>
 
-    <!-- ================== Industry talks (post end-sem) ================== -->
+    <!-- ================== Industry talks (pre end-sem) ================== -->
     <section class="week-block" id="industry">
-      <header><span>Industry Talks &middot; Post end-semester (optional)</span><span class="range">Late Nov &ndash; early Dec 2026</span></header>
+      <header><span>Industry Talks &middot; Three guest lectures before end-sem</span><span class="range">Sep &ndash; Nov 2026</span></header>
       <div class="week-readings">
-        <b>Three optional guest lectures from industry practitioners.</b>
-        Scheduled after end-sem examinations (Nov 21) and before the winter
-        vacation, in coordination with speakers' availability. Topics span the
-        arc of the course from real fuzzing infrastructure to large-scale
-        static analysis in production. Attendance is encouraged but not graded.
-        <ul>
-          <li>Talk 1 &mdash; <em>speaker &amp; topic TBA</em>. Suggested slot: Mon 23 Nov 2026.</li>
-          <li>Talk 2 &mdash; <em>speaker &amp; topic TBA</em>. Suggested slot: Wed 25 Nov 2026.</li>
-          <li>Talk 3 &mdash; <em>speaker &amp; topic TBA</em>. Suggested slot: Mon 30 Nov 2026.</li>
-        </ul>
-        <p style="margin:8px 0 0;color:var(--text-faint);">
-          Target speaker pool: security/analysis teams at Qualcomm, Google, Microsoft,
-          NVIDIA, CEA, TrailOfBits, and Indian OSS-heavy shops. Talks are
-          typically 45 min + 15 min Q&amp;A.
-        </p>
+        <b>Three guest lectures from industry practitioners</b>, interleaved
+        with regular lectures to give students a working-engineer view of
+        program analysis in real security/tooling teams. Format: 45 min talk
+        + 10 min Q&amp;A + 5 min transition. Held in <b>Room 5405</b>. Speakers
+        &amp; topics will be filled in as they confirm; the schedule slots below
+        are locked.
       </div>
+
+      <div class="lecture" id="IT1">
+        <h3>Industry Talk 1</h3>
+        <div class="meta">Tue 22 Sep 2026 &middot; 4:00&ndash;4:55 PM &middot; Room 5405 &middot; freed Tue-8 slot</div>
+        <dl>
+          <dt>Speaker</dt><dd class="notes-slot">TBA</dd>
+          <dt>Topic</dt><dd class="notes-slot">Suggested area: <em>static analysis / fuzzing in industry</em> &mdash; tied to Topic 4 (pointer analysis) just covered.</dd>
+          <dt>Frees</dt><dd>L22 and L23 combined into a single session on Mon 21 Sep to open this slot.</dd>
+        </dl>
+      </div>
+
+      <div class="lecture" id="IT3">
+        <h3>Industry Talk 3</h3>
+        <div class="meta">Thu 15 Oct 2026 &middot; 2:00&ndash;2:55 PM &middot; Room 5405 &middot; reserved Thursday slot</div>
+        <dl>
+          <dt>Speaker</dt><dd class="notes-slot">TBA</dd>
+          <dt>Topic</dt><dd class="notes-slot">Suggested area: <em>type systems / verification in industry</em> (e.g. Pyre, Sorbet, eBPF verifier, Rust unsafe) &mdash; tied to Topic 6 just underway.</dd>
+          <dt>Frees</dt><dd>Uses the one Thursday slot reserved for the semester; no lectures are displaced.</dd>
+        </dl>
+      </div>
+
+      <div class="lecture" id="IT2">
+        <h3>Industry Talk 2</h3>
+        <div class="meta">Tue 3 Nov 2026 &middot; 4:00&ndash;4:55 PM &middot; Room 5405 &middot; freed Tue-13 slot</div>
+        <dl>
+          <dt>Speaker</dt><dd class="notes-slot">TBA</dd>
+          <dt>Topic</dt><dd class="notes-slot">Suggested area: <em>large-scale fuzzing / bug bounty / LLM-assisted vuln discovery</em> (e.g. Google OSS-Fuzz, Meta Sapienz/CI-Fuzz, Qualcomm QPSI) &mdash; tied to Topic 8/9.</dd>
+          <dt>Frees</dt><dd>L38 and L39 combined into a single session on Mon 2 Nov to open this slot.</dd>
+        </dl>
+      </div>
+
+      <p style="font-size:13px;color:var(--text-muted);margin-top:12px;">
+        Attendance is expected but not directly graded; content may appear in
+        Quiz 2 or end-sem discussion questions. Target speaker pool:
+        security/analysis teams at Qualcomm, Google, Microsoft, NVIDIA, CEA,
+        TrailOfBits, Meta, and Indian OSS-heavy shops.
+      </p>
     </section>
 
     <footer>
