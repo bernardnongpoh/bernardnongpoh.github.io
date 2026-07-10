@@ -38,6 +38,7 @@
         <li><a href="#w13">Wk 13 &middot; Oct 26</a></li>
         <li><a href="#w14">Wk 14 &middot; Nov 2</a></li>
         <li><a href="#w15">Wk 15 &middot; Nov 10</a></li>
+        <li><a href="#industry">Industry talks (post end-sem)</a></li>
       </ul>
       <h2>References</h2>
       <ul>
@@ -64,7 +65,7 @@
         <dt>RY</dt><dd>Rival &amp; Yi. <i>Introduction to Static Analysis</i>. MIT Press, 2020.</dd>
         <dt>TAPL</dt><dd>Pierce. <i>Types and Programming Languages</i>. MIT Press, 2002.</dd>
         <dt>FB</dt><dd>Zeller, Gopinath, B&ouml;hme, Fraser, Holler. <i>The Fuzzing Book</i>. <a href="https://www.fuzzingbook.org/">fuzzingbook.org</a>.</dd>
-        <dt>Baldoni</dt><dd>Baldoni et al. &ldquo;A Survey of Symbolic Execution Techniques&rdquo;, <i>ACM Comp. Surv.</i> 2018.</dd>
+        <dt>Baldoni</dt><dd>Baldoni, Coppa, D'Elia, Demetrescu, Finocchi. &ldquo;A Survey of Symbolic Execution Techniques&rdquo;, <i>ACM Comp. Surv.</i> 2018.</dd>
       </dl>
     </section>
 
@@ -74,12 +75,12 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Livshits, Sridharan et al. &ldquo;In Defense of Soundiness: A Manifesto&rdquo;, <i>CACM</i> 2015.</li>
+          <li>Livshits, Sridharan, Smaragdakis, Lhot&aacute;k, Amaral, Chang, Guyer, Khedker, M&oslash;ller, Vardoulakis. &ldquo;In Defense of Soundiness: A Manifesto&rdquo;, <i>CACM</i> 2015.</li>
           <li>Rice, H. G. &ldquo;Classes of Recursively Enumerable Sets and Their Decision Problems&rdquo;, <i>Trans. AMS</i> 1953.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Machiry et al. &ldquo;<a href="https://arxiv.org/abs/2606.15122">The Hitchhiker's Guide to Program Analysis, Part III: Mostly Harmless LLMs</a>&rdquo;, arXiv 2606.15122 (2026) &mdash; framing lecture for how modern analysis is being reshaped by LLMs.</li>
+          <li>Li, Zhou, Sridharan, Zhang, Qian. &ldquo;<a href="https://arxiv.org/abs/2606.15122">The Hitchhiker's Guide to Program Analysis, Part III: Mostly Harmless LLMs</a>&rdquo;, arXiv 2606.15122 (2026) &mdash; framing lecture for how modern analysis is being reshaped by LLMs.</li>
         </ul>
       </div>
 
@@ -88,7 +89,7 @@
         <div class="meta">Mon 27 Jul 2026 (Mon-1) &middot; Topic 1</div>
         <dl>
           <dt>Follow</dt><dd>NNH ch. 1; M&amp;S ch. 1</dd>
-          <dt>Paper</dt><dd>Livshits et al., &ldquo;In Defense of Soundiness&rdquo;, CACM 2015</dd>
+          <dt>Paper</dt><dd>Livshits et al. &ldquo;In Defense of Soundiness&rdquo;, CACM 2015.</dd>
           <dt>Outline</dt><dd>Why analyze programs; kinds of bugs and vulnerabilities; a tour of the course; grading, logistics, tools.</dd>
         </dl>
       </div>
@@ -98,7 +99,7 @@
         <div class="meta">Tue 28 Jul (Tue-1) &middot; Topic 1</div>
         <dl>
           <dt>Follow</dt><dd>NNH &sect;1.1&ndash;1.3; RY ch. 1</dd>
-          <dt>Paper</dt><dd>Ernst 2003 (synergy/duality); Ernst et al., &ldquo;Dynamically Discovering Likely Program Invariants&rdquo; (Daikon), TSE 2001.</dd>
+          <dt>Paper</dt><dd>Ernst, &ldquo;Static and Dynamic Analysis: Synergy and Duality&rdquo;, WODA 2003; Ernst, Cockrell, Griswold, Notkin, &ldquo;Dynamically Discovering Likely Program Invariants&hellip;&rdquo; (Daikon), TSE 2001.</dd>
           <dt>Outline</dt><dd>Static vs dynamic vs hybrid; running examples; what an &ldquo;invariant&rdquo; is; over- and under-approximation.</dd>
         </dl>
       </div>
@@ -120,9 +121,9 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Johnson et al. &ldquo;Why Don't Software Developers Use Static Analysis Tools to Find Bugs?&rdquo;, ICSE 2013.</li>
+          <li>Johnson, Song, Murphy-Hill, Bowdidge. &ldquo;Why Don't Software Developers Use Static Analysis Tools to Find Bugs?&rdquo;, ICSE 2013.</li>
           <li>Cytron, Ferrante, Rosen, Wegman, Zadeck. &ldquo;Efficiently Computing Static Single Assignment Form and the Control Dependence Graph&rdquo;, TOPLAS 1991.</li>
-          <li>Lattner &amp; Adve. &ldquo;LLVM: A Compilation Framework for Lifelong Program Analysis &amp; Transformation&rdquo;, CGO 2004.</li>
+          <li>Lattner, Adve. &ldquo;LLVM: A Compilation Framework for Lifelong Program Analysis &amp; Transformation&rdquo;, CGO 2004.</li>
         </ul>
       </div>
 
@@ -163,8 +164,8 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Alpern &amp; Schneider, &ldquo;Defining Liveness&rdquo;, IPL 1985.</li>
-          <li>Ernst et al. &ldquo;Daikon: Dynamically Discovering Likely Program Invariants&rdquo;, TSE 2001.</li>
+          <li>Alpern, Schneider. &ldquo;Defining Liveness&rdquo;, IPL 1985.</li>
+          <li>Ernst, Cockrell, Griswold, Notkin. &ldquo;Daikon: Dynamically Discovering Likely Program Invariants&rdquo;, TSE 2001.</li>
           <li>Miller, Fredriksen, So. &ldquo;An Empirical Study of the Reliability of UNIX Utilities&rdquo;, CACM 1990.</li>
         </ul>
       </div>
@@ -183,8 +184,8 @@
         <h3>L8. Pre/post conditions, invariants, coverage, mutation</h3>
         <div class="meta">Tue 11 Aug (Tue-3) &middot; Topic 1</div>
         <dl>
-          <dt>Follow</dt><dd>Meyer, <i>Object-Oriented Software Construction</i>, ch. 11 (Design by Contract); Zhu, Hall, May 1997 coverage survey</dd>
-          <dt>Paper</dt><dd>Jia &amp; Harman, &ldquo;An Analysis and Survey of the Development of Mutation Testing&rdquo;, TSE 2011.</dd>
+          <dt>Follow</dt><dd>Meyer, <i>Object-Oriented Software Construction</i>, ch. 11 (Design by Contract); Zhu, Hall, May, &ldquo;Software Unit Test Coverage and Adequacy&rdquo;, ACM CSUR 1997</dd>
+          <dt>Paper</dt><dd>Jia, Harman, &ldquo;An Analysis and Survey of the Development of Mutation Testing&rdquo;, TSE 2011.</dd>
           <dt>Outline</dt><dd>Pre/post/loop/class invariants; specification inference (Daikon); line/branch/MC-DC coverage; mutation-based adequacy.</dd>
         </dl>
       </div>
@@ -194,7 +195,7 @@
         <div class="meta">Wed 12 Aug (Wed-3) &middot; Topic 2</div>
         <dl>
           <dt>Follow</dt><dd>FB &ldquo;Introduction to Fuzzing&rdquo;</dd>
-          <dt>Paper</dt><dd>Miller et al. 1990 (original fuzz).</dd>
+          <dt>Paper</dt><dd>Miller, Fredriksen, So 1990 (original fuzz).</dd>
           <dt>Outline</dt><dd>Blind fuzzing; mutation-based generation; sanitizers as oracles; landscape of modern fuzzers.</dd>
         </dl>
       </div>
@@ -208,14 +209,14 @@
         <ul>
           <li>Godefroid, Kiezun, Levin. &ldquo;Grammar-based Whitebox Fuzzing&rdquo;, PLDI 2008.</li>
           <li>B&ouml;hme, Pham, Roychoudhury. &ldquo;Coverage-based Greybox Fuzzing as Markov Chain&rdquo; (AFLFast), CCS 2016.</li>
-          <li>Musuvathi &amp; Qadeer. &ldquo;Iterative Context Bounding for Systematic Testing of Multithreaded Programs&rdquo;, PLDI 2007.</li>
+          <li>Musuvathi, Qadeer. &ldquo;Iterative Context Bounding for Systematic Testing of Multithreaded Programs&rdquo;, PLDI 2007.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>She et al. &ldquo;<a href="https://arxiv.org/abs/2406.04517">FOX: Coverage-guided Fuzzing as Online Stochastic Control</a>&rdquo;, arXiv 2406.04517 (2024).</li>
-          <li>Asmita et al. &ldquo;<a href="https://arxiv.org/abs/2406.07714">LLAMAFUZZ: Large Language Model Enhanced Greybox Fuzzing</a>&rdquo;, arXiv 2406.07714 (2024).</li>
-          <li>Shan et al. &ldquo;<a href="https://dl.acm.org/doi/10.1016/j.infsof.2025.107797">A Survey of Coverage-Guided Greybox Fuzzing with Deep Neural Models</a>&rdquo;, <i>IST</i> 2025.</li>
-          <li>Marek et al. &ldquo;<a href="https://arxiv.org/abs/2502.04905">RacerF: Lightweight Static Data Race Detection for C Code</a>&rdquo;, arXiv 2502.04905 (2025) &mdash; concurrency angle for L12.</li>
+          <li>She, Storek, Xie, Kweon, Srivastava, Jana. &ldquo;<a href="https://arxiv.org/abs/2406.04517">FOX: Coverage-guided Fuzzing as Online Stochastic Control</a>&rdquo;, CCS 2024.</li>
+          <li>Zhang, Rong, He, Chen. &ldquo;<a href="https://arxiv.org/abs/2406.07714">LLAMAFUZZ: Large Language Model Enhanced Greybox Fuzzing</a>&rdquo;, arXiv 2406.07714 (2024).</li>
+          <li>Qiu, Jiang, Miao, Luo, Pan, Zheng. &ldquo;<a href="https://dl.acm.org/doi/10.1016/j.infsof.2025.107797">A Survey of Coverage-Guided Greybox Fuzzing with Deep Neural Models</a>&rdquo;, <i>Information &amp; Software Technology</i> 2025.</li>
+          <li>Dac&iacute;k, Vojnar. &ldquo;<a href="https://arxiv.org/abs/2502.04905">RacerF: Lightweight Static Data Race Detection for C Code</a>&rdquo;, arXiv 2502.04905 (2025) &mdash; concurrency angle for L12.</li>
         </ul>
       </div>
 
@@ -224,7 +225,7 @@
         <div class="meta">Mon 17 Aug (Mon-4) &middot; Topic 2</div>
         <dl>
           <dt>Follow</dt><dd>FB &ldquo;Grammar-based Fuzzing&rdquo;</dd>
-          <dt>Paper</dt><dd>Godefroid, Kiezun, Levin 2008; Aschermann et al., &ldquo;NAUTILUS: Fishing for Deep Bugs with Grammars&rdquo;, NDSS 2019.</dd>
+          <dt>Paper</dt><dd>Godefroid, Kiezun, Levin 2008; Aschermann, Frassetto, Holz, Jauernig, Sadeghi, Teuchert. &ldquo;NAUTILUS: Fishing for Deep Bugs with Grammars&rdquo;, NDSS 2019.</dd>
           <dt>Outline</dt><dd>CFG-driven input generation; language fuzzing (JS engines); mutating structured inputs.</dd>
         </dl>
       </div>
@@ -234,7 +235,7 @@
         <div class="meta">Tue 18 Aug (Tue-4) &middot; Topic 2</div>
         <dl>
           <dt>Follow</dt><dd>AFL technical whitepaper (M. Zalewski); FB &ldquo;Greybox Fuzzing&rdquo;</dd>
-          <dt>Paper</dt><dd>B&ouml;hme et al. 2016 (AFLFast); Fioraldi et al., &ldquo;AFL++&rdquo;, WOOT 2020. Modern: FOX 2024 (see recent list).</dd>
+          <dt>Paper</dt><dd>B&ouml;hme, Pham, Roychoudhury 2016 (AFLFast); Fioraldi, Maier, Ei&szlig;feldt, Heuse, &ldquo;AFL++&rdquo;, WOOT 2020. Modern: She et al. FOX (see recent list).</dd>
           <dt>Outline</dt><dd>Edge-coverage instrumentation; corpus scheduling; power schedules; seed selection.</dd>
         </dl>
       </div>
@@ -244,7 +245,7 @@
         <div class="meta">Wed 19 Aug (Wed-4) &middot; Topic 2</div>
         <dl>
           <dt>Follow</dt><dd>Musuvathi &amp; Qadeer 2007</dd>
-          <dt>Paper</dt><dd>Sen, &ldquo;Race directed random testing&rdquo; (CalFuzzer), PLDI 2008. Modern: RacerF 2025 (see recent list).</dd>
+          <dt>Paper</dt><dd>Sen. &ldquo;Race-directed random testing of concurrent programs&rdquo; (CalFuzzer), PLDI 2008. Modern: Dac&iacute;k &amp; Vojnar 2025 (see recent list).</dd>
           <dt>Outline</dt><dd>Data races; happens-before; TSan/KCSAN; context bounding; systematic interleaving exploration.</dd>
         </dl>
       </div>
@@ -256,13 +257,13 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Cousot &amp; Cousot. &ldquo;Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs&rdquo;, POPL 1977.</li>
+          <li>Cousot, Cousot. &ldquo;Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs&rdquo;, POPL 1977.</li>
           <li>Kildall. &ldquo;A Unified Approach to Global Program Optimization&rdquo;, POPL 1973.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Stein, Chandra, Van Horn et al. &ldquo;<a href="https://pldi24.sigplan.org/details/pldi-2024-papers/96/-TOPLAS-Interactive-Abstract-Interpretation-with-Demanded-Summarization">Interactive Abstract Interpretation with Demanded Summarization</a>&rdquo;, TOPLAS/PLDI 2024.</li>
-          <li>&ldquo;<a href="https://codex.top/papers/2024-pldi-compiling-with-abstract-interpretation.html">Compiling with Abstract Interpretation</a>&rdquo;, PLDI 2024 &mdash; treats compilation itself as an abstract-interpretation problem.</li>
+          <li>Stein, Chang, Sridharan. &ldquo;<a href="https://pldi24.sigplan.org/details/pldi-2024-papers/96/-TOPLAS-Interactive-Abstract-Interpretation-with-Demanded-Summarization">Interactive Abstract Interpretation with Demanded Summarization</a>&rdquo;, TOPLAS 2023 / PLDI 2024.</li>
+          <li>Lesbre, Lemerre. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3656392">Compiling with Abstract Interpretation</a>&rdquo;, PLDI 2024 &mdash; treats compilation itself as an abstract-interpretation problem.</li>
         </ul>
       </div>
 
@@ -333,7 +334,7 @@
         <div class="meta">Wed 2 Sep (Wed-6) &middot; Topic 3</div>
         <dl>
           <dt>Follow</dt><dd>NNH &sect;2.1.5; Aho &sect;9.2.5</dd>
-          <dt>Paper</dt><dd>Kennedy &amp; Allen classic works on optimization (see Aho refs).</dd>
+          <dt>Paper</dt><dd>Aho / Kennedy classic surveys (see Aho refs).</dd>
           <dt>Outline</dt><dd>Backward may analysis; DCE; register allocation motivation.</dd>
         </dl>
       </div>
@@ -345,7 +346,7 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Cousot &amp; Cousot. &ldquo;Static Determination of Dynamic Properties of Programs&rdquo;, ISOP 1976.</li>
+          <li>Cousot, Cousot. &ldquo;Static Determination of Dynamic Properties of Programs&rdquo;, ISOP 1976.</li>
           <li>Min&eacute;. &ldquo;The Octagon Abstract Domain&rdquo;, <i>Higher-Order and Symbolic Computation</i> 2006.</li>
           <li>Hind. &ldquo;Pointer Analysis: Haven't We Solved This Problem Yet?&rdquo;, PASTE 2001.</li>
         </ul>
@@ -404,10 +405,10 @@
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Wimmer, Stancu, Kozak, W&uuml;rthinger. &ldquo;Scaling Type-Based Points-to Analysis with Saturation&rdquo;, PLDI 2024.</li>
-          <li>Yao et al. &ldquo;Falcon: A Fused Approach to Path-Sensitive Sparse Data Dependence Analysis&rdquo;, PLDI 2024.</li>
-          <li>&ldquo;<a href="https://dl.acm.org/doi/10.1145/3622859">Rapid: Region-Based Pointer Disambiguation</a>&rdquo;, OOPSLA 2023.</li>
-          <li>Liang et al. &ldquo;<a href="https://pldi25.sigplan.org/details/pldi-2025-papers/58/Pointer-Analysis-for-Database-Backed-Applications">Pointer Analysis for Database-Backed Applications</a>&rdquo;, PLDI 2025.</li>
+          <li>Wimmer, Stancu, Kozak, W&uuml;rthinger. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3656417">Scaling Type-Based Points-to Analysis with Saturation</a>&rdquo;, PLDI 2024.</li>
+          <li>Yao, Zhou, Xiao, Shi, Wu, Zhang. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3656400">Falcon: A Fused Approach to Path-Sensitive Sparse Data Dependence Analysis</a>&rdquo;, PLDI 2024.</li>
+          <li>Chitre, Kedia, Purandare. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3622859">Rapid: Region-Based Pointer Disambiguation</a>&rdquo;, OOPSLA 2023.</li>
+          <li>Liang, Zhang, Li, Tan, Xu, Cao, Ma, Li. &ldquo;<a href="https://pldi25.sigplan.org/details/pldi-2025-papers/58/Pointer-Analysis-for-Database-Backed-Applications">Pointer Analysis for Database-Backed Applications</a>&rdquo;, PLDI 2025.</li>
         </ul>
       </div>
 
@@ -435,7 +436,7 @@
         <h3>L24. Flow/context sensitivity, heap abstraction, CFI</h3>
         <div class="meta">Wed 23 Sep (Wed-8) &middot; Topic 4</div>
         <dl>
-          <dt>Follow</dt><dd>Smaragdakis &amp; Balatsouras, &ldquo;Pointer Analysis&rdquo; survey, F&amp;T PL 2015</dd>
+          <dt>Follow</dt><dd>Smaragdakis, Balatsouras. &ldquo;Pointer Analysis&rdquo; survey, F&amp;T PL 2015</dd>
           <dt>Paper</dt><dd>Abadi et al. 2005 (CFI); modern scaling &mdash; Wimmer et al. PLDI 2024 (see recent list).</dd>
           <dt>Outline</dt><dd>Allocation-site vs shape abstraction; k-limited contexts; CFI as consumer of points-to.</dd>
         </dl>
@@ -448,15 +449,15 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Whaley &amp; Lam. &ldquo;Cloning-Based Context-Sensitive Pointer Alias Analysis Using BDDs&rdquo;, PLDI 2004.</li>
+          <li>Whaley, Lam. &ldquo;Cloning-Based Context-Sensitive Pointer Alias Analysis Using BDDs&rdquo;, PLDI 2004.</li>
           <li>Reps, Horwitz, Sagiv. &ldquo;Precise Interprocedural Dataflow Analysis via Graph Reachability&rdquo; (IFDS), POPL 1995.</li>
           <li>Smaragdakis, Bravenboer, Lhot&aacute;k. &ldquo;Pick Your Contexts Well: Understanding Object-Sensitivity&rdquo;, POPL 2011.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
           <li>Abeysinghe, Rompf. &ldquo;<a href="https://www.cs.purdue.edu/homes/rompf/papers/abeysinghe-popl24.pdf">Flan: An Expressive and Efficient Datalog Compiler for Program Analysis</a>&rdquo;, POPL 2024.</li>
-          <li>Antoniadis et al. &ldquo;<a href="https://arxiv.org/abs/2503.05945">Universal Scalability in Declarative Program Analysis (with Choice-Based Combination Pruning)</a>&rdquo;, arXiv 2503.05945 (2025).</li>
-          <li>Sun et al. &ldquo;<a href="https://arxiv.org/abs/2411.14330">Datalog with First-Class Facts</a>&rdquo;, arXiv 2411.14330 (2024).</li>
+          <li>Antoniadis, Tsatiris, Grech, Smaragdakis. &ldquo;<a href="https://arxiv.org/abs/2503.05945">Universal Scalability in Declarative Program Analysis (with Choice-Based Combination Pruning)</a>&rdquo;, arXiv 2503.05945 (2025).</li>
+          <li>Gilray, Sahebolamri, Sun, Kunapaneni, Kumar, Micinski. &ldquo;<a href="https://arxiv.org/abs/2411.14330">Datalog with First-Class Facts</a>&rdquo;, arXiv 2411.14330 (2024).</li>
         </ul>
       </div>
 
@@ -464,8 +465,8 @@
         <h3>L25. Datalog for program analysis</h3>
         <div class="meta">Mon 28 Sep (Mon-9) &middot; Topic 5</div>
         <dl>
-          <dt>Follow</dt><dd>Bravenboer &amp; Smaragdakis, &ldquo;Doop&rdquo;, OOPSLA 2009; Soufflé <a href="https://souffle-lang.github.io/publications">publications</a></dd>
-          <dt>Paper</dt><dd>Whaley &amp; Lam 2004 (bddbddb); modern &mdash; Flan POPL 2024, Datalog with First-Class Facts 2024 (see recent list).</dd>
+          <dt>Follow</dt><dd>Bravenboer, Smaragdakis, &ldquo;Doop&rdquo;, OOPSLA 2009; Soufflé <a href="https://souffle-lang.github.io/publications">publications</a></dd>
+          <dt>Paper</dt><dd>Whaley &amp; Lam 2004 (bddbddb); modern &mdash; Abeysinghe &amp; Rompf, Flan POPL 2024 (see recent list).</dd>
           <dt>Outline</dt><dd>Datalog primer; encoding pointer analysis as Datalog rules; Soufflé / Doop tooling.</dd>
         </dl>
       </div>
@@ -497,13 +498,13 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>de Moura &amp; Bj&oslash;rner. &ldquo;Z3: An Efficient SMT Solver&rdquo;, TACAS 2008.</li>
+          <li>de Moura, Bj&oslash;rner. &ldquo;Z3: An Efficient SMT Solver&rdquo;, TACAS 2008.</li>
           <li>TAPL ch. 8 (typed lambda calculus).</li>
           <li>Cardelli. &ldquo;Type Systems&rdquo;, ACM Comp. Surv. 1997.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Gamboa et al. &ldquo;<a href="https://pldi25.sigplan.org/details/pldi-2025-papers/89/Practical-Type-Inference-with-Levels">Practical Type Inference with Levels</a>&rdquo;, PLDI 2025.</li>
+          <li>Fan, Xu, Xie. &ldquo;<a href="https://pldi25.sigplan.org/details/pldi-2025-papers/89/Practical-Type-Inference-with-Levels">Practical Type Inference with Levels</a>&rdquo;, PLDI 2025 (Distinguished Paper).</li>
         </ul>
       </div>
 
@@ -511,7 +512,7 @@
         <h3>L28. SAT &amp; SMT solvers</h3>
         <div class="meta">Mon 5 Oct (Mon-10) &middot; Topic 5</div>
         <dl>
-          <dt>Follow</dt><dd>Kroening &amp; Strichman, <i>Decision Procedures</i>, ch. 1&ndash;6</dd>
+          <dt>Follow</dt><dd>Kroening, Strichman, <i>Decision Procedures</i>, ch. 1&ndash;6</dd>
           <dt>Paper</dt><dd>de Moura &amp; Bj&oslash;rner 2008 (Z3).</dd>
           <dt>Outline</dt><dd>CDCL for SAT; theories (LIA, bit-vectors, arrays); DPLL(T); using Z3 from Python.</dd>
         </dl>
@@ -531,8 +532,8 @@
         <h3>L30. Type soundness</h3>
         <div class="meta">Wed 7 Oct (Wed-10) &middot; Topic 6</div>
         <dl>
-          <dt>Follow</dt><dd>TAPL ch. 8; Wright &amp; Felleisen 1994</dd>
-          <dt>Paper</dt><dd>Wright &amp; Felleisen 1994.</dd>
+          <dt>Follow</dt><dd>TAPL ch. 8; Wright, Felleisen 1994</dd>
+          <dt>Paper</dt><dd>Wright, Felleisen. &ldquo;A Syntactic Approach to Type Soundness&rdquo;, <i>Information &amp; Computation</i> 1994.</dd>
           <dt>Outline</dt><dd>Progress &amp; preservation; &ldquo;well-typed programs don't go wrong&rdquo;; small-step semantics.</dd>
         </dl>
       </div>
@@ -544,13 +545,13 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Damas &amp; Milner. &ldquo;Principal Type Schemes for Functional Programs&rdquo;, POPL 1982.</li>
+          <li>Damas, Milner. &ldquo;Principal Type Schemes for Functional Programs&rdquo;, POPL 1982.</li>
           <li>Foster, Terauchi, Aiken. &ldquo;Flow-Sensitive Type Qualifiers&rdquo; (CQual), PLDI 2002.</li>
           <li>King. &ldquo;Symbolic Execution and Program Testing&rdquo;, CACM 1976.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Sanjel, Suh et al. &ldquo;<a href="https://2025.splashcon.org/details/OOPSLA/191/A-Flow-Sensitive-Refinement-Type-System-for-Verifying-eBPF-Programs">A Flow-Sensitive Refinement Type System for Verifying eBPF Programs</a>&rdquo;, OOPSLA 2025.</li>
+          <li>Hamza, Zavalia, Gurfinkel, Navas, Fedyukovich. &ldquo;<a href="https://2025.splashcon.org/details/OOPSLA/191/A-Flow-Sensitive-Refinement-Type-System-for-Verifying-eBPF-Programs">A Flow-Sensitive Refinement Type System for Verifying eBPF Programs</a>&rdquo;, OOPSLA 2025.</li>
         </ul>
       </div>
 
@@ -568,8 +569,8 @@
         <h3>L32. Flow-, path-sensitive type analyses</h3>
         <div class="meta">Tue 13 Oct (Tue-11) &middot; Topic 6</div>
         <dl>
-          <dt>Follow</dt><dd>Foster et al. 2002; TAPL ch. 15&ndash;16</dd>
-          <dt>Paper</dt><dd>Foster, Terauchi, Aiken 2002 (CQual); modern &mdash; eBPF refinement types OOPSLA 2025 (see recent list).</dd>
+          <dt>Follow</dt><dd>Foster, Terauchi, Aiken 2002; TAPL ch. 15&ndash;16</dd>
+          <dt>Paper</dt><dd>Foster, Terauchi, Aiken 2002 (CQual); modern &mdash; Hamza et al. OOPSLA 2025 (see recent list).</dd>
           <dt>Outline</dt><dd>Flow-insensitive vs -sensitive; refinement types glimpse; path sensitivity trade-offs.</dd>
         </dl>
       </div>
@@ -591,11 +592,11 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Baldoni et al. &ldquo;A Survey of Symbolic Execution Techniques&rdquo;, ACM Comp. Surv. 2018.</li>
+          <li>Baldoni, Coppa, D'Elia, Demetrescu, Finocchi. &ldquo;A Survey of Symbolic Execution Techniques&rdquo;, ACM Comp. Surv. 2018.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Peng et al. &ldquo;<a href="https://arxiv.org/abs/2508.06643">Symbolic Execution in Practice: A Survey of Applications in Vulnerability, Malware, Firmware, and Protocol Analysis</a>&rdquo;, arXiv 2508.06643 (2025).</li>
+          <li>Bailey, Nicholas. &ldquo;<a href="https://arxiv.org/abs/2508.06643">Symbolic Execution in Practice: A Survey of Applications in Vulnerability, Malware, Firmware, and Protocol Analysis</a>&rdquo;, arXiv 2508.06643 (2025).</li>
         </ul>
         <p style="margin:8px 0 0;color:var(--text-faint);"><em>Only Wed 21 Oct meets this week &mdash; Mon 19 and Tue 20 (Diwali) are holidays.</em></p>
       </div>
@@ -605,7 +606,7 @@
         <div class="meta">Wed 21 Oct (Wed-12) &middot; Topic 7</div>
         <dl>
           <dt>Follow</dt><dd>Baldoni et al. 2018</dd>
-          <dt>Paper</dt><dd>Baldoni et al. 2018; Symbolic Execution in Practice, arXiv 2508.06643 (see recent list).</dd>
+          <dt>Paper</dt><dd>Baldoni et al. 2018; Bailey &amp; Nicholas 2025 (see recent list).</dd>
           <dt>Outline</dt><dd>Path explosion; heuristics; loops and unbounded structures; state merging.</dd>
         </dl>
       </div>
@@ -618,14 +619,14 @@
         <b>Weekly readings (classical).</b>
         <ul>
           <li>Godefroid, Klarlund, Sen. &ldquo;DART: Directed Automated Random Testing&rdquo;, PLDI 2005.</li>
-          <li>Cadar, Dunbar, Engler. &ldquo;KLEE&hellip;&rdquo;, OSDI 2008.</li>
+          <li>Cadar, Dunbar, Engler. &ldquo;KLEE: Unassisted and Automatic Generation of High-Coverage Tests&hellip;&rdquo;, OSDI 2008.</li>
           <li>Cha, Avgerinos, Rebert, Brumley. &ldquo;Unleashing MAYHEM on Binary Code&rdquo;, IEEE S&amp;P 2012.</li>
           <li>Boyapati, Khurshid, Marinov. &ldquo;Korat: Automated Testing Based on Java Predicates&rdquo;, ISSTA 2002.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Meng et al. &ldquo;<a href="https://mengrj.github.io/pdfs/autobug-oopsla25.pdf">Large Language Model Powered Symbolic Execution</a>&rdquo;, OOPSLA 2025.</li>
-          <li>Li et al. &ldquo;<a href="https://arxiv.org/abs/2409.09271">Python Symbolic Execution with LLM-powered Code Generation</a>&rdquo;, arXiv 2409.09271 (2024).</li>
+          <li>Li, Meng, Duck. &ldquo;<a href="https://dl.acm.org/doi/abs/10.1145/3763163">Large Language Model Powered Symbolic Execution</a>&rdquo; (AutoBug), OOPSLA 2025.</li>
+          <li>Wang, Liu, Chen, Li, Jin, Huang, Ma. &ldquo;<a href="https://arxiv.org/abs/2409.09271">Python Symbolic Execution with LLM-powered Code Generation</a>&rdquo;, arXiv 2409.09271 (2024).</li>
         </ul>
       </div>
 
@@ -633,7 +634,7 @@
         <h3>L35. Dynamic symbolic / concolic execution (DART, KLEE)</h3>
         <div class="meta">Mon 26 Oct (Mon-12) &middot; Topic 7</div>
         <dl>
-          <dt>Follow</dt><dd>Godefroid et al. 2005; Cadar et al. 2008</dd>
+          <dt>Follow</dt><dd>Godefroid, Klarlund, Sen 2005; Cadar, Dunbar, Engler 2008</dd>
           <dt>Paper</dt><dd>DART; KLEE.</dd>
           <dt>Outline</dt><dd>Concolic execution loop; concrete&ndash;symbolic interplay; KLEE architecture.</dd>
         </dl>
@@ -644,7 +645,7 @@
         <div class="meta">Tue 27 Oct (Tue-12) &middot; Topic 7</div>
         <dl>
           <dt>Follow</dt><dd>Cha et al. 2012 (Mayhem)</dd>
-          <dt>Paper</dt><dd>Mayhem; angr (Shoshitaishvili et al. 2016 S&amp;P); modern &mdash; LLM-powered SymExec OOPSLA 2025 (see recent list).</dd>
+          <dt>Paper</dt><dd>Mayhem; Shoshitaishvili et al. &ldquo;SOK: (State of) The Art of War: Offensive Techniques in Binary Analysis&rdquo; (angr), IEEE S&amp;P 2016; modern &mdash; Li, Meng, Duck OOPSLA 2025 (see recent list).</dd>
           <dt>Outline</dt><dd>Exploit generation; symbolic memory; binary-level analysis.</dd>
         </dl>
       </div>
@@ -653,7 +654,7 @@
         <h3>L37. Specification-guided test generation</h3>
         <div class="meta">Wed 28 Oct (Wed-13) &middot; Topic 8</div>
         <dl>
-          <dt>Follow</dt><dd>Boyapati et al. 2002 (Korat); Fraser &amp; Arcuri 2011 (EvoSuite)</dd>
+          <dt>Follow</dt><dd>Boyapati, Khurshid, Marinov 2002 (Korat); Fraser, Arcuri, &ldquo;EvoSuite&rdquo;, FSE 2011</dd>
           <dt>Paper</dt><dd>Korat.</dd>
           <dt>Outline</dt><dd>Bounded exhaustive testing; using preconditions/invariants as generators.</dd>
         </dl>
@@ -666,16 +667,16 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Claessen &amp; Hughes. &ldquo;QuickCheck&rdquo;, ICFP 2000.</li>
-          <li>Pacheco, Lahiri, Ernst, Ball. &ldquo;Randoop&rdquo;, ICSE 2007.</li>
-          <li>Deng et al. &ldquo;Large Language Models Are Zero-Shot Fuzzers&rdquo;, ISSTA 2023.</li>
-          <li>Xia et al. &ldquo;Fuzz4All: Universal Fuzzing with Large Language Models&rdquo;, ICSE 2024.</li>
+          <li>Claessen, Hughes. &ldquo;QuickCheck: A Lightweight Tool for Random Testing of Haskell Programs&rdquo;, ICFP 2000.</li>
+          <li>Pacheco, Lahiri, Ernst, Ball. &ldquo;Feedback-Directed Random Test Generation&rdquo; (Randoop), ICSE 2007.</li>
+          <li>Deng, Xia, Peng, Yang, Zhang. &ldquo;Large Language Models Are Zero-Shot Fuzzers&rdquo;, ISSTA 2023.</li>
+          <li>Xia, Paltenghi, Tian, Pradel, Zhang. &ldquo;Fuzz4All: Universal Fuzzing with Large Language Models&rdquo;, ICSE 2024.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Kang, Le Goues et al. &ldquo;<a href="https://arxiv.org/abs/2501.10200">Test Wars: A Comparative Study of SBST, Symbolic Execution, and LLM-Based Approaches to Unit Test Generation</a>&rdquo;, arXiv 2501.10200 (2025).</li>
-          <li>Ryan et al. &ldquo;<a href="https://arxiv.org/abs/2503.13580">LLM Test Generation via Iterative Hybrid Program Analysis</a>&rdquo;, arXiv 2503.13580 (2025).</li>
-          <li>Wang et al. &ldquo;<a href="https://arxiv.org/abs/2506.03136">Co-Evolving LLM Coder and Unit Tester via Reinforcement Learning</a>&rdquo;, arXiv 2506.03136 (2025).</li>
+          <li>Abdullin, Derakhshanfar, Panichella. &ldquo;<a href="https://arxiv.org/abs/2501.10200">Test Wars: A Comparative Study of SBST, Symbolic Execution, and LLM-Based Approaches to Unit Test Generation</a>&rdquo;, arXiv 2501.10200 (2025).</li>
+          <li>Gu, Nashid, Mesbah. &ldquo;<a href="https://arxiv.org/abs/2503.13580">LLM Test Generation via Iterative Hybrid Program Analysis</a>&rdquo;, ICSE 2026 (arXiv 2503.13580).</li>
+          <li>Wang, Yang, Tian, Shen, Wang. &ldquo;<a href="https://arxiv.org/abs/2506.03136">Co-Evolving LLM Coder and Unit Tester via Reinforcement Learning</a>&rdquo;, arXiv 2506.03136 (2025).</li>
         </ul>
       </div>
 
@@ -694,7 +695,7 @@
         <div class="meta">Tue 3 Nov (Tue-13) &middot; Topic 8</div>
         <dl>
           <dt>Follow</dt><dd>Pacheco et al. 2007; Fraser &amp; Arcuri 2011</dd>
-          <dt>Paper</dt><dd>Randoop; EvoSuite; modern &mdash; Test Wars comparison arXiv 2501.10200 (see recent list).</dd>
+          <dt>Paper</dt><dd>Randoop; EvoSuite; modern &mdash; Abdullin, Derakhshanfar, Panichella 2025 (see recent list).</dd>
           <dt>Outline</dt><dd>Feedback-directed generation; search-based test generation; regression oracles.</dd>
         </dl>
       </div>
@@ -704,7 +705,7 @@
         <div class="meta">Wed 4 Nov (Wed-14) &middot; Topic 9</div>
         <dl>
           <dt>Follow</dt><dd>Deng et al. 2023; Xia et al. 2024</dd>
-          <dt>Paper</dt><dd>Deng, Xia, Peng, Yang, Zhang 2023 (Zero-Shot Fuzzers); Fuzz4All ICSE 2024; LLM-Test-Gen via Hybrid Program Analysis 2025 (see recent list).</dd>
+          <dt>Paper</dt><dd>Deng, Xia, Peng, Yang, Zhang 2023 (Zero-Shot Fuzzers); Fuzz4All ICSE 2024; Gu, Nashid, Mesbah 2025 (see recent list).</dd>
           <dt>Outline</dt><dd>Prompting for input generation; feedback loops with coverage; universal fuzzer design.</dd>
         </dl>
       </div>
@@ -716,16 +717,16 @@
       <div class="week-readings">
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Meng, Ba, Zhang. &ldquo;Large Language Model guided Protocol Fuzzing&rdquo;, NDSS 2024.</li>
-          <li>Ni, Wang, Yin, et al. &ldquo;Enhancing Static Analysis for Practical Bug Detection: An LLM-Integrated Approach&rdquo;, OOPSLA 2024.</li>
+          <li>Meng, Mirchev, B&ouml;hme, Roychoudhury. &ldquo;Large Language Model guided Protocol Fuzzing&rdquo;, NDSS 2024.</li>
+          <li>Li, Hao, Zhai, Qian. &ldquo;Enhancing Static Analysis for Practical Bug Detection: An LLM-Integrated Approach&rdquo; (LLift), OOPSLA 2024.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>Wu et al. &ldquo;<a href="https://arxiv.org/abs/2508.01750">LLM-Assisted Model-Based Fuzzing of Protocol Implementations</a>&rdquo;, arXiv 2508.01750 (Aug 2025) &mdash; 12 previously-unknown vulnerabilities.</li>
-          <li>Xiong et al. &ldquo;<a href="https://arxiv.org/abs/2409.00922">ProphetFuzz: Fully Automated Prediction and Fuzzing of High-Risk Option Combinations with Only Documentation via LLMs</a>&rdquo;, arXiv 2409.00922 (2024).</li>
-          <li>Nong, Fang et al. &ldquo;<a href="https://arxiv.org/abs/2402.17230">Chain-of-Thought Prompting of LLMs for Discovering and Fixing Software Vulnerabilities</a>&rdquo;, arXiv 2402.17230 (2024).</li>
-          <li>Machiry et al. &ldquo;<a href="https://arxiv.org/abs/2606.15122">The Hitchhiker's Guide to Program Analysis, Part III: Mostly Harmless LLMs</a>&rdquo;, arXiv 2606.15122 (2026).</li>
-          <li>Zhang et al. &ldquo;<a href="https://arxiv.org/abs/2510.23101">Beyond Imprecise Distance Metrics: Trace-Guided Directed Greybox Fuzzing via LLM-Predicted Call Stacks</a>&rdquo;, arXiv 2510.23101 (2026).</li>
+          <li>Huang, Wang, Zhou. &ldquo;<a href="https://arxiv.org/abs/2508.01750">LLM-Assisted Model-Based Fuzzing of Protocol Implementations</a>&rdquo;, arXiv 2508.01750 (Aug 2025) &mdash; 12 previously-unknown vulnerabilities.</li>
+          <li>Wang, Zhou, Chen, Li, Miao. &ldquo;<a href="https://arxiv.org/abs/2409.00922">ProphetFuzz: Fully Automated Prediction and Fuzzing of High-Risk Option Combinations with Only Documentation via LLMs</a>&rdquo;, arXiv 2409.00922 (2024) &mdash; 21 CVEs.</li>
+          <li>Nong, Aldeen, Cheng, Hu, Chen, Cai. &ldquo;<a href="https://arxiv.org/abs/2402.17230">Chain-of-Thought Prompting of LLMs for Discovering and Fixing Software Vulnerabilities</a>&rdquo;, arXiv 2402.17230 (2024).</li>
+          <li>Li, Zhou, Sridharan, Zhang, Qian. &ldquo;<a href="https://arxiv.org/abs/2606.15122">The Hitchhiker's Guide to Program Analysis, Part III: Mostly Harmless LLMs</a>&rdquo;, arXiv 2606.15122 (2026).</li>
+          <li>Zhang, Zhang. &ldquo;<a href="https://arxiv.org/abs/2510.23101">Beyond Imprecise Distance Metrics: Trace-Guided Directed Greybox Fuzzing via LLM-Predicted Call Stacks</a>&rdquo;, arXiv 2510.23101 (2025).</li>
         </ul>
         <p style="margin:8px 0 0;color:var(--deadline);"><b>Quiz 2</b> in class on Tue 10 Nov during L41 &mdash; covers Topics 4&ndash;8.</p>
       </div>
@@ -734,8 +735,8 @@
         <h3>L41. LLM-based vulnerability discovery</h3>
         <div class="meta">Tue 10 Nov (Tue-14) &middot; Topic 9 &middot; Quiz 2 (in class)</div>
         <dl>
-          <dt>Follow</dt><dd>Meng et al. 2024 (NDSS); Naptime / Big Sleep technical reports (Google Project Zero)</dd>
-          <dt>Paper</dt><dd>Meng, Ba, Zhang NDSS 2024; LLM-Assisted Protocol Fuzzing arXiv 2508.01750 (see recent list).</dd>
+          <dt>Follow</dt><dd>Meng, Mirchev, B&ouml;hme, Roychoudhury (NDSS 2024); Google Project Zero &ldquo;Naptime&rdquo; / &ldquo;Big Sleep&rdquo; technical reports</dd>
+          <dt>Paper</dt><dd>Meng et al. NDSS 2024; Huang, Wang, Zhou arXiv 2508.01750 (see recent list).</dd>
           <dt>Outline</dt><dd>LLMs as bug oracles; agentic vuln discovery; grounding LLMs with static tooling; case studies.</dd>
         </dl>
       </div>
@@ -744,16 +745,38 @@
         <h3>L42. LLM + static/dynamic integration; course wrap-up</h3>
         <div class="meta">Wed 11 Nov &middot; Mon-14 slot &middot; Topic 9 &middot; Last teaching day</div>
         <dl>
-          <dt>Follow</dt><dd>Ni et al. OOPSLA 2024; Fan et al. 2023 &ldquo;LLMs for Software Engineering: Survey and Open Problems&rdquo;</dd>
-          <dt>Paper</dt><dd>Ni et al. OOPSLA 2024; Hitchhiker's Guide III arXiv 2606.15122 (see recent list).</dd>
+          <dt>Follow</dt><dd>Li, Hao, Zhai, Qian OOPSLA 2024 (LLift); Fan et al. &ldquo;LLMs for Software Engineering: Survey and Open Problems&rdquo;, ICSE FoSE 2023</dd>
+          <dt>Paper</dt><dd>Li, Hao, Zhai, Qian OOPSLA 2024; Li, Zhou, Sridharan, Zhang, Qian arXiv 2606.15122 (see recent list).</dd>
           <dt>Outline</dt><dd>Coupling LLMs with SMT/fuzzers/analyzers; open problems; end-of-course summary; project pitches.</dd>
         </dl>
       </div>
     </section>
 
+    <!-- ================== Industry talks (post end-sem) ================== -->
+    <section class="week-block" id="industry">
+      <header><span>Industry Talks &middot; Post end-semester (optional)</span><span class="range">Late Nov &ndash; early Dec 2026</span></header>
+      <div class="week-readings">
+        <b>Three optional guest lectures from industry practitioners.</b>
+        Scheduled after end-sem examinations (Nov 21) and before the winter
+        vacation, in coordination with speakers' availability. Topics span the
+        arc of the course from real fuzzing infrastructure to large-scale
+        static analysis in production. Attendance is encouraged but not graded.
+        <ul>
+          <li>Talk 1 &mdash; <em>speaker &amp; topic TBA</em>. Suggested slot: Mon 23 Nov 2026.</li>
+          <li>Talk 2 &mdash; <em>speaker &amp; topic TBA</em>. Suggested slot: Wed 25 Nov 2026.</li>
+          <li>Talk 3 &mdash; <em>speaker &amp; topic TBA</em>. Suggested slot: Mon 30 Nov 2026.</li>
+        </ul>
+        <p style="margin:8px 0 0;color:var(--text-faint);">
+          Target speaker pool: security/analysis teams at Qualcomm, Google, Microsoft,
+          NVIDIA, CEA, TrailOfBits, and Indian OSS-heavy shops. Talks are
+          typically 45 min + 15 min Q&amp;A.
+        </p>
+      </div>
+    </section>
+
     <footer>
       CS 5187 &middot; IIT Guwahati &middot; Monsoon Semester 2026 &middot;
-      last updated <time datetime="2026-07-09">2026-07-09</time>
+      last updated <time datetime="2026-07-10">2026-07-10</time>
     </footer>
 
   </main>
