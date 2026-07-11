@@ -6,7 +6,6 @@
   <title>Term Project Architecture &mdash; CS 5187</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Small local styling to lay out component cards nicely. */
     .diagram {
       background: var(--bg-alt);
       border: 1px solid var(--border);
@@ -19,57 +18,66 @@
       overflow-x: auto;
       color: var(--text);
     }
-    .component-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
+    .component-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     .component {
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 14px 16px;
       background: #fff;
     }
-    .component header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 6px;
-      gap: 10px;
+    .component > header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 6px; gap: 10px;
     }
-    .component header h3 {
-      margin: 0;
-      color: var(--blue-700);
-      font-size: 16px;
-    }
+    .component > header h3 { margin: 0; color: var(--blue-700); font-size: 16px; }
     .component .cid {
-      background: var(--blue-700);
-      color: #fff;
-      font-family: var(--mono);
-      font-size: 11.5px;
-      padding: 2px 6px;
-      border-radius: 3px;
-      flex-shrink: 0;
+      background: var(--blue-700); color: #fff; font-family: var(--mono);
+      font-size: 11.5px; padding: 2px 6px; border-radius: 3px; flex-shrink: 0;
     }
     .component .role {
-      font-style: italic;
-      color: var(--text-muted);
-      font-size: 13.5px;
-      margin: 2px 0 8px;
+      font-style: italic; color: var(--text-muted);
+      font-size: 13.5px; margin: 2px 0 10px;
     }
+    .component .io {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin: 8px 0 10px;
+    }
+    .io-box {
+      background: var(--bg-alt);
+      border-left: 3px solid var(--blue-500);
+      padding: 8px 10px;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+    .io-box.out { border-left-color: #059669; }
+    .io-box h4 {
+      margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.03em; color: var(--text-muted); font-weight: 600;
+    }
+    .io-box code { font-size: 12px; }
+    .io-box ul { margin: 4px 0 0 16px; padding: 0; }
+    .io-box li { margin: 2px 0; }
     .component dl {
-      display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 3px 12px;
-      margin: 0;
-      font-size: 13.5px;
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 3px 12px; margin: 0; font-size: 13.5px;
     }
-    .component dt {
-      color: var(--text-muted);
-      font-weight: 600;
-    }
+    .component dt { color: var(--text-muted); font-weight: 600; }
     .component dd { margin: 0; }
-    .badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+    .cmd {
+      display: block; background: var(--text); color: #f5f5f5;
+      font-family: var(--mono); font-size: 12px; padding: 4px 8px;
+      border-radius: 3px; margin: 2px 0; overflow-x: auto; white-space: pre;
+    }
+    table.contracts { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    table.contracts th, table.contracts td {
+      border: 1px solid var(--border); padding: 6px 10px; vertical-align: top;
+      text-align: left;
+    }
+    table.contracts th { background: var(--blue-700); color: #fff; font-size: 12.5px; }
+    table.contracts td code { font-size: 12px; }
+    @media (max-width: 900px) {
+      .component .io { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -90,9 +98,11 @@
       <ul>
         <li><a href="#overview">Overview</a></li>
         <li><a href="#pipeline">Reference pipeline</a></li>
+        <li><a href="#contracts">Shared contracts (C1&ndash;C10)</a></li>
+        <li><a href="#repo">Shared repo layout</a></li>
+        <li><a href="#independence">Independence guarantees</a></li>
         <li><a href="#components">Components (P1&ndash;P10)</a></li>
-        <li><a href="#bonus">Bonus tracks</a></li>
-        <li><a href="#integration">Integration plan</a></li>
+        <li><a href="#bonus">Bonus tracks (P11&ndash;P12)</a></li>
         <li><a href="#milestones">Milestones</a></li>
         <li><a href="#references">References</a></li>
       </ul>
@@ -101,7 +111,7 @@
       <ul>
         <li><a href="#p1">P1 &middot; Build ingestion</a></li>
         <li><a href="#p2">P2 &middot; ClangIR frontend</a></li>
-        <li><a href="#p3">P3 &middot; Summary runtime</a></li>
+        <li><a href="#p3">P3 &middot; SSAF runtime</a></li>
         <li><a href="#p4a">P4a &middot; Memory-safety</a></li>
         <li><a href="#p4b">P4b &middot; Integer safety</a></li>
         <li><a href="#p4c">P4c &middot; Concurrency</a></li>
@@ -121,7 +131,7 @@
     <header class="course">
       <h1>Term Project Architecture</h1>
       <div class="subtitle">
-        Building a C/C++ AI security-review &amp; triage tool from student components
+        A C/C++ AI security-review &amp; triage tool built from 10 independently-buildable components
       </div>
     </header>
 
@@ -129,124 +139,212 @@
     <section id="overview">
       <h2>Overview</h2>
       <p>
-        The class-wide term project is to build a <strong>C/C++-focused,
-        execution-verified security-review and triage tool</strong>, spiritually
-        similar to <a href="https://github.com/arm/metis">Arm's Metis</a>, but
-        specialized for C/C++ and grounded in real analysis instead of LLM
-        opinions alone. The analysis substrate is
-        <a href="https://llvm.github.io/clangir/">ClangIR</a>, the cross-TU
-        organization follows the
+        The class-wide term project builds a
+        <strong>C/C++-focused, execution-verified security-review and triage
+        tool</strong>, spiritually similar to
+        <a href="https://github.com/arm/metis">Arm Metis</a> but specialized
+        for C/C++ and grounded in real analysis + real execution. The
+        substrate is <a href="https://llvm.github.io/clangir/">ClangIR</a>,
+        the cross-TU story follows the
         <a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">Scalable
-        Static Analysis Framework (SSAF)</a> RFC on LLVM Discourse, and every
-        finding surfaced to a human is <em>verified by executing a
-        program</em> &mdash; not just by an LLM's confidence score.
+        Static Analysis Framework (SSAF)</a> RFC, an LLM triages, and every
+        finding surfaced to a human is verified by executing a sanitized PoC.
       </p>
       <p>
-        Ten student groups (P1&ndash;P10) each own one component. Two bonus
-        tracks (P11&ndash;P12) exist for teams that finish early or want a
-        cross-cutting concern. The components share stable JSON /
-        <a href="https://sarifweb.azurewebsites.net/">SARIF</a> interfaces so
-        they can be developed independently and stitched together at the end
-        of the semester.
+        Ten groups (P1&ndash;P10) each own one component. Two bonus tracks
+        (P11&ndash;P12) exist for teams that finish early. <b>Every component
+        is a standalone project</b>: its own directory, its own build system,
+        its own tests, its own CI. Groups depend on <em>schemas and
+        fixtures</em>, not on each other's builds &mdash; you can ship, test,
+        and demo your component against golden fixtures without a single other
+        group being ready.
       </p>
-
-      <h3 style="font-size:16px;color:var(--blue-700);margin-top:14px;">Why this shape</h3>
-      <ul>
-        <li><b>ClangIR</b> preserves C/C++-level types and operations that LLVM IR throws away &mdash; better precision for security analyses without doing your own frontend.</li>
-        <li><b>SSAF</b> gives us a principled cross-TU organization: per-TU summaries, USR-keyed entities, and an offline linker. Avoids ASTImporter and scales to large open-source targets.</li>
-        <li><b>LLM triage</b> filters analyzer noise, but LLM alone is not evidence &mdash; hence the execution verifier.</li>
-        <li><b>Execution verifier</b> runs sanitized PoCs so &ldquo;this is a bug&rdquo; means &ldquo;we made it crash on your box, here's the reproducer.&rdquo;</li>
-      </ul>
     </section>
 
     <!-- Reference pipeline -->
     <section id="pipeline">
       <h2>Reference pipeline</h2>
       <p style="font-size:13.5px;color:var(--text-muted);">
-        Data flows top-to-bottom. Component IDs on the right identify the group
-        that owns each stage.
+        Data flows top-to-bottom. Contract IDs (C1&hellip;C10) label the
+        artifact each stage produces and the next stage consumes.
       </p>
 <div class="diagram">
-    Source repo (widely-used C/C++ OSS: Linux, Chromium, FFmpeg, OpenSSL, ...)
+    Source repo (Linux, Chromium, FFmpeg, OpenSSL, SQLite, ...)
                         |
                         v
-   +------------------------------------------------+
-   |  P1. Build ingestion & CIR emission            |    P1
-   |      compile_commands.json + per-TU CIR bc     |
-   +------------------------------------------------+
-                        |
+   +------------------------------+     P1 -&gt; C1 compile_commands.json
+   |  P1. Build ingestion & CIR   |     P1 -&gt; C2 cir-manifest.json + *.cir.bc
+   +------------------------------+
+                        |    C1 + C2
                         v
-   +------------------------------------------------+
-   |  P2. ClangIR analysis frontend                 |    P2
-   |      USR-keyed entities, pass manager          |
-   +------------------------------------------------+
-                        |
+   +------------------------------+     P2 -&gt; C3 program-model.json
+   |  P2. ClangIR analysis        |
+   |      frontend                |
+   +------------------------------+
+                        |    C1 + C2 + C3
                         v
-   +------------------------------------------------+
-   |  P3. Cross-TU summary runtime (SSAF)           |    P3
-   |      per-TU summaries -> global link           |
-   +------------------------------------------------+
-                        |
+   +------------------------------+     P3 -&gt; C4 ssaf-summary.json
+   |  P3. Cross-TU SSAF runtime   |
+   +------------------------------+
+                        |    C3 + C4
         +---------------+---------------+---------------+
         v               v               v               v
    +----------+   +-----------+   +------------+   +-----------+
-   |P4a       |   |P4b        |   |P4c         |   |P4d        |
-   |Memory    |   |Integer    |   |Concurrency |   |Taint /    |
-   |safety    |   |safety     |   |            |   |injection  |
+   |P4a mem   |   |P4b int    |   |P4c concurr.|   |P4d taint  |
    +----------+   +-----------+   +------------+   +-----------+
-        \___________________|______________|__________/
-                            v
-   +------------------------------------------------+
-   |  P5. Normalization + SARIF emitter             |    P5
-   +------------------------------------------------+
-                        |
+        \_______________|_______________|_______________/
+                                |   C5 finding.json (many)
+                                v
+   +------------------------------+     P5 -&gt; C6 SARIF v2.1.0
+   |  P5. Normalize + SARIF       |
+   +------------------------------+
+                        |    C6
                         v
-   +------------------------------------------------+
-   |  P6. LLM triage: real / likely-FP / unclear    |    P6
-   +------------------------------------------------+
-                        |
+   +------------------------------+     P6 -&gt; C7 triaged-finding.json
+   |  P6. LLM triage              |
+   +------------------------------+
+                        |    C7
                         v
-   +------------------------------------------------+
-   |  P7. PoC / harness generator                   |    P7
-   +------------------------------------------------+
-                        |
+   +------------------------------+     P7 -&gt; C8 poc-bundle/
+   |  P7. PoC / harness generator |
+   +------------------------------+
+                        |    C8
                         v
-   +------------------------------------------------+
-   |  P8. Execution verifier                        |    P8
-   |      ASan/UBSan/MSan + LibFuzzer + KLEE        |
-   +------------------------------------------------+
-                        |
+   +------------------------------+     P8 -&gt; C9 verdict.json
+   |  P8. Execution verifier      |
+   |      ASan/UBSan + LibFuzzer  |
+   +------------------------------+
+                        |    C9
                         v
-   +------------------------------------------------+
-   |  P9. Dedup / clustering                        |    P9
-   +------------------------------------------------+
-                        |
+   +------------------------------+     P9 -&gt; C10 cluster.json
+   |  P9. Dedup / clustering      |
+   +------------------------------+
+                        |    C6 + C7 + C9 + C10
                         v
-   +------------------------------------------------+
-   |  P10. Review dashboard                         |    P10
-   +------------------------------------------------+
+   +------------------------------+     P10 -&gt; web UI + upstream ticket
+   |  P10. Review dashboard       |
+   +------------------------------+
                         |
                         v
               Upstream reports (PRs / advisories / CVEs)
 </div>
-      <p style="font-size:13.5px;color:var(--text-muted);margin-top:8px;">
-        The pipeline is designed so that each stage can be developed against
-        a static fixture from the stage above. You do not need P1&hellip;P4 to
-        be finished before P8 works &mdash; every group publishes example
-        inputs/outputs early.
+    </section>
+
+    <!-- Contracts -->
+    <section id="contracts">
+      <h2>Shared contracts (C1&ndash;C10)</h2>
+      <p style="font-size:13.5px;color:var(--text-muted);">
+        Every contract is a JSON Schema stored at
+        <code>contracts/&lt;name&gt;.schema.json</code>. Every contract
+        ships at least one canonical fixture at
+        <code>contracts/fixtures/&lt;name&gt;-*.json</code>. The schemas are
+        frozen at <b>Progress Meeting 1</b>; downstream components develop
+        against fixtures, not upstream builds.
       </p>
+      <table class="contracts">
+        <thead>
+          <tr>
+            <th style="width:60px;">ID</th>
+            <th>Contract</th>
+            <th style="width:70px;">Producer</th>
+            <th style="width:110px;">Consumers</th>
+            <th>Format &amp; canonical path</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><b>C1</b></td><td>Compilation database</td><td>P1</td><td>P2, P3, P4*</td><td><code>compile_commands.json</code> (Clang standard)</td></tr>
+          <tr><td><b>C2</b></td><td>CIR module manifest + bitcode</td><td>P1</td><td>P2, P3</td><td><code>cir-manifest.schema.json</code>; bitcode at <code>artifacts/cir/*.cir.bc</code></td></tr>
+          <tr><td><b>C3</b></td><td>Program model (functions, BBs, USRs, callgraph)</td><td>P2</td><td>P3, P4*, P7</td><td><code>program-model.schema.json</code></td></tr>
+          <tr><td><b>C4</b></td><td>SSAF summary (per-TU + linked global)</td><td>P3</td><td>P4*</td><td><code>ssaf-summary.schema.json</code></td></tr>
+          <tr><td><b>C5</b></td><td>Raw finding (single detector, single issue)</td><td>P4*</td><td>P5</td><td><code>finding.schema.json</code></td></tr>
+          <tr><td><b>C6</b></td><td>SARIF report</td><td>P5</td><td>P6, P10, P11</td><td>SARIF v2.1.0 (<code>*.sarif</code>)</td></tr>
+          <tr><td><b>C7</b></td><td>Triaged finding (verdict from LLM, rationale, PoC hints)</td><td>P6</td><td>P7, P10</td><td><code>triaged-finding.schema.json</code></td></tr>
+          <tr><td><b>C8</b></td><td>PoC bundle (harness source + build + seed corpus)</td><td>P7</td><td>P8</td><td>Directory: <code>poc/&lt;id&gt;/{harness.c, build.sh, seed/, metadata.json}</code></td></tr>
+          <tr><td><b>C9</b></td><td>Execution verdict (confirmed / rejected / inconclusive + sanitizer log)</td><td>P8</td><td>P9, P10, P11</td><td><code>verdict.schema.json</code></td></tr>
+          <tr><td><b>C10</b></td><td>Finding cluster (root-cause grouping)</td><td>P9</td><td>P10</td><td><code>cluster.schema.json</code></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">
+        A validator lives at <code>tools/validate.py</code>. Every component's
+        CI runs <code>validate.py</code> on every output it produces against
+        the relevant schema &mdash; a component that emits invalid JSON fails
+        its own build, before integration.
+      </p>
+    </section>
+
+    <!-- Shared repo layout -->
+    <section id="repo">
+      <h2>Shared repo layout</h2>
+      <p>Everything lives in one GitHub organisation with a shared monorepo (or a small set of repos linked as submodules):</p>
+<div class="diagram">
+cs5187-ssr/                              # class-wide monorepo
+├── contracts/                           # C1..C10 schemas + fixtures (frozen at PM1)
+│   ├── cir-manifest.schema.json
+│   ├── program-model.schema.json
+│   ├── ssaf-summary.schema.json
+│   ├── finding.schema.json
+│   ├── triaged-finding.schema.json
+│   ├── verdict.schema.json
+│   ├── cluster.schema.json
+│   └── fixtures/
+│       ├── compile_commands-hello.json
+│       ├── cir-manifest-hello.json
+│       ├── program-model-hello.json
+│       ├── ssaf-summary-hello.json
+│       ├── finding-uaf-example.json
+│       ├── report-hello.sarif
+│       ├── triaged-uaf-example.json
+│       ├── verdict-confirmed.json
+│       └── cluster-example.json
+├── tools/                               # shared helpers, no logic
+│   ├── validate.py                      # JSON-Schema + SARIF validator
+│   └── run-golden.sh                    # golden-diff runner
+├── components/
+│   ├── p1-ingest/                       # each component: own build, own tests
+│   ├── p2-cir-frontend/
+│   ├── p3-ssaf-runtime/
+│   ├── p4a-memsafety/
+│   ├── p4b-intsafety/
+│   ├── p4c-concurrency/
+│   ├── p4d-taint/
+│   ├── p5-sarif/
+│   ├── p6-triage/
+│   ├── p7-pocgen/
+│   ├── p8-verifier/
+│   ├── p9-dedup/
+│   ├── p10-dashboard/
+│   ├── p11-bench/                       # bonus
+│   └── p12-ops/                         # bonus
+└── integration/                         # P12: end-to-end orchestrator
+    └── run-e2e.sh
+</div>
+    </section>
+
+    <!-- Independence guarantees -->
+    <section id="independence">
+      <h2>Independence guarantees</h2>
+      <p>Every component ships in isolation. Concretely:</p>
+      <ol>
+        <li>Own directory under <code>components/p&lt;N&gt;/</code>. Own build system (CMake / Cargo / Poetry / npm &mdash; whatever fits).</li>
+        <li>A <b>local <code>Makefile</code></b> exposing four standard targets:
+          <ul>
+            <li><code>make build</code> &mdash; builds the component.</li>
+            <li><code>make test</code> &mdash; runs unit tests against fixtures in <code>contracts/fixtures/</code>.</li>
+            <li><code>make demo</code> &mdash; runs a scripted end-to-end on a canned input, produces a canonical output.</li>
+            <li><code>make validate</code> &mdash; runs <code>tools/validate.py</code> on the demo output.</li>
+          </ul>
+        </li>
+        <li><b>No build-time dependency on peer components.</b> At test time, inputs come from <code>contracts/fixtures/</code>. At demo time, inputs come from either fixtures or the component's own generated data.</li>
+        <li>A component that consumes an upstream artifact <b>must not read from a peer component's <code>build/</code>, <code>target/</code>, or in-memory objects</b>. Read the artifact from a file, validated against the schema.</li>
+        <li>A component that produces an upstream artifact must run <code>make validate</code> before declaring &ldquo;done&rdquo;. Invalid output = failing CI on the component's own repo.</li>
+        <li><b>Integration</b> is P12's job: <code>integration/run-e2e.sh</code> shells P1&rarr;P10 in sequence with real data. Individual components never call each other in-process.</li>
+        <li>Every component publishes a small <b>&ldquo;usage&rdquo; README</b> at <code>components/p&lt;N&gt;/README.md</code>: what to install, what fixtures it expects, what it emits, one example command line.</li>
+      </ol>
     </section>
 
     <!-- Components -->
     <section id="components">
       <h2>Components (10 groups)</h2>
-      <p style="font-size:13.5px;color:var(--text-muted);">
-        Team size hints assume up to 5 students, per the
-        <a href="index.html#project">project rules</a>. Every component's
-        upstream-bug expectation is spelled out under &ldquo;Definition of
-        upstream impact&rdquo; because not every component finds bugs directly
-        &mdash; some enable other components to.
-      </p>
 
       <div class="component-grid">
 
@@ -257,14 +355,35 @@
             <span class="cid">P1</span>
           </header>
           <div class="role">Get real OSS builds to hand us a compilation database and per-TU ClangIR bitcode.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>A cloned OSS source tree under <code>sources/&lt;project&gt;/</code></li>
+                <li><code>config/build-&lt;project&gt;.yaml</code> (target triple, flags, entry make/cmake targets)</li>
+              </ul>
+              For tests: <code>contracts/fixtures/tree-hello.tar.gz</code> (toy 3-file C project).
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C1 &mdash; <code>artifacts/build/compile_commands.json</code></li>
+                <li>C2 &mdash; <code>artifacts/build/cir-manifest.json</code> + <code>artifacts/build/cir/*.cir.bc</code></li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>3&ndash;4</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p1-ingest &amp;&amp; make build test demo validate</span>
+              Demo scans the toy tree and produces a valid C1 + C2 in <code>build/demo-out/</code>.
+            </dd>
+            <dt>Contract test</dt><dd>
+              <span class="cmd">tools/validate.py --schema contracts/cir-manifest.schema.json build/demo-out/cir-manifest.json</span>
+            </dd>
             <dt>Prereq skills</dt><dd>Build systems (make, cmake, ninja, kbuild); intercept-build; Docker</dd>
-            <dt>Depends on</dt><dd>&mdash;</dd>
-            <dt>Provides</dt><dd><code>compile_commands.json</code> + <code>*.cir.bc</code> per TU; a build recipe for each target project</dd>
-            <dt>Deliverable</dt><dd>Scripts &amp; Dockerfiles that build 3 target OSS projects (start with SQLite, Nginx, FFmpeg) and dump the CIR</dd>
-            <dt>Stretch</dt><dd>Auto-detect build system; incremental build support so re-analysis is fast</dd>
-            <dt>Upstream impact</dt><dd>Not directly; enables every downstream stage</dd>
+            <dt>Stretch</dt><dd>Auto-detect build system; incremental rebuild</dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; enables every downstream stage</dd>
           </dl>
         </div>
 
@@ -274,15 +393,35 @@
             <h3>ClangIR analysis frontend</h3>
             <span class="cid">P2</span>
           </header>
-          <div class="role">A stable in-process API that turns CIR modules into a walkable, USR-keyed program under a pass manager.</div>
+          <div class="role">Turn CIR modules into a walkable, USR-keyed program model that downstream analyses read from a single JSON file.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C1 (compilation database)</li>
+                <li>C2 (CIR manifest + bitcode)</li>
+              </ul>
+              For tests: <code>contracts/fixtures/compile_commands-hello.json</code> + <code>fixtures/cir/*</code>.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C3 &mdash; <code>artifacts/model/program-model.json</code></li>
+                <li>Optional in-process library (linkable) for the same info</li>
+              </ul>
+              The JSON is the contract; the library is a convenience.
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Prereq skills</dt><dd>C++, MLIR/ClangIR internals, LLVM pass manager, USRs</dd>
-            <dt>Depends on</dt><dd>P1</dd>
-            <dt>Provides</dt><dd>An <code>Analyzer</code> library: load CIR, iterate functions/BBs/values, resolve entities by USR, register bug detectors as passes</dd>
-            <dt>Deliverable</dt><dd>Library + doc + example detector (a trivial &ldquo;null-check-then-deref&rdquo; pass), tested on the P1 outputs</dd>
-            <dt>Stretch</dt><dd>Incremental invalidation; visitor caches</dd>
-            <dt>Upstream impact</dt><dd>Not directly; enables P4* and P3</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p2-cir-frontend &amp;&amp; make build test demo validate</span>
+              Reads fixture C1+C2, emits <code>build/demo-out/program-model.json</code>.
+            </dd>
+            <dt>Contract test</dt><dd><code>validate.py --schema contracts/program-model.schema.json build/demo-out/program-model.json</code></dd>
+            <dt>Prereq skills</dt><dd>C++, ClangIR/MLIR, USRs, pass manager</dd>
+            <dt>Stretch</dt><dd>Incremental invalidation; per-function caches</dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; enables P4* and P3</dd>
           </dl>
         </div>
 
@@ -292,15 +431,35 @@
             <h3>Cross-TU summary runtime (SSAF)</h3>
             <span class="cid">P3</span>
           </header>
-          <div class="role">Per-TU summaries + a global linker so analyses can reason across translation units without loading all ASTs.</div>
+          <div class="role">Per-TU summaries + a global linker so P4* can reason across TUs without loading the whole AST.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C2 (CIR manifest + bitcode)</li>
+                <li>C3 (program model)</li>
+                <li>Analysis-specific requests: <code>ssaf-request.json</code> (which summaries to compute)</li>
+              </ul>
+              For tests: fixtures under <code>contracts/fixtures/ssaf/</code>.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C4 &mdash; per-TU summaries in <code>artifacts/summaries/&lt;tu&gt;.summary.json</code></li>
+                <li>C4 &mdash; linked global summary <code>artifacts/summaries/global.summary.json</code></li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Prereq skills</dt><dd>C++, serialization (FlatBuffers/Protobuf), graph algorithms, Clang USRs</dd>
-            <dt>Depends on</dt><dd>P1 (build graph), P2 (frontend)</dd>
-            <dt>Provides</dt><dd>Summary schema; <code>summarize</code> tool (per TU) + <code>link</code> tool (global); query API for downstream passes</dd>
-            <dt>Deliverable</dt><dd>Two initial summary kinds: <em>function effects</em> (may-write / may-read globals; escapes) and <em>call graph</em> (with virtual/indirect edges)</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p3-ssaf-runtime &amp;&amp; make build test demo validate</span>
+              Demo emits &ldquo;function effects&rdquo; and &ldquo;call graph&rdquo; summaries for the fixture program.
+            </dd>
+            <dt>Contract test</dt><dd><code>validate.py --schema contracts/ssaf-summary.schema.json build/demo-out/global.summary.json</code></dd>
+            <dt>Prereq skills</dt><dd>C++, USRs, graph algorithms, serialization</dd>
             <dt>Stretch</dt><dd>ThinLTO-style parallel summarize; caching</dd>
-            <dt>Upstream impact</dt><dd>Not directly; enables cross-TU precision in every P4*</dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; unlocks cross-TU precision in every P4*</dd>
           </dl>
         </div>
 
@@ -310,15 +469,35 @@
             <h3>Memory-safety detector</h3>
             <span class="cid">P4a</span>
           </header>
-          <div class="role">Find use-after-free, double-free, and heap/stack out-of-bounds in real C/C++ code.</div>
+          <div class="role">Find use-after-free, double-free, and heap/stack out-of-bounds in real C/C++.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C3 (program model)</li>
+                <li>C4 (SSAF summary)</li>
+                <li>Detector config: <code>components/p4a-memsafety/config/rules.yaml</code></li>
+              </ul>
+              For tests: fixture C3 + C4 for the <code>hello</code> and a curated Juliet subset.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C5 &mdash; one <code>finding.json</code> per issue at <code>artifacts/findings/p4a/&lt;id&gt;.json</code></li>
+              </ul>
+              Every finding carries a stable ID, CWE, source location, and evidence trail.
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>3&ndash;4</dd>
-            <dt>Prereq skills</dt><dd>Dataflow analysis, pointer/alias analysis, LLVM/ClangIR APIs</dd>
-            <dt>Depends on</dt><dd>P2, P3</dd>
-            <dt>Provides</dt><dd>A CIR pass emitting findings against a shared JSON schema (P5's)</dd>
-            <dt>Deliverable</dt><dd>Precision/recall table on the <a href="https://samate.nist.gov/SARD/">Juliet C/C++</a> memory-safety subset + a handful of findings on a real OSS target</dd>
-            <dt>Stretch</dt><dd>Context-sensitive taint of heap objects; shape analysis lite</dd>
-            <dt>Upstream impact</dt><dd><b>Yes</b> &mdash; findings from P8-confirmed runs on real OSS should be filed upstream</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p4a-memsafety &amp;&amp; make build test demo validate</span>
+              Reads the fixture C3+C4, emits N findings, validates each against C5.
+            </dd>
+            <dt>Contract test</dt><dd><code>find build/demo-out -name '*.json' -exec validate.py --schema contracts/finding.schema.json {} \;</code></dd>
+            <dt>Prereq skills</dt><dd>Dataflow, pointer analysis, ClangIR API</dd>
+            <dt>Stretch</dt><dd>Context-sensitive taint of heap objects</dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> &mdash; jointly with P8, file confirmed bugs upstream</dd>
           </dl>
         </div>
 
@@ -328,15 +507,30 @@
             <h3>Integer-safety detector</h3>
             <span class="cid">P4b</span>
           </header>
-          <div class="role">Find integer overflow, sign-conversion, division-by-zero, and array-index arithmetic bugs.</div>
+          <div class="role">Find integer overflow, sign-conversion, division-by-zero, and index-arithmetic bugs.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C3, C4</li>
+                <li>Config: <code>rules.yaml</code> with sink APIs (e.g. <code>memcpy(len)</code>)</li>
+              </ul>
+              For tests: Juliet integer CWEs subset.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C5 &mdash; findings with interval / bit-vector evidence attached in the <code>trace</code> field</li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>3</dd>
-            <dt>Prereq skills</dt><dd>Abstract interpretation, interval / bit-vector domains, SMT (Z3)</dd>
-            <dt>Depends on</dt><dd>P2, P3</dd>
-            <dt>Provides</dt><dd>CIR pass; each finding attaches the interval evidence that makes it interesting</dd>
-            <dt>Deliverable</dt><dd>Interval + bit-vector domain on ClangIR; benchmark on Juliet integer CWEs + real OSS demo</dd>
-            <dt>Stretch</dt><dd>Path-sensitive refinement using Z3 for the finalists</dd>
-            <dt>Upstream impact</dt><dd><b>Yes</b> &mdash; confirmed findings filed upstream</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p4b-intsafety &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>C5 schema validation on every emitted finding.</dd>
+            <dt>Prereq skills</dt><dd>Abstract interpretation, interval/bit-vector domains, SMT (Z3)</dd>
+            <dt>Stretch</dt><dd>Path-sensitive refinement using Z3 for finalists</dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> (with P8)</dd>
           </dl>
         </div>
 
@@ -346,15 +540,29 @@
             <h3>Concurrency detector</h3>
             <span class="cid">P4c</span>
           </header>
-          <div class="role">Find data races, missing locks, and TOCTOU on real multi-threaded C/C++.</div>
+          <div class="role">Static lockset + escape analysis for data races and TOCTOU in multi-threaded C/C++.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C3, C4</li>
+                <li>Config: threading library model (pthreads / std::thread)</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C5 &mdash; findings tagged with locksets and access pair evidence</li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>3</dd>
-            <dt>Prereq skills</dt><dd>Concurrency semantics, happens-before, lockset analysis, TSan/KCSAN internals</dd>
-            <dt>Depends on</dt><dd>P2, P3</dd>
-            <dt>Provides</dt><dd>Static lockset + escape analysis over CIR; findings JSON</dd>
-            <dt>Deliverable</dt><dd>Comparable to a lightweight RacerF; benchmark on curated race benchmarks + real OSS demo</dd>
-            <dt>Stretch</dt><dd>Integration with TSan runtime so P8 can confirm dynamically</dd>
-            <dt>Upstream impact</dt><dd><b>Yes</b> &mdash; confirmed findings filed upstream</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p4c-concurrency &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>C5 schema + golden lockset for the fixture</dd>
+            <dt>Prereq skills</dt><dd>Concurrency semantics, happens-before, lockset, TSan/KCSAN internals</dd>
+            <dt>Stretch</dt><dd>TSan integration so P8 can confirm dynamically</dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> (with P8)</dd>
           </dl>
         </div>
 
@@ -364,15 +572,29 @@
             <h3>Taint / injection detector</h3>
             <span class="cid">P4d</span>
           </header>
-          <div class="role">Track untrusted input through the program to sensitive sinks (system(), exec, format strings, SQL, deserialization).</div>
+          <div class="role">Track untrusted input through the program to sensitive sinks.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C3, C4</li>
+                <li>Source/sink DSL: <code>packs/*.yaml</code> (libc, POSIX, OpenSSL, SQLite)</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C5 &mdash; findings with taint path in the <code>trace</code> field</li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>3</dd>
-            <dt>Prereq skills</dt><dd>IFDS / taint analysis, source/sink modeling, JSON DSL design</dd>
-            <dt>Depends on</dt><dd>P2, P3</dd>
-            <dt>Provides</dt><dd>Configurable source/sink DSL + CIR pass; findings JSON</dd>
-            <dt>Deliverable</dt><dd>Ships with source/sink packs for libc, POSIX, OpenSSL, SQLite; benchmark + real-OSS demo</dd>
-            <dt>Stretch</dt><dd>Field-sensitive taint on structs; propagation summaries</dd>
-            <dt>Upstream impact</dt><dd><b>Yes</b> &mdash; confirmed findings filed upstream</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p4d-taint &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>C5 validation + a hand-crafted taint fixture where the expected sink is reached</dd>
+            <dt>Prereq skills</dt><dd>IFDS / taint analysis, source/sink modeling</dd>
+            <dt>Stretch</dt><dd>Field-sensitive taint on structs</dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> (with P8)</dd>
           </dl>
         </div>
 
@@ -382,15 +604,33 @@
             <h3>Finding normalization &amp; SARIF emitter</h3>
             <span class="cid">P5</span>
           </header>
-          <div class="role">Every detector's output speaks the same shape, so downstream stages don't care who produced the finding.</div>
+          <div class="role">One canonical finding shape and a valid SARIF v2.1.0 report out.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C5 &mdash; one or more directories of <code>finding.json</code> (from any P4*)</li>
+              </ul>
+              For tests: mixed fixtures spanning all four detectors under <code>contracts/fixtures/findings/</code>.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C6 &mdash; <code>artifacts/reports/all.sarif</code></li>
+                <li>A schema-validated superset report at <code>all.merged.json</code></li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>2</dd>
-            <dt>Prereq skills</dt><dd>SARIF spec, JSON schema, small tooling</dd>
-            <dt>Depends on</dt><dd>P4* (loosely; can develop against a mock)</dd>
-            <dt>Provides</dt><dd>Canonical <code>Finding</code> schema; SARIF v2.1.0 emitter; schema validator; CLI merge tool</dd>
-            <dt>Deliverable</dt><dd>Library + <code>ssaf-report merge --sarif out.sarif</code> command; sample outputs</dd>
-            <dt>Stretch</dt><dd>GitHub Code Scanning upload path; VS Code SARIF viewer instructions</dd>
-            <dt>Upstream impact</dt><dd>Indirect; makes every downstream finding shareable in a standard format</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p5-sarif &amp;&amp; make build test demo validate</span>
+              No P4* required &mdash; demo runs entirely on shipped fixtures.
+            </dd>
+            <dt>Contract test</dt><dd>Official SARIF validator; CI job asserts round-trip: parse &rarr; emit &rarr; parse.</dd>
+            <dt>Prereq skills</dt><dd>SARIF spec, JSON Schema, small CLI tooling</dd>
+            <dt>Stretch</dt><dd>GitHub Code Scanning upload; VS Code SARIF viewer instructions</dd>
+            <dt>Upstream impact</dt><dd>Indirect</dd>
           </dl>
         </div>
 
@@ -400,15 +640,34 @@
             <h3>LLM-based triage layer</h3>
             <span class="cid">P6</span>
           </header>
-          <div class="role">Read the code around each finding and classify it as <em>likely real</em>, <em>likely false-positive</em>, or <em>needs execution</em>, with a written rationale.</div>
+          <div class="role">Classify each finding as <em>likely real</em>, <em>likely FP</em>, or <em>needs execution</em>, with a written rationale.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C6 &mdash; SARIF report</li>
+                <li>Source-file access (read-only) OR C3 program model for slicing</li>
+                <li>An LLM API key (OpenAI / Anthropic / OpenRouter / vLLM)</li>
+              </ul>
+              For tests: <code>contracts/fixtures/report-hello.sarif</code> + <code>fixtures/src/</code>.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C7 &mdash; <code>artifacts/triage/triaged.json</code>: array of {finding_id, verdict, confidence, rationale, poc_hints}</li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Prereq skills</dt><dd>LLM prompting, retrieval, evaluation, at least one Claude / OpenAI / open-weights SDK</dd>
-            <dt>Depends on</dt><dd>P5 (finding schema); P2 (code slicing helpers)</dd>
-            <dt>Provides</dt><dd>A CLI &amp; library that reads SARIF, retrieves a &ldquo;just-enough&rdquo; code slice, calls an LLM, returns triage verdict + rationale + suggested PoC hints for P7</dd>
-            <dt>Deliverable</dt><dd>Prompt suite; harness that evaluates classification accuracy on a labeled dataset of TP/FP findings you assemble from Juliet + your own labeling; ablation showing gain over LLM-without-code</dd>
-            <dt>Stretch</dt><dd>Local model support (Ollama / vLLM); chain-of-thought that quotes IR excerpts</dd>
-            <dt>Upstream impact</dt><dd>Indirect; measured by the reduction in FP rate reaching P8</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p6-triage &amp;&amp; make build test demo validate</span>
+              Ships a &ldquo;mock LLM&rdquo; provider (fixed responses) so <code>make test</code> runs without network. <code>make demo</code> uses the real LLM.
+            </dd>
+            <dt>Contract test</dt><dd>C7 schema + a small labeled TP/FP set to assert &ge; baseline accuracy in CI.</dd>
+            <dt>Prereq skills</dt><dd>LLM prompting, retrieval, evaluation, at least one SDK</dd>
+            <dt>Stretch</dt><dd>Local model via Ollama / vLLM; chain-of-thought referencing IR excerpts</dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; measured by FP rate reduction feeding P8</dd>
           </dl>
         </div>
 
@@ -418,15 +677,37 @@
             <h3>PoC / harness generator</h3>
             <span class="cid">P7</span>
           </header>
-          <div class="role">Turn a finding into a runnable C/C++ harness that, if the bug is real, will crash under a sanitizer.</div>
+          <div class="role">Turn a triaged finding into a runnable C/C++ harness that <em>should</em> crash under a sanitizer if the bug is real.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C7 &mdash; triaged findings</li>
+                <li>Source-file access (read-only)</li>
+                <li>Optional C3 for signature / usage discovery</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C8 &mdash; a directory per finding: <code>poc/&lt;id&gt;/{harness.c, build.sh, seed/, metadata.json}</code></li>
+              </ul>
+              <code>metadata.json</code> declares the harness type: <code>reproducer</code> or <code>libfuzzer</code>.
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p7-pocgen &amp;&amp; make build test demo validate</span>
+              Ships golden Poc bundles in <code>test/expected/</code>; <code>make test</code> diffs against them.
+            </dd>
+            <dt>Contract test</dt><dd>
+              Every generated bundle must (a) parse <code>metadata.json</code> against schema and
+              (b) <code>bash build.sh</code> must produce a binary in a scratch container.
+            </dd>
             <dt>Prereq skills</dt><dd>LLM tool use, C/C++, LibFuzzer harnesses, sanitizer semantics</dd>
-            <dt>Depends on</dt><dd>P5, P6</dd>
-            <dt>Provides</dt><dd>A CLI &amp; library that emits: a <code>harness.c</code>, a <code>build.sh</code>, and a <code>seed/</code> corpus (if fuzzing) &mdash; either LibFuzzer-style or a plain crashing input</dd>
-            <dt>Deliverable</dt><dd>Two harness kinds: (1) minimal reproducer program, (2) LibFuzzer harness. Evaluated on synthetic bugs from Juliet</dd>
-            <dt>Stretch</dt><dd>LLM-guided sequential harness synthesis with feedback from failed builds</dd>
-            <dt>Upstream impact</dt><dd>Indirect; the harness is what makes an upstream report reproducible</dd>
+            <dt>Stretch</dt><dd>LLM feedback loop from failed builds</dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; but the harness <em>is</em> what makes upstream reports reproducible</dd>
           </dl>
         </div>
 
@@ -436,15 +717,33 @@
             <h3>Execution-based verifier</h3>
             <span class="cid">P8</span>
           </header>
-          <div class="role">Compile P7's harness with ASan/UBSan/MSan, run it, optionally fuzz and/or concolic-execute. Emit a verdict backed by a real crash log.</div>
+          <div class="role">Compile P7's harness with sanitizers, run it (optionally fuzz / concolic-execute), emit a verdict backed by a real crash log.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C8 &mdash; PoC bundles</li>
+                <li>Sandbox limits from <code>config/sandbox.yaml</code></li>
+              </ul>
+              For tests: shipped bundles at <code>contracts/fixtures/poc/</code> including one guaranteed crasher and one non-crasher.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C9 &mdash; <code>verdicts/&lt;id&gt;.json</code>: verdict in {<code>CONFIRMED</code>, <code>REJECTED_BY_EXECUTION</code>, <code>INCONCLUSIVE</code>}, sanitizer log, minimized input, build recipe</li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Prereq skills</dt><dd>Sanitizers, LibFuzzer/AFL++, KLEE / SymCC, container isolation</dd>
-            <dt>Depends on</dt><dd>P5, P7</dd>
-            <dt>Provides</dt><dd>Sandbox that runs harnesses with a time budget; verdicts: <code>CONFIRMED</code>, <code>REJECTED_BY_EXECUTION</code>, <code>INCONCLUSIVE</code>; attaches sanitizer log, minimized crash input, build recipe</dd>
-            <dt>Deliverable</dt><dd>End-to-end run on findings from at least one P4* detector, showing precision improvements vs. taking the detector's word</dd>
-            <dt>Stretch</dt><dd>KLEE fallback when fuzzing plateaus; incremental / delta-debug crash minimization</dd>
-            <dt>Upstream impact</dt><dd><b>Yes (jointly with a P4*)</b> &mdash; a confirmed crash + minimized input is exactly what upstream maintainers accept</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p8-verifier &amp;&amp; make build test demo validate</span>
+              <code>make test</code> runs shipped fixtures &mdash; asserts CONFIRMED on the guaranteed crasher and REJECTED on the non-crasher.
+            </dd>
+            <dt>Contract test</dt><dd>C9 schema on every verdict; golden verdicts for shipped fixtures.</dd>
+            <dt>Prereq skills</dt><dd>Sanitizers, LibFuzzer/AFL++, KLEE/SymCC, container isolation</dd>
+            <dt>Stretch</dt><dd>KLEE fallback; delta-debug minimization</dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> (jointly with a P4*)</dd>
           </dl>
         </div>
 
@@ -454,15 +753,33 @@
             <h3>Deduplication &amp; clustering</h3>
             <span class="cid">P9</span>
           </header>
-          <div class="role">Group findings that share a root cause so triagers see one representative instead of 200 copies.</div>
+          <div class="role">Group findings that share a root cause so triagers see one representative instead of 200.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C6 (SARIF) or C7 (triaged) &mdash; whichever is available</li>
+                <li>C9 (verdicts) &mdash; when available, for crash-log clustering</li>
+              </ul>
+              For tests: fixture bundle of 100 findings with known 15 clusters.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C10 &mdash; <code>artifacts/clusters/clusters.json</code>: finding_id &rarr; cluster_id, plus per-cluster representative</li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>2&ndash;3</dd>
-            <dt>Prereq skills</dt><dd>Symbol resolution, MinHash / SimHash / graph clustering, some LLM embedding for stretch</dd>
-            <dt>Depends on</dt><dd>P5, P8 (crash-log clustering)</dd>
-            <dt>Provides</dt><dd>Fingerprint per finding (source loc + normalized stack frame set + LLM embedding); cluster IDs</dd>
-            <dt>Deliverable</dt><dd>Cluster-quality evaluation: number of clusters vs. raw findings on a real target; manual sample of correctness</dd>
-            <dt>Stretch</dt><dd>Cross-run tracking so the same bug in a later scan keeps its ID</dd>
-            <dt>Upstream impact</dt><dd>Indirect; makes triage tractable</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p9-dedup &amp;&amp; make build test demo validate</span>
+              Golden test: assert cluster count on the fixture within &plusmn;1.
+            </dd>
+            <dt>Contract test</dt><dd>C10 schema + purity / completeness metrics against the labeled fixture</dd>
+            <dt>Prereq skills</dt><dd>Symbol resolution, MinHash / SimHash, LLM embeddings (stretch)</dd>
+            <dt>Stretch</dt><dd>Cross-run tracking so the same bug retains its ID next scan</dd>
+            <dt>Upstream impact</dt><dd>Indirect</dd>
           </dl>
         </div>
 
@@ -472,15 +789,35 @@
             <h3>Review dashboard</h3>
             <span class="cid">P10</span>
           </header>
-          <div class="role">A web UI where a human triager sees the pipeline's output: finding, LLM rationale, PoC, verdict, sanitizer log, and a &ldquo;file upstream&rdquo; button.</div>
+          <div class="role">Web UI that shows the finding, the LLM rationale, the PoC, the crash log, and a &ldquo;file upstream&rdquo; button.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C6 (SARIF), C7 (triaged), C9 (verdicts), C10 (clusters)</li>
+                <li>Source code (read-only)</li>
+              </ul>
+              For tests: fixture bundle of all four inputs at <code>contracts/fixtures/dashboard/</code>.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>Single-page web app + small backend</li>
+                <li>Exportable review reports (PDF / Markdown) at <code>exports/</code></li>
+                <li>Optional GitHub issue payloads pre-filled with PoC + crash log</li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Prereq skills</dt><dd>Web dev (React/Svelte/Vite), SARIF, small backend (FastAPI / Flask), GitHub API</dd>
-            <dt>Depends on</dt><dd>P5, P6, P8, P9</dd>
-            <dt>Provides</dt><dd>A single-page app + a small server that ingests SARIF + verdicts, renders findings with syntax-highlighted code panes, lets a user annotate and export a report / open a GitHub issue</dd>
-            <dt>Deliverable</dt><dd>Working UI on top of the pipeline's real output, demoed against one OSS target</dd>
+            <dt>Standalone build</dt><dd>
+              <span class="cmd">cd components/p10-dashboard &amp;&amp; make build test demo validate</span>
+              <code>make demo</code> serves the UI at <code>localhost:5187</code> reading from the fixture bundle.
+            </dd>
+            <dt>Contract test</dt><dd>End-to-end: Playwright scripted flow asserts renders + export produced.</dd>
+            <dt>Prereq skills</dt><dd>Web (React/Svelte/Vite), SARIF, small backend (FastAPI / Flask), GitHub API</dd>
             <dt>Stretch</dt><dd>Chat with the finding via P6's LLM; direct PR filing</dd>
-            <dt>Upstream impact</dt><dd>Indirect; makes upstream reports easier and more consistent</dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; makes upstream reports consistent</dd>
           </dl>
         </div>
 
@@ -498,13 +835,27 @@
             <h3>Benchmark / evaluation harness</h3>
             <span class="cid">P11</span>
           </header>
-          <div class="role">A reproducible &ldquo;how well does the whole pipeline do?&rdquo; suite.</div>
+          <div class="role">Reproducible &ldquo;how well does the whole pipeline do?&rdquo; suite.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C6 (SARIF) + C9 (verdicts) from real runs</li>
+                <li>Labeled datasets: <a href="https://samate.nist.gov/SARD/">SARD / Juliet</a>, curated real-CVE micro-benchmarks</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>Precision/recall tables &amp; plots as <code>artifacts/bench/*.csv</code> + <code>*.png</code></li>
+                <li>An HTML report at <code>artifacts/bench/report.html</code></li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>2&ndash;3</dd>
-            <dt>Prereq skills</dt><dd>Benchmarking, CI, scripting</dd>
-            <dt>Depends on</dt><dd>All of P4*, P8</dd>
-            <dt>Provides</dt><dd>Automated runs against <a href="https://samate.nist.gov/SARD/">SARD / Juliet</a>, curated real-CVE micro-benchmarks, and a &ldquo;live&rdquo; scan of one OSS target on each pull to <code>main</code></dd>
-            <dt>Deliverable</dt><dd>Precision/recall tables in the paper; artifact for the report's evaluation section</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p11-bench &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>Idempotent runs; deterministic tables on fixed dataset</dd>
           </dl>
         </div>
 
@@ -513,40 +864,43 @@
             <h3>Ops / reproducibility harness</h3>
             <span class="cid">P12</span>
           </header>
-          <div class="role">One-command runs, containers, CI, and provenance so the whole system is trivially reproducible for graders and reviewers.</div>
+          <div class="role">One-command runs, containers, CI, and provenance so graders can reproduce trivially.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>All component <code>Makefile</code>s (the four standard targets: build/test/demo/validate)</li>
+                <li>A top-level <code>manifest.yaml</code> declaring components + versions</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li><code>Dockerfile</code> + <code>docker-compose.yaml</code> for the whole system</li>
+                <li><code>integration/run-e2e.sh</code>: shells P1&rarr;P10 end-to-end</li>
+                <li>GitHub Actions matrix that runs each component's four targets on every PR</li>
+              </ul>
+            </div>
+          </div>
           <dl>
             <dt>Team size</dt><dd>2</dd>
-            <dt>Prereq skills</dt><dd>Docker, GitHub Actions, Nix / lockfiles, provenance metadata</dd>
-            <dt>Depends on</dt><dd>All components</dd>
-            <dt>Provides</dt><dd>Top-level orchestrator container that runs P1&rarr;P10 end-to-end; a hermetic image; a monorepo GitHub Actions matrix</dd>
-            <dt>Deliverable</dt><dd>&ldquo;<code>docker run cs5187/ssr scan &lt;git-url&gt;</code>&rdquo; produces a SARIF + a dashboard URL; every component has a green CI badge</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p12-ops &amp;&amp; make demo</span> = <code>docker run cs5187/ssr scan &lt;git-url&gt;</code> against a canned target</dd>
+            <dt>Contract test</dt><dd>CI green badge on the shared repo; container image builds from scratch on a clean runner</dd>
           </dl>
         </div>
 
       </div>
     </section>
 
-    <!-- Integration -->
-    <section id="integration">
-      <h2>Integration plan</h2>
-      <ul>
-        <li>Everyone works in the same GitHub <b>org</b> under one monorepo (or a small set of coordinated repos linked as submodules). Instructor pre-creates the org and gives every group a subdirectory + write access.</li>
-        <li>Interfaces are <b>frozen at Progress Meeting 1</b> (Oct 5&ndash;9). The JSON schemas for CIR modules, summaries, findings, and verdicts are the contract; anything private inside a component can evolve freely.</li>
-        <li>Every component ships a <b>mock</b> in its first week so downstream components aren't blocked. If P4a hasn't emitted a real finding yet, P5 consumes a canned finding.json to keep integrating.</li>
-        <li>The <b>class-wide integration checkpoints</b> are the three project progress meetings and the final presentation.</li>
-        <li>Every group's <b>report chapter</b> is written against the same LaTeX skeleton (P12 provides). The final &ldquo;paper&rdquo; is really N chapters &mdash; each group can still submit its own individually-graded report per <a href="index.html#project">project rubric</a>.</li>
-      </ul>
-    </section>
-
     <!-- Milestones -->
     <section id="milestones">
-      <h2>Milestones (aligned with the course schedule)</h2>
+      <h2>Milestones</h2>
       <dl class="info-grid">
-        <dt>Proposal due</dt><dd><b>Sun 20 Sep 2026</b> &middot; each group's proposal names the component (P1&hellip;P12), the OSS targets they will scan, and how they integrate with adjacent components.</dd>
-        <dt>Progress Meeting 1</dt><dd><b>Oct 5&ndash;9</b> &middot; <em>interfaces frozen</em>. Every group presents its schema and demoes end-to-end plumbing with mocked data.</dd>
-        <dt>Progress Meeting 2</dt><dd><b>Oct 26&ndash;30</b> &middot; first real end-to-end run on <em>one</em> target OSS project. First-bug candidates from P4* being fed into P6/P7/P8.</dd>
+        <dt>Proposal due</dt><dd><b>Sun 20 Sep 2026</b> &middot; each group names its component (P1&hellip;P12), OSS targets it will scan (if applicable), and the fixtures it will consume/produce.</dd>
+        <dt>Progress Meeting 1</dt><dd><b>Oct 5&ndash;9</b> &middot; <em>contracts frozen</em>. Every group demonstrates <code>make build test demo validate</code> passing on fixtures alone.</dd>
+        <dt>Progress Meeting 2</dt><dd><b>Oct 26&ndash;30</b> &middot; first real end-to-end run on one target. First-bug candidates flowing P4* &rarr; P6 &rarr; P7 &rarr; P8.</dd>
         <dt>Progress Meeting 3</dt><dd><b>Nov 2&ndash;6</b> &middot; upstream reports/PRs filed. Verdicts and clustering stable. Dashboard usable.</dd>
-        <dt>Final presentation</dt><dd><b>Thu 12 Nov 2026</b> &middot; class demo; each group shows its slice and the class demos end-to-end on a live target.</dd>
+        <dt>Final presentation</dt><dd><b>Thu 12 Nov 2026</b> &middot; class demo; each group shows its slice + integrated demo on a live target.</dd>
         <dt>Paper + repo due</dt><dd><b>Fri 13 Nov 2026, 23:59 IST</b>.</dd>
       </dl>
     </section>
@@ -555,13 +909,14 @@
     <section id="references">
       <h2>References</h2>
       <ul>
-        <li><a href="https://github.com/arm/metis">Arm Metis</a> &mdash; AI-powered security code-review framework (Python, Tree-sitter, LLM-driven). Model to learn from but not copy: we specialize on C/C++ and verify by execution.</li>
+        <li><a href="https://github.com/arm/metis">Arm Metis</a> &mdash; AI-powered security code-review framework (Python, Tree-sitter, LLM-driven). Inspiration; we specialize on C/C++ and verify by execution.</li>
         <li><a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">RFC: Scalable Static Analysis Framework</a> &mdash; the SSAF blueprint for per-TU summaries, USR-keyed entities, and cross-TU linking.</li>
         <li><a href="https://llvm.github.io/clangir/">ClangIR (CIR)</a> &mdash; MLIR-based high-level IR for C/C++ preserving language-level types and operations.</li>
-        <li><a href="https://sarifweb.azurewebsites.net/">SARIF v2.1.0</a> &mdash; the finding format everyone in the pipeline consumes / emits.</li>
-        <li><a href="https://samate.nist.gov/SARD/">NIST SARD / Juliet</a> &mdash; labeled C/C++ CWE test cases for measuring detector precision/recall.</li>
-        <li><a href="https://google.github.io/oss-fuzz/">OSS-Fuzz</a> &mdash; harness &amp; sanitizer conventions we borrow for P7/P8.</li>
-        <li><a href="https://llvm.org/docs/LibFuzzer.html">LibFuzzer</a>, <a href="https://klee-se.org/">KLEE</a> &mdash; the two execution engines P8 defaults to.</li>
+        <li><a href="https://sarifweb.azurewebsites.net/">SARIF v2.1.0</a> &mdash; contract C6.</li>
+        <li><a href="https://json-schema.org/">JSON Schema</a> &mdash; the format for contracts C2&ndash;C5, C7, C9&ndash;C10.</li>
+        <li><a href="https://samate.nist.gov/SARD/">NIST SARD / Juliet</a> &mdash; labeled C/C++ CWE test cases for P4* precision/recall.</li>
+        <li><a href="https://google.github.io/oss-fuzz/">OSS-Fuzz</a> &mdash; harness / sanitizer conventions for P7 &amp; P8.</li>
+        <li><a href="https://llvm.org/docs/LibFuzzer.html">LibFuzzer</a>, <a href="https://klee-se.org/">KLEE</a> &mdash; the execution engines P8 defaults to.</li>
       </ul>
     </section>
 
