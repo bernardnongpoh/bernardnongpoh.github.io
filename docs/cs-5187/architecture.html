@@ -75,9 +75,14 @@
     }
     table.contracts th { background: var(--blue-700); color: #fff; font-size: 12.5px; }
     table.contracts td code { font-size: 12px; }
-    @media (max-width: 900px) {
-      .component .io { grid-template-columns: 1fr; }
+    .callout {
+      background: var(--blue-50); border: 1px solid var(--blue-200);
+      border-radius: var(--radius); padding: 10px 14px; font-size: 13.5px;
+      margin: 10px 0;
     }
+    .papers { font-size: 13px; color: var(--text); }
+    .papers li { margin: 2px 0; }
+    @media (max-width: 900px) { .component .io { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -97,12 +102,14 @@
       <h2>This page</h2>
       <ul>
         <li><a href="#overview">Overview</a></li>
+        <li><a href="#industry">Industry requirements</a></li>
         <li><a href="#pipeline">Reference pipeline</a></li>
-        <li><a href="#contracts">Shared contracts (C1&ndash;C10)</a></li>
+        <li><a href="#contracts">Contracts v2 (C1&ndash;C10)</a></li>
+        <li><a href="#storage">Data model &amp; storage</a></li>
         <li><a href="#repo">Shared repo layout</a></li>
         <li><a href="#independence">Independence guarantees</a></li>
         <li><a href="#components">Components (P1&ndash;P10)</a></li>
-        <li><a href="#bonus">Bonus tracks (P11&ndash;P12)</a></li>
+        <li><a href="#bonus">Bonus tracks</a></li>
         <li><a href="#milestones">Milestones</a></li>
         <li><a href="#references">References</a></li>
       </ul>
@@ -131,7 +138,7 @@
     <header class="course">
       <h1>Term Project Architecture</h1>
       <div class="subtitle">
-        A C/C++ AI security-review &amp; triage tool built from 10 independently-buildable components
+        Build a C/C++ AI security-review &amp; triage tool that industry can actually use
       </div>
     </header>
 
@@ -141,14 +148,16 @@
       <p>
         The class-wide term project builds a
         <strong>C/C++-focused, execution-verified security-review and triage
-        tool</strong>, spiritually similar to
+        tool</strong>. It is spiritually similar to
         <a href="https://github.com/arm/metis">Arm Metis</a> but specialized
-        for C/C++ and grounded in real analysis + real execution. The
-        substrate is <a href="https://llvm.github.io/clangir/">ClangIR</a>,
-        the cross-TU story follows the
-        <a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">Scalable
-        Static Analysis Framework (SSAF)</a> RFC, an LLM triages, and every
-        finding surfaced to a human is verified by executing a sanitized PoC.
+        for C/C++, grounded in real analysis over
+        <a href="https://llvm.github.io/clangir/">ClangIR</a>, organized by
+        the <a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">SSAF</a>
+        RFC, triaged by an LLM in the style of <a href="https://iris-sast.github.io/">IRIS</a> /
+        <a href="https://dl.acm.org/doi/10.1145/3649828">LLift</a>, and
+        <em>verified by executing a sanitized PoC</em> in the style of
+        <a href="https://github.com/google/oss-fuzz">OSS-Fuzz</a> /
+        <a href="https://google.github.io/oss-fuzz-gen/">OSS-Fuzz-Gen</a>.
       </p>
       <p>
         Ten groups (P1&ndash;P10) each own one component. Two bonus tracks
@@ -156,9 +165,77 @@
         is a standalone project</b>: its own directory, its own build system,
         its own tests, its own CI. Groups depend on <em>schemas and
         fixtures</em>, not on each other's builds &mdash; you can ship, test,
-        and demo your component against golden fixtures without a single other
-        group being ready.
+        and demo your component against golden fixtures without a single peer
+        being ready.
       </p>
+    </section>
+
+    <!-- Industry requirements -->
+    <section id="industry">
+      <h2>Industry requirements this system is designed to meet</h2>
+      <p style="font-size:13.5px;color:var(--text-muted);">
+        Read this section before proposing scope. If your component doesn't
+        satisfy at least one of these industry requirements, cut it. If you
+        want to add scope, tie the addition to a specific requirement.
+      </p>
+      <ol>
+        <li>
+          <b>SARIF-first output.</b> Every finding surfaces as SARIF v2.1.0 so
+          GitHub Code Scanning, Azure DevOps, GitLab, VS Code, and every
+          serious enterprise SAST dashboard can consume it. Anything else is
+          gravy.
+        </li>
+        <li>
+          <b>Incremental analysis on PRs.</b> Enterprise CI needs answers in
+          &lt; 5 min on a PR touching &lt; 1 % of the code. This is the
+          Szab&oacute; et al. &ldquo;Incrementalizing Production CodeQL
+          Analyses&rdquo; (ESEC/FSE 2023) problem &mdash; solve it with per-TU
+          summaries + a delta over the SSAF store, not full re-scan.
+        </li>
+        <li>
+          <b>Low false-positive rate on delivered findings.</b> Meta's public
+          Infer numbers say devs stop fixing when FPR passes ~20 %. Our
+          answer: triage with an LLM (P6) <em>and</em> confirm with sanitizer
+          execution (P8). Only <code>CONFIRMED</code> or high-confidence
+          findings reach the dashboard.
+        </li>
+        <li>
+          <b>Reproducible builds &amp; scans (SLSA / in-toto).</b> Every
+          artifact carries provenance so a regulator or downstream consumer
+          can replay it. This is table stakes for federal / finance /
+          healthcare in 2025+.
+        </li>
+        <li>
+          <b>Runs on-prem, no code egress.</b> The default triage path uses a
+          local LLM (Ollama / vLLM); the SaaS path is opt-in. No enterprise
+          will let source code leave the perimeter without controls.
+        </li>
+        <li>
+          <b>CI-native.</b> One-command scan, exits 0/1, comments on the PR,
+          uploads SARIF, opens issues. GitHub Actions + GitLab CI examples ship
+          in P12.
+        </li>
+        <li>
+          <b>Reproducer for every reported bug.</b> Upstream maintainers
+          (Linux, Chromium, FFmpeg, OpenSSL) only accept reports with a
+          minimized crashing input. That's exactly what P8 emits.
+        </li>
+        <li>
+          <b>Deduplication at scale.</b> Fuzzers routinely emit thousands of
+          crash reports for one bug. A production tool that shows 1,000
+          duplicates gets uninstalled. P9 owns this.
+        </li>
+        <li>
+          <b>Cross-language scaling story.</b> C/C++ is the beachhead. But
+          the architecture must not preclude Rust / kernel-eBPF / drivers.
+          ClangIR + SSAF gives us a plausible path to that.
+        </li>
+        <li>
+          <b>Auditable triage decisions.</b> When an LLM says &ldquo;this is a
+          false positive,&rdquo; the rationale, the code slice it saw, and the
+          model version are recorded (C7). No black-box &ldquo;trust the AI.&rdquo;
+        </li>
+      </ol>
     </section>
 
     <!-- Reference pipeline -->
@@ -166,80 +243,90 @@
       <h2>Reference pipeline</h2>
       <p style="font-size:13.5px;color:var(--text-muted);">
         Data flows top-to-bottom. Contract IDs (C1&hellip;C10) label the
-        artifact each stage produces and the next stage consumes.
+        artifact each stage produces. Large-scale artifacts also materialize
+        in a shared graph store (see <a href="#storage">Data model &amp;
+        storage</a>).
       </p>
 <div class="diagram">
     Source repo (Linux, Chromium, FFmpeg, OpenSSL, SQLite, ...)
-                        |
-                        v
-   +------------------------------+     P1 -&gt; C1 compile_commands.json
-   |  P1. Build ingestion & CIR   |     P1 -&gt; C2 cir-manifest.json + *.cir.bc
-   +------------------------------+
-                        |    C1 + C2
-                        v
-   +------------------------------+     P2 -&gt; C3 program-model.json
-   |  P2. ClangIR analysis        |
-   |      frontend                |
-   +------------------------------+
-                        |    C1 + C2 + C3
-                        v
-   +------------------------------+     P3 -&gt; C4 ssaf-summary.json
-   |  P3. Cross-TU SSAF runtime   |
-   +------------------------------+
-                        |    C3 + C4
-        +---------------+---------------+---------------+
-        v               v               v               v
-   +----------+   +-----------+   +------------+   +-----------+
-   |P4a mem   |   |P4b int    |   |P4c concurr.|   |P4d taint  |
-   +----------+   +-----------+   +------------+   +-----------+
-        \_______________|_______________|_______________/
-                                |   C5 finding.json (many)
-                                v
-   +------------------------------+     P5 -&gt; C6 SARIF v2.1.0
-   |  P5. Normalize + SARIF       |
-   +------------------------------+
-                        |    C6
-                        v
-   +------------------------------+     P6 -&gt; C7 triaged-finding.json
-   |  P6. LLM triage              |
-   +------------------------------+
-                        |    C7
-                        v
-   +------------------------------+     P7 -&gt; C8 poc-bundle/
-   |  P7. PoC / harness generator |
-   +------------------------------+
-                        |    C8
-                        v
-   +------------------------------+     P8 -&gt; C9 verdict.json
-   |  P8. Execution verifier      |
-   |      ASan/UBSan + LibFuzzer  |
-   +------------------------------+
-                        |    C9
-                        v
-   +------------------------------+     P9 -&gt; C10 cluster.json
-   |  P9. Dedup / clustering      |
-   +------------------------------+
-                        |    C6 + C7 + C9 + C10
-                        v
-   +------------------------------+     P10 -&gt; web UI + upstream ticket
-   |  P10. Review dashboard       |
-   +------------------------------+
-                        |
-                        v
-              Upstream reports (PRs / advisories / CVEs)
+                            |
+                            v
+   +----------------------------------+   P1 -> C1 compile_commands.json
+   |  P1. Build ingestion & CIR       |        C2 cir-manifest.json + *.cir.bc
+   +----------------------------------+
+                            |
+                            v
+   +----------------------------------+   P2 -> C3 program-model.json
+   |  P2. ClangIR analysis frontend   |        (+ nodes/edges written into
+   +----------------------------------+         the KuzuDB program-graph store)
+                            |
+                            v
+   +----------------------------------+   P3 -> C4 ssaf-summary.json
+   |  P3. Cross-TU SSAF runtime       |        (+ summary tables in graph store)
+   +----------------------------------+
+                            |
+        +-------------------+---------------------+-------------------+
+        v                   v                     v                   v
+   +---------+          +---------+          +----------+        +---------+
+   | P4a mem |          | P4b int |          | P4c race |        | P4d tnt |
+   +---------+          +---------+          +----------+        +---------+
+        \___________________|___________________|__________________/
+                                    |   C5 finding.json (many)
+                                    v
+   +----------------------------------+   P5 -> C6 SARIF v2.1.0
+   |  P5. Normalize + SARIF           |
+   +----------------------------------+
+                            |
+                            v
+   +----------------------------------+   P6 -> C7 triaged-finding.json
+   |  P6. LLM triage (IRIS/LLift-like)|
+   +----------------------------------+
+                            |
+                            v
+   +----------------------------------+   P7 -> C8 poc-bundle/
+   |  P7. PoC / harness generator     |        (OSS-Fuzz-Gen style)
+   +----------------------------------+
+                            |
+                            v
+   +----------------------------------+   P8 -> C9 verdict.json
+   |  P8. Execution verifier          |        (ASan/UBSan + LibFuzzer + KLEE)
+   +----------------------------------+
+                            |
+                            v
+   +----------------------------------+   P9 -> C10 cluster.json
+   |  P9. Dedup / clustering          |        (GPTrace / ReBucket style)
+   +----------------------------------+
+                            |
+                            v
+   +----------------------------------+   P10 -> web UI + upstream ticket
+   |  P10. Review dashboard           |
+   +----------------------------------+
+                            |
+                            v
+             Upstream reports (PRs / advisories / CVEs)
+
+
+       ┌──────────────────────────────────────────────────┐
+       │  Shared program-graph store (embedded, KuzuDB or │
+       │  LadybugDB fork; contains: functions, BBs, calls,│
+       │  values, USRs, summaries, findings, verdicts,    │
+       │  clusters) &mdash; every stage writes/reads by  │
+       │  entity ID; JSON contracts are the exchange fmt  │
+       └──────────────────────────────────────────────────┘
 </div>
     </section>
 
-    <!-- Contracts -->
+    <!-- Contracts v2 -->
     <section id="contracts">
-      <h2>Shared contracts (C1&ndash;C10)</h2>
+      <h2>Contracts v2 (C1&ndash;C10)</h2>
       <p style="font-size:13.5px;color:var(--text-muted);">
-        Every contract is a JSON Schema stored at
-        <code>contracts/&lt;name&gt;.schema.json</code>. Every contract
-        ships at least one canonical fixture at
-        <code>contracts/fixtures/&lt;name&gt;-*.json</code>. The schemas are
-        frozen at <b>Progress Meeting 1</b>; downstream components develop
-        against fixtures, not upstream builds.
+        Every contract is a JSON Schema at
+        <code>contracts/&lt;name&gt;.schema.json</code> with fixtures at
+        <code>contracts/fixtures/&lt;name&gt;-*.json</code>. Schemas are
+        frozen at <b>Progress Meeting 1</b>. For scale, contracts C2/C3/C4
+        and the aggregated C5/C9/C10 also materialize in a shared graph
+        store (see <a href="#storage">below</a>). <b>JSON is the exchange
+        format; the DB is the materialization.</b>
       </p>
       <table class="contracts">
         <thead>
@@ -248,97 +335,177 @@
             <th>Contract</th>
             <th style="width:70px;">Producer</th>
             <th style="width:110px;">Consumers</th>
-            <th>Format &amp; canonical path</th>
+            <th>JSON format &amp; canonical path</th>
+            <th style="width:110px;">Graph store?</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td><b>C1</b></td><td>Compilation database</td><td>P1</td><td>P2, P3, P4*</td><td><code>compile_commands.json</code> (Clang standard)</td></tr>
-          <tr><td><b>C2</b></td><td>CIR module manifest + bitcode</td><td>P1</td><td>P2, P3</td><td><code>cir-manifest.schema.json</code>; bitcode at <code>artifacts/cir/*.cir.bc</code></td></tr>
-          <tr><td><b>C3</b></td><td>Program model (functions, BBs, USRs, callgraph)</td><td>P2</td><td>P3, P4*, P7</td><td><code>program-model.schema.json</code></td></tr>
-          <tr><td><b>C4</b></td><td>SSAF summary (per-TU + linked global)</td><td>P3</td><td>P4*</td><td><code>ssaf-summary.schema.json</code></td></tr>
-          <tr><td><b>C5</b></td><td>Raw finding (single detector, single issue)</td><td>P4*</td><td>P5</td><td><code>finding.schema.json</code></td></tr>
-          <tr><td><b>C6</b></td><td>SARIF report</td><td>P5</td><td>P6, P10, P11</td><td>SARIF v2.1.0 (<code>*.sarif</code>)</td></tr>
-          <tr><td><b>C7</b></td><td>Triaged finding (verdict from LLM, rationale, PoC hints)</td><td>P6</td><td>P7, P10</td><td><code>triaged-finding.schema.json</code></td></tr>
-          <tr><td><b>C8</b></td><td>PoC bundle (harness source + build + seed corpus)</td><td>P7</td><td>P8</td><td>Directory: <code>poc/&lt;id&gt;/{harness.c, build.sh, seed/, metadata.json}</code></td></tr>
-          <tr><td><b>C9</b></td><td>Execution verdict (confirmed / rejected / inconclusive + sanitizer log)</td><td>P8</td><td>P9, P10, P11</td><td><code>verdict.schema.json</code></td></tr>
-          <tr><td><b>C10</b></td><td>Finding cluster (root-cause grouping)</td><td>P9</td><td>P10</td><td><code>cluster.schema.json</code></td></tr>
+          <tr><td><b>C1</b></td><td>Compilation database</td><td>P1</td><td>P2, P3, P4*</td><td><code>compile_commands.json</code> (Clang standard)</td><td>no</td></tr>
+          <tr><td><b>C2</b></td><td>CIR module manifest + bitcode</td><td>P1</td><td>P2, P3</td><td><code>cir-manifest.schema.json</code>; <code>artifacts/cir/*.cir.bc</code></td><td>yes (TU nodes)</td></tr>
+          <tr><td><b>C3</b></td><td>Program model (functions, BBs, USRs, callgraph)</td><td>P2</td><td>P3, P4*, P7</td><td><code>program-model.schema.json</code></td><td>yes (main)</td></tr>
+          <tr><td><b>C4</b></td><td>SSAF summary (per-TU + linked global)</td><td>P3</td><td>P4*</td><td><code>ssaf-summary.schema.json</code></td><td>yes</td></tr>
+          <tr><td><b>C5</b></td><td>Raw finding (single detector, single issue)</td><td>P4*</td><td>P5</td><td><code>finding.schema.json</code></td><td>yes (finding nodes)</td></tr>
+          <tr><td><b>C6</b></td><td>SARIF report</td><td>P5</td><td>P6, P10, P11</td><td>SARIF v2.1.0 (<code>*.sarif</code>)</td><td>export from DB</td></tr>
+          <tr><td><b>C7</b></td><td>Triaged finding (verdict, rationale, PoC hints)</td><td>P6</td><td>P7, P10</td><td><code>triaged-finding.schema.json</code></td><td>yes</td></tr>
+          <tr><td><b>C8</b></td><td>PoC bundle (harness + build + seed corpus)</td><td>P7</td><td>P8</td><td>Directory: <code>poc/&lt;id&gt;/</code></td><td>no (file bundle)</td></tr>
+          <tr><td><b>C9</b></td><td>Execution verdict (+ sanitizer log)</td><td>P8</td><td>P9, P10, P11</td><td><code>verdict.schema.json</code></td><td>yes</td></tr>
+          <tr><td><b>C10</b></td><td>Finding cluster (root-cause grouping)</td><td>P9</td><td>P10</td><td><code>cluster.schema.json</code></td><td>yes</td></tr>
         </tbody>
       </table>
-      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">
-        A validator lives at <code>tools/validate.py</code>. Every component's
-        CI runs <code>validate.py</code> on every output it produces against
-        the relevant schema &mdash; a component that emits invalid JSON fails
-        its own build, before integration.
+      <p style="font-size:13px;color:var(--text-muted);margin-top:10px;">
+        Every artifact is <b>content-addressed</b> (SHA-256 in
+        <code>metadata.provenance</code>) and carries a
+        <a href="https://slsa.dev/spec/v1.0/">SLSA v1.0 provenance</a>
+        stanza + optional <a href="https://in-toto.io/">in-toto</a>
+        attestation. A validator lives at <code>tools/validate.py</code>;
+        every component's CI runs it on every output.
       </p>
+    </section>
+
+    <!-- Data model & storage -->
+    <section id="storage">
+      <h2>Data model &amp; storage</h2>
+      <p>
+        JSON contracts alone don't scale to Linux-kernel-sized inputs
+        (30 M+ LOC, millions of basic blocks). We adopt a hybrid model that
+        is standard in production SAST (CodeQL uses a Datalog-oriented
+        relational DB; Kythe uses a graph protobuf store; Ant Group's YASA
+        uses a unified AST DB):
+      </p>
+      <ul>
+        <li><b>JSON contracts (C1&ndash;C10)</b> stay authoritative for
+        schemas, fixtures, and cross-component exchange. This is what CI
+        validates and what humans diff.</li>
+        <li><b>An embedded graph DB</b> materializes the same data for
+        query performance. Every entity has a stable ID; every finding
+        links back to a code entity; every verdict links back to a finding.
+        Cross-TU queries become graph traversals instead of custom code.</li>
+      </ul>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:14px;">Concrete choice: Vela Engineering's Kuzu fork</h3>
+      <p>
+        We pin the class-wide graph store to
+        <a href="https://github.com/Vela-Engineering/kuzu"><b>Vela Engineering's Kuzu fork</b></a>
+        (<code>v0.12.0-vela</code>, March 2026 &middot; MIT-licensed).
+        Rationale:
+      </p>
+      <ul>
+        <li>
+          <b>Original KuzuDB was archived Oct 2025</b> after Apple's
+          acquisition of Kuzu Inc. Depending on the abandoned upstream is not
+          safe for a semester project or an industry-facing artifact.
+        </li>
+        <li>
+          <b>Concurrent multi-writer support</b> is the fork's headline
+          addition &mdash; exactly what we need. Our four detectors
+          (P4a&ndash;P4d) all write findings and analysis edges into the
+          same graph store simultaneously. Stock Kuzu serialized writes; the
+          Vela fork lets us run detectors in parallel without contention.
+        </li>
+        <li>
+          Everything else from upstream is preserved: full Cypher, vector
+          search, full-text search, MIT licence.
+        </li>
+        <li>
+          Performance vs Neo4j (independent benchmarks): <b>~374&times;
+          faster on multi-hop path queries</b> (0.009s vs 3.22s on 100K
+          nodes / 2.4M edges), ~18&times; faster bulk ingest. Cross-TU
+          call-graph traversals in P4* / P9 stay under 100 ms even on
+          Linux-kernel-scale program models.
+        </li>
+        <li>
+          Bindings for Python, C/C++, Rust, Go, Java, Node, WASM &mdash;
+          every group's language is covered. Zero-infra embedded runtime,
+          so no server to fight in Docker.
+        </li>
+      </ul>
+      <div class="callout" style="background:#fef3c7;border-color:#fde68a;">
+        <b>Isolation rule.</b> Every component depends on the DB only via
+        <code>tools/graph/adapter.py</code> (thin adapter). Adapter defines
+        the entity + edge schema in <code>tools/graph/schema.cypher</code>
+        and exposes a tiny API: <code>insert_node()</code>,
+        <code>insert_edge()</code>, <code>query()</code>. If the Vela fork
+        ever stalls, we swap the adapter's backend for DuckDB with a JSON
+        blob column + recursive CTEs &mdash; the JSON contracts remain the
+        source of truth, so no component needs rewriting.
+      </div>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:14px;">Graph schema (Cypher, sketch)</h3>
+<div class="diagram">
+// Nodes
+(:TranslationUnit {tu_id, path, hash})
+(:Function        {usr, name, file, line, tu_id})
+(:BasicBlock      {bb_id, function_usr, index})
+(:Value           {value_id, function_usr, kind})   // SSA values in ClangIR
+(:Summary         {kind, function_usr, payload_hash})
+(:Finding         {finding_id, cwe, severity, detector, sarif_ref})
+(:Verdict         {finding_id, status, sanitizer, log_hash})
+(:Cluster         {cluster_id, representative_finding_id})
+
+// Edges
+(:Function)-[:IN_TU]->(:TranslationUnit)
+(:BasicBlock)-[:IN_FUNCTION]->(:Function)
+(:Function)-[:CALLS {call_site}]->(:Function)
+(:Value)-[:DEFINES]->(:Value)                        // def-use
+(:Value)-[:FLOWS_TO {via}]->(:Value)                 // taint / dataflow
+(:Summary)-[:OF]->(:Function)
+(:Finding)-[:LOCATED_AT]->(:Function)|(:BasicBlock)  // provenance
+(:Verdict)-[:CONFIRMS]->(:Finding)
+(:Cluster)-[:CONTAINS]->(:Finding)
+</div>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:14px;">Alternatives considered</h3>
+      <ul>
+        <li><b>Plain JSON files</b> &mdash; simple; blows up on large targets; no cross-TU query.</li>
+        <li><b>SQLite</b> &mdash; ubiquitous, but graph queries are painful; recursive CTEs don't scale to k-hop reachability over M edges.</li>
+        <li><b>DuckDB</b> &mdash; excellent columnar; no native graph; usable as a fallback if the Kuzu fork falters.</li>
+        <li><b>Neo4j embedded</b> &mdash; GPL licence issues + heavy JVM.</li>
+        <li><b>Datalog engine (Soufflé)</b> &mdash; matches CodeQL's model; steeper student ramp; students already meet Datalog in L25 so a stretch team can layer this on top of KuzuDB.</li>
+      </ul>
+      <div class="callout">
+        <b>Rule of thumb:</b> If your component only touches thousands of
+        entities, JSON is fine. If it touches millions, go through KuzuDB.
+        P5 &amp; P10 read via SARIF and DB queries; P1&ndash;P4* &amp;
+        P8&ndash;P9 write into both.
+      </div>
     </section>
 
     <!-- Shared repo layout -->
     <section id="repo">
       <h2>Shared repo layout</h2>
-      <p>Everything lives in one GitHub organisation with a shared monorepo (or a small set of repos linked as submodules):</p>
 <div class="diagram">
-cs5187-ssr/                              # class-wide monorepo
-├── contracts/                           # C1..C10 schemas + fixtures (frozen at PM1)
-│   ├── cir-manifest.schema.json
-│   ├── program-model.schema.json
-│   ├── ssaf-summary.schema.json
-│   ├── finding.schema.json
-│   ├── triaged-finding.schema.json
-│   ├── verdict.schema.json
-│   ├── cluster.schema.json
-│   └── fixtures/
-│       ├── compile_commands-hello.json
-│       ├── cir-manifest-hello.json
-│       ├── program-model-hello.json
-│       ├── ssaf-summary-hello.json
-│       ├── finding-uaf-example.json
-│       ├── report-hello.sarif
-│       ├── triaged-uaf-example.json
-│       ├── verdict-confirmed.json
-│       └── cluster-example.json
-├── tools/                               # shared helpers, no logic
+cs5187-ssr/
+├── contracts/                           # C1..C10 schemas + fixtures
+│   ├── *.schema.json
+│   └── fixtures/*.json                  # canonical demos
+├── tools/
 │   ├── validate.py                      # JSON-Schema + SARIF validator
-│   └── run-golden.sh                    # golden-diff runner
+│   ├── provenance.py                    # SLSA / in-toto emitter
+│   └── graph/                           # thin KuzuDB adapter (used by P2..P9)
+│       ├── schema.cypher                # entity + edge tables
+│       └── adapter.py                   # open, load, query
 ├── components/
-│   ├── p1-ingest/                       # each component: own build, own tests
-│   ├── p2-cir-frontend/
-│   ├── p3-ssaf-runtime/
-│   ├── p4a-memsafety/
-│   ├── p4b-intsafety/
-│   ├── p4c-concurrency/
-│   ├── p4d-taint/
-│   ├── p5-sarif/
-│   ├── p6-triage/
-│   ├── p7-pocgen/
-│   ├── p8-verifier/
-│   ├── p9-dedup/
-│   ├── p10-dashboard/
-│   ├── p11-bench/                       # bonus
-│   └── p12-ops/                         # bonus
-└── integration/                         # P12: end-to-end orchestrator
-    └── run-e2e.sh
+│   ├── p1-ingest/       p4a-memsafety/  p7-pocgen/    p10-dashboard/
+│   ├── p2-cir-frontend/ p4b-intsafety/  p8-verifier/  p11-bench/     # bonus
+│   ├── p3-ssaf-runtime/ p4c-concurrency/p9-dedup/     p12-ops/       # bonus
+│   ├── p4* detectors    p4d-taint/      p5-sarif/  p6-triage/
+└── integration/
+    ├── run-e2e.sh                       # P12: shells P1..P10 end-to-end
+    └── slsa-provenance.yaml
 </div>
     </section>
 
     <!-- Independence guarantees -->
     <section id="independence">
       <h2>Independence guarantees</h2>
-      <p>Every component ships in isolation. Concretely:</p>
       <ol>
-        <li>Own directory under <code>components/p&lt;N&gt;/</code>. Own build system (CMake / Cargo / Poetry / npm &mdash; whatever fits).</li>
-        <li>A <b>local <code>Makefile</code></b> exposing four standard targets:
-          <ul>
-            <li><code>make build</code> &mdash; builds the component.</li>
-            <li><code>make test</code> &mdash; runs unit tests against fixtures in <code>contracts/fixtures/</code>.</li>
-            <li><code>make demo</code> &mdash; runs a scripted end-to-end on a canned input, produces a canonical output.</li>
-            <li><code>make validate</code> &mdash; runs <code>tools/validate.py</code> on the demo output.</li>
-          </ul>
-        </li>
-        <li><b>No build-time dependency on peer components.</b> At test time, inputs come from <code>contracts/fixtures/</code>. At demo time, inputs come from either fixtures or the component's own generated data.</li>
-        <li>A component that consumes an upstream artifact <b>must not read from a peer component's <code>build/</code>, <code>target/</code>, or in-memory objects</b>. Read the artifact from a file, validated against the schema.</li>
-        <li>A component that produces an upstream artifact must run <code>make validate</code> before declaring &ldquo;done&rdquo;. Invalid output = failing CI on the component's own repo.</li>
-        <li><b>Integration</b> is P12's job: <code>integration/run-e2e.sh</code> shells P1&rarr;P10 in sequence with real data. Individual components never call each other in-process.</li>
-        <li>Every component publishes a small <b>&ldquo;usage&rdquo; README</b> at <code>components/p&lt;N&gt;/README.md</code>: what to install, what fixtures it expects, what it emits, one example command line.</li>
+        <li>Own directory under <code>components/p&lt;N&gt;/</code>. Own build system.</li>
+        <li>Each component has a <code>Makefile</code> exposing <code>make build test demo validate</code>. Fixtures come from <code>contracts/fixtures/</code>.</li>
+        <li>No build-time dependency on peer components. No in-process cross-calls.</li>
+        <li>The graph DB is accessed via <code>tools/graph/adapter.py</code>. Components read via JSON <em>or</em> DB. Both are the same data.</li>
+        <li>Every produced artifact runs <code>make validate</code> which invokes JSON-Schema + SARIF validators + <code>tools/provenance.py</code>.</li>
+        <li>Integration is P12's job (<code>integration/run-e2e.sh</code>).</li>
+        <li>Every component ships a <code>README.md</code>: install, fixtures, outputs, one example command.</li>
       </ol>
     </section>
 
@@ -359,30 +526,34 @@ cs5187-ssr/                              # class-wide monorepo
             <div class="io-box">
               <h4>Consumes</h4>
               <ul>
-                <li>A cloned OSS source tree under <code>sources/&lt;project&gt;/</code></li>
-                <li><code>config/build-&lt;project&gt;.yaml</code> (target triple, flags, entry make/cmake targets)</li>
+                <li>Cloned OSS source under <code>sources/&lt;project&gt;/</code></li>
+                <li><code>config/build-&lt;project&gt;.yaml</code></li>
               </ul>
-              For tests: <code>contracts/fixtures/tree-hello.tar.gz</code> (toy 3-file C project).
+              CI fixture: <code>contracts/fixtures/tree-hello.tar.gz</code>.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
               <ul>
                 <li>C1 &mdash; <code>artifacts/build/compile_commands.json</code></li>
-                <li>C2 &mdash; <code>artifacts/build/cir-manifest.json</code> + <code>artifacts/build/cir/*.cir.bc</code></li>
+                <li>C2 &mdash; <code>artifacts/build/cir-manifest.json</code> + <code>cir/*.cir.bc</code></li>
+                <li>SBOM (CycloneDX) + SLSA provenance in <code>artifacts/attestations/</code></li>
               </ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>3&ndash;4</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p1-ingest &amp;&amp; make build test demo validate</span>
-              Demo scans the toy tree and produces a valid C1 + C2 in <code>build/demo-out/</code>.
-            </dd>
-            <dt>Contract test</dt><dd>
-              <span class="cmd">tools/validate.py --schema contracts/cir-manifest.schema.json build/demo-out/cir-manifest.json</span>
-            </dd>
-            <dt>Prereq skills</dt><dd>Build systems (make, cmake, ninja, kbuild); intercept-build; Docker</dd>
-            <dt>Stretch</dt><dd>Auto-detect build system; incremental rebuild</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p1-ingest &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd><code>validate.py --schema contracts/cir-manifest.schema.json build/demo-out/cir-manifest.json</code></dd>
+            <dt>Prereq skills</dt><dd>Build systems (make, cmake, ninja, kbuild); Bear / intercept-build; whole-program bitcode (WLLVM / gllvm); Docker; SBOM (CycloneDX)</dd>
+            <dt>Industry driver</dt><dd>Req. 4 (SLSA/SBOM), Req. 5 (on-prem), Req. 6 (CI-native)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Lattner &amp; Adve. &ldquo;LLVM: A Compilation Framework&hellip;&rdquo;, CGO 2004.</li>
+              <li>GSoC 2025 blog: <a href="https://blog.llvm.org/posts/2025-gsoc-clangir-upstreaming/">ClangIR upstreaming</a>.</li>
+              <li>K&aacute;szoni-Rozsny&aacute;k et al. &ldquo;<a href="https://arxiv.org/abs/2408.05657">Implementing and Executing Static Analysis Using LLVM and CodeChecker</a>&rdquo;, arXiv 2024.</li>
+              <li><a href="https://google.github.io/oss-fuzz/getting-started/new-project-guide/">OSS-Fuzz project-integration guide</a> (build patterns).</li>
+              <li><a href="https://slsa.dev/spec/v1.0/">SLSA v1.0</a> + <a href="https://cyclonedx.org/">CycloneDX SBOM</a> specs.</li>
+            </ul></dd>
             <dt>Upstream impact</dt><dd>Indirect &mdash; enables every downstream stage</dd>
           </dl>
         </div>
@@ -393,35 +564,38 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>ClangIR analysis frontend</h3>
             <span class="cid">P2</span>
           </header>
-          <div class="role">Turn CIR modules into a walkable, USR-keyed program model that downstream analyses read from a single JSON file.</div>
+          <div class="role">Turn CIR modules into a USR-keyed program model that downstream analyses read from JSON <em>or</em> from the graph DB.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
               <ul>
-                <li>C1 (compilation database)</li>
-                <li>C2 (CIR manifest + bitcode)</li>
+                <li>C1, C2</li>
               </ul>
-              For tests: <code>contracts/fixtures/compile_commands-hello.json</code> + <code>fixtures/cir/*</code>.
+              CI fixture: <code>fixtures/compile_commands-hello.json</code> + <code>fixtures/cir/</code>.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
               <ul>
                 <li>C3 &mdash; <code>artifacts/model/program-model.json</code></li>
-                <li>Optional in-process library (linkable) for the same info</li>
+                <li>Node/edge inserts into KuzuDB tables: <code>Function</code>, <code>BasicBlock</code>, <code>Value</code>, <code>CALLS</code>, <code>DEFINES</code>, <code>USES</code></li>
               </ul>
-              The JSON is the contract; the library is a convenience.
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p2-cir-frontend &amp;&amp; make build test demo validate</span>
-              Reads fixture C1+C2, emits <code>build/demo-out/program-model.json</code>.
-            </dd>
-            <dt>Contract test</dt><dd><code>validate.py --schema contracts/program-model.schema.json build/demo-out/program-model.json</code></dd>
-            <dt>Prereq skills</dt><dd>C++, ClangIR/MLIR, USRs, pass manager</dd>
-            <dt>Stretch</dt><dd>Incremental invalidation; per-function caches</dd>
-            <dt>Upstream impact</dt><dd>Indirect &mdash; enables P4* and P3</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p2-cir-frontend &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>JSON schema validation on <code>program-model.json</code>; Cypher assertions on the DB.</dd>
+            <dt>Prereq skills</dt><dd>C++, ClangIR/MLIR, USRs, pass manager, graph DB modelling</dd>
+            <dt>Industry driver</dt><dd>Req. 2 (incremental), Req. 9 (cross-lang path)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Yamaguchi, Golde, Arp, Rieck. &ldquo;Modeling and Discovering Vulnerabilities with Code Property Graphs&rdquo;, IEEE S&amp;P 2014.</li>
+              <li>Sui, Xue. &ldquo;<a href="https://dl.acm.org/doi/10.1145/2892208.2892235">SVF: Interprocedural Static Value-Flow Analysis in LLVM</a>&rdquo;, CC 2016.</li>
+              <li>Lattner et al. &ldquo;MLIR: A Compiler Infrastructure for the End of Moore's Law&rdquo;, CGO 2021.</li>
+              <li>ClangIR documentation &amp; <a href="https://blog.llvm.org/posts/2025-gsoc-clangir-upstreaming/">GSoC 2025 upstreaming status</a>.</li>
+              <li><a href="https://github.com/Vela-Engineering/kuzu">Vela's Kuzu fork</a> README + <a href="https://docs.kuzudb.com/">Kuzu docs</a> + <a href="https://thedataquarry.com/blog/embedded-db-2/">embedded DB comparison</a>.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; enables P4* &amp; P3</dd>
           </dl>
         </div>
 
@@ -431,35 +605,40 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>Cross-TU summary runtime (SSAF)</h3>
             <span class="cid">P3</span>
           </header>
-          <div class="role">Per-TU summaries + a global linker so P4* can reason across TUs without loading the whole AST.</div>
+          <div class="role">Per-TU summaries + a global linker so P4* reasons across TUs. Incremental on PRs.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
               <ul>
-                <li>C2 (CIR manifest + bitcode)</li>
-                <li>C3 (program model)</li>
-                <li>Analysis-specific requests: <code>ssaf-request.json</code> (which summaries to compute)</li>
+                <li>C2, C3</li>
+                <li>Analysis requests: <code>ssaf-request.json</code></li>
               </ul>
-              For tests: fixtures under <code>contracts/fixtures/ssaf/</code>.
+              CI fixture: <code>fixtures/ssaf/</code>.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
               <ul>
-                <li>C4 &mdash; per-TU summaries in <code>artifacts/summaries/&lt;tu&gt;.summary.json</code></li>
-                <li>C4 &mdash; linked global summary <code>artifacts/summaries/global.summary.json</code></li>
+                <li>C4 &mdash; per-TU + global summaries as JSON</li>
+                <li>Summary rows in KuzuDB: <code>Summary(function_usr, kind, payload)</code>; edges to program-model entities</li>
               </ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p3-ssaf-runtime &amp;&amp; make build test demo validate</span>
-              Demo emits &ldquo;function effects&rdquo; and &ldquo;call graph&rdquo; summaries for the fixture program.
-            </dd>
-            <dt>Contract test</dt><dd><code>validate.py --schema contracts/ssaf-summary.schema.json build/demo-out/global.summary.json</code></dd>
-            <dt>Prereq skills</dt><dd>C++, USRs, graph algorithms, serialization</dd>
-            <dt>Stretch</dt><dd>ThinLTO-style parallel summarize; caching</dd>
-            <dt>Upstream impact</dt><dd>Indirect &mdash; unlocks cross-TU precision in every P4*</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p3-ssaf-runtime &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>Schema validation + a golden global-summary diff for the fixture program.</dd>
+            <dt>Prereq skills</dt><dd>C++, IFDS, biabduction basics, USRs, graph algorithms, serialization (FlatBuffers/Protobuf)</dd>
+            <dt>Industry driver</dt><dd>Req. 2 (incremental), Req. 9 (cross-lang)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Reps, Horwitz, Sagiv. &ldquo;Precise Interprocedural Dataflow Analysis via Graph Reachability&rdquo; (IFDS), POPL 1995.</li>
+              <li>Calcagno, Distefano, O'Hearn, Yang. &ldquo;<a href="https://dl.acm.org/doi/10.1145/1594834.1480917">Compositional Shape Analysis by Means of Biabduction</a>&rdquo;, POPL 2009.</li>
+              <li>Distefano, F&auml;hndrich, Logozzo, O'Hearn. &ldquo;Scaling Static Analyses at Facebook&rdquo;, CACM 2019.</li>
+              <li>Szab&oacute;, Erdweg, V&ouml;lter. &ldquo;<a href="https://arxiv.org/abs/2308.09660">Incrementalizing Production CodeQL Analyses</a>&rdquo;, ESEC/FSE 2023.</li>
+              <li>Bravenboer &amp; Smaragdakis. &ldquo;Doop&rdquo;, OOPSLA 2009 (Datalog-based whole-program).</li>
+              <li>LLVM Discourse RFC: <a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">SSAF</a>.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; unlocks cross-TU precision for every P4*</dd>
           </dl>
         </div>
 
@@ -469,34 +648,33 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>Memory-safety detector</h3>
             <span class="cid">P4a</span>
           </header>
-          <div class="role">Find use-after-free, double-free, and heap/stack out-of-bounds in real C/C++.</div>
+          <div class="role">Use-after-free, double-free, out-of-bounds on real C/C++.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C3 (program model)</li>
-                <li>C4 (SSAF summary)</li>
-                <li>Detector config: <code>components/p4a-memsafety/config/rules.yaml</code></li>
-              </ul>
-              For tests: fixture C3 + C4 for the <code>hello</code> and a curated Juliet subset.
+              <ul><li>C3, C4</li><li>Config: <code>rules.yaml</code></li></ul>
+              CI fixture: Juliet CWE-416/415/121 subset.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C5 &mdash; one <code>finding.json</code> per issue at <code>artifacts/findings/p4a/&lt;id&gt;.json</code></li>
-              </ul>
-              Every finding carries a stable ID, CWE, source location, and evidence trail.
+              <ul><li>C5 &mdash; one <code>finding.json</code> per issue, linked to program-model USRs</li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>3&ndash;4</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p4a-memsafety &amp;&amp; make build test demo validate</span>
-              Reads the fixture C3+C4, emits N findings, validates each against C5.
-            </dd>
-            <dt>Contract test</dt><dd><code>find build/demo-out -name '*.json' -exec validate.py --schema contracts/finding.schema.json {} \;</code></dd>
-            <dt>Prereq skills</dt><dd>Dataflow, pointer analysis, ClangIR API</dd>
-            <dt>Stretch</dt><dd>Context-sensitive taint of heap objects</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p4a-memsafety &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>C5 validation + precision/recall on shipped Juliet slice.</dd>
+            <dt>Prereq skills</dt><dd>Dataflow, pointer/alias analysis, ClangIR APIs</dd>
+            <dt>Industry driver</dt><dd>Req. 3 (low FPR), Req. 7 (reproducer needed)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Sui, Xue. &ldquo;SVF&rdquo;, CC 2016 (base for value-flow).</li>
+              <li>Calcagno et al. biabduction (POPL 2009).</li>
+              <li>Xu et al. &ldquo;<a href="https://arxiv.org/abs/2603.27224">Finding Memory Leaks in C/C++ Programs via Neuro-Symbolic Augmented Static Analysis</a>&rdquo;, arXiv 2026.</li>
+              <li>Chen et al. &ldquo;<a href="https://arxiv.org/abs/2509.22530">Boosting Pointer Analysis with LLM-Enhanced Allocation Function Detection</a>&rdquo;, 2025.</li>
+              <li>Yamaguchi et al. Code Property Graphs, IEEE S&amp;P 2014.</li>
+              <li>Wu et al. &ldquo;<a href="https://arxiv.org/abs/2507.15671">BugScope: Learn to Find Bugs Like Human</a>&rdquo;, 2025.</li>
+            </ul></dd>
             <dt>Upstream impact</dt><dd><b>Yes</b> &mdash; jointly with P8, file confirmed bugs upstream</dd>
           </dl>
         </div>
@@ -507,29 +685,32 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>Integer-safety detector</h3>
             <span class="cid">P4b</span>
           </header>
-          <div class="role">Find integer overflow, sign-conversion, division-by-zero, and index-arithmetic bugs.</div>
+          <div class="role">Integer overflow, sign-conversion, division-by-zero, index arithmetic.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C3, C4</li>
-                <li>Config: <code>rules.yaml</code> with sink APIs (e.g. <code>memcpy(len)</code>)</li>
-              </ul>
-              For tests: Juliet integer CWEs subset.
+              <ul><li>C3, C4</li><li>Sink APIs config</li></ul>
+              CI fixture: Juliet integer CWEs (190, 191, 197, 369).
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C5 &mdash; findings with interval / bit-vector evidence attached in the <code>trace</code> field</li>
-              </ul>
+              <ul><li>C5 with interval / bit-vector evidence in <code>trace</code></li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>3</dd>
             <dt>Standalone build</dt><dd><span class="cmd">cd components/p4b-intsafety &amp;&amp; make build test demo validate</span></dd>
-            <dt>Contract test</dt><dd>C5 schema validation on every emitted finding.</dd>
-            <dt>Prereq skills</dt><dd>Abstract interpretation, interval/bit-vector domains, SMT (Z3)</dd>
-            <dt>Stretch</dt><dd>Path-sensitive refinement using Z3 for finalists</dd>
+            <dt>Contract test</dt><dd>C5 validation + Z3-checked feasibility on flagged paths.</dd>
+            <dt>Prereq skills</dt><dd>Abstract interpretation, interval / bit-vector domains, Z3</dd>
+            <dt>Industry driver</dt><dd>Req. 3 (low FPR), Req. 7</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Wang, Chen, Zeldovich, Kaashoek. &ldquo;Understanding Integer Overflow in C/C++&rdquo;, TOSEM 2015 (KINT background).</li>
+              <li>Wang, Zeldovich et al. &ldquo;IntFlow&rdquo;.</li>
+              <li>Muntean et al. &ldquo;<a href="https://arxiv.org/abs/1807.05092">IntRepair: Informed Repairing of Integer Overflows</a>&rdquo;.</li>
+              <li>Dietz et al. &ldquo;Understanding Integer Overflow in C/C++&rdquo; (IOC / UBSan roots).</li>
+              <li>Min&eacute;. &ldquo;The Octagon Abstract Domain&rdquo;, 2006 (numeric domain).</li>
+            </ul></dd>
             <dt>Upstream impact</dt><dd><b>Yes</b> (with P8)</dd>
           </dl>
         </div>
@@ -540,28 +721,31 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>Concurrency detector</h3>
             <span class="cid">P4c</span>
           </header>
-          <div class="role">Static lockset + escape analysis for data races and TOCTOU in multi-threaded C/C++.</div>
+          <div class="role">Static lockset + escape analysis for data races and TOCTOU.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C3, C4</li>
-                <li>Config: threading library model (pthreads / std::thread)</li>
-              </ul>
+              <ul><li>C3, C4</li><li>Threading model config</li></ul>
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C5 &mdash; findings tagged with locksets and access pair evidence</li>
-              </ul>
+              <ul><li>C5 tagged with locksets + access pairs</li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>3</dd>
             <dt>Standalone build</dt><dd><span class="cmd">cd components/p4c-concurrency &amp;&amp; make build test demo validate</span></dd>
-            <dt>Contract test</dt><dd>C5 schema + golden lockset for the fixture</dd>
-            <dt>Prereq skills</dt><dd>Concurrency semantics, happens-before, lockset, TSan/KCSAN internals</dd>
-            <dt>Stretch</dt><dd>TSan integration so P8 can confirm dynamically</dd>
+            <dt>Contract test</dt><dd>C5 + golden lockset on fixture</dd>
+            <dt>Prereq skills</dt><dd>Concurrency semantics, happens-before, lockset, TSan/KCSAN</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 7 &mdash; concurrency bugs are the class most-desired upstream</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Voung, Jhala, Lerner. &ldquo;RELAY: Static Race Detection on Millions of Lines of Code&rdquo;, ESEC/FSE 2007.</li>
+              <li>Kahlon, Sinha, Kruus. &ldquo;Fast &amp; Accurate Static Data-Race Detection&rdquo;, CAV 2007.</li>
+              <li>Dac&iacute;k, Vojnar. &ldquo;<a href="https://arxiv.org/abs/2502.04905">RacerF: Lightweight Static Data Race Detection for C Code</a>&rdquo;, 2025.</li>
+              <li>Serebryany, Iskhodzhanov. ThreadSanitizer, WBIA 2009.</li>
+              <li>Musuvathi &amp; Qadeer. &ldquo;Iterative Context Bounding&rdquo;, PLDI 2007.</li>
+            </ul></dd>
             <dt>Upstream impact</dt><dd><b>Yes</b> (with P8)</dd>
           </dl>
         </div>
@@ -572,28 +756,32 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>Taint / injection detector</h3>
             <span class="cid">P4d</span>
           </header>
-          <div class="role">Track untrusted input through the program to sensitive sinks.</div>
+          <div class="role">Untrusted input to sensitive sinks (exec, format, SQL, deserialize).</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C3, C4</li>
-                <li>Source/sink DSL: <code>packs/*.yaml</code> (libc, POSIX, OpenSSL, SQLite)</li>
-              </ul>
+              <ul><li>C3, C4</li><li>Source/sink DSL packs</li></ul>
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C5 &mdash; findings with taint path in the <code>trace</code> field</li>
-              </ul>
+              <ul><li>C5 with taint path in <code>trace</code></li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>3</dd>
             <dt>Standalone build</dt><dd><span class="cmd">cd components/p4d-taint &amp;&amp; make build test demo validate</span></dd>
-            <dt>Contract test</dt><dd>C5 validation + a hand-crafted taint fixture where the expected sink is reached</dd>
-            <dt>Prereq skills</dt><dd>IFDS / taint analysis, source/sink modeling</dd>
-            <dt>Stretch</dt><dd>Field-sensitive taint on structs</dd>
+            <dt>Contract test</dt><dd>C5 + hand-crafted taint fixture reaching known sink</dd>
+            <dt>Prereq skills</dt><dd>IFDS, source/sink modelling, YAML/DSL design</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 9 (multi-lang) &mdash; YASA-style</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Livshits &amp; Lam. &ldquo;Finding Security Vulnerabilities in Java Applications&hellip;&rdquo;, USENIX Security 2005.</li>
+              <li>Arzt et al. &ldquo;FlowDroid&rdquo;, PLDI 2014.</li>
+              <li>Sridharan et al. &ldquo;F4F: Taint Analysis of Framework-based Web Apps&rdquo;, OOPSLA 2011.</li>
+              <li>Reps, Horwitz, Sagiv IFDS, POPL 1995 (formal base).</li>
+              <li>Ant Group. &ldquo;<a href="https://arxiv.org/abs/2601.17390">YASA: Scalable Multi-Language Taint Analysis on the Unified AST at Ant Group</a>&rdquo;, 2026 (industrial scale).</li>
+              <li>Chen et al. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3773365.3773410">LLM-Driven Adaptive Source&ndash;Sink Identification and False Positive Mitigation for Static Analysis</a>&rdquo;, 2025.</li>
+            </ul></dd>
             <dt>Upstream impact</dt><dd><b>Yes</b> (with P8)</dd>
           </dl>
         </div>
@@ -608,28 +796,27 @@ cs5187-ssr/                              # class-wide monorepo
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C5 &mdash; one or more directories of <code>finding.json</code> (from any P4*)</li>
-              </ul>
-              For tests: mixed fixtures spanning all four detectors under <code>contracts/fixtures/findings/</code>.
+              <ul><li>C5 &mdash; findings from any P4*</li></ul>
+              CI fixture: mixed <code>fixtures/findings/</code>.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C6 &mdash; <code>artifacts/reports/all.sarif</code></li>
-                <li>A schema-validated superset report at <code>all.merged.json</code></li>
-              </ul>
+              <ul><li>C6 &mdash; <code>artifacts/reports/all.sarif</code></li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>2</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p5-sarif &amp;&amp; make build test demo validate</span>
-              No P4* required &mdash; demo runs entirely on shipped fixtures.
-            </dd>
-            <dt>Contract test</dt><dd>Official SARIF validator; CI job asserts round-trip: parse &rarr; emit &rarr; parse.</dd>
-            <dt>Prereq skills</dt><dd>SARIF spec, JSON Schema, small CLI tooling</dd>
-            <dt>Stretch</dt><dd>GitHub Code Scanning upload; VS Code SARIF viewer instructions</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p5-sarif &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>Official SARIF validator + round-trip parse/emit</dd>
+            <dt>Prereq skills</dt><dd>SARIF spec, JSON Schema</dd>
+            <dt>Industry driver</dt><dd>Req. 1 (SARIF-first), Req. 6 (CI upload)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li><a href="https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata02/os/sarif-v2.1.0-errata02-os-complete.html">OASIS SARIF v2.1.0 specification</a>.</li>
+              <li><a href="https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/sarif-support-for-code-scanning">GitHub Code Scanning SARIF support</a>.</li>
+              <li><a href="https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata02/os/schemas/sarif-schema-2.1.0.json">SARIF JSON Schema</a>.</li>
+              <li>SonarQube / GitLab SARIF ingestion docs (industry patterns).</li>
+            </ul></dd>
             <dt>Upstream impact</dt><dd>Indirect</dd>
           </dl>
         </div>
@@ -640,34 +827,34 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>LLM-based triage layer</h3>
             <span class="cid">P6</span>
           </header>
-          <div class="role">Classify each finding as <em>likely real</em>, <em>likely FP</em>, or <em>needs execution</em>, with a written rationale.</div>
+          <div class="role">Classify each finding as <em>likely real</em> / <em>likely FP</em> / <em>needs execution</em> with a written rationale.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C6 &mdash; SARIF report</li>
-                <li>Source-file access (read-only) OR C3 program model for slicing</li>
-                <li>An LLM API key (OpenAI / Anthropic / OpenRouter / vLLM)</li>
-              </ul>
-              For tests: <code>contracts/fixtures/report-hello.sarif</code> + <code>fixtures/src/</code>.
+              <ul><li>C6 SARIF</li><li>Source access + C3 for slicing</li><li>LLM API key</li></ul>
+              CI fixture: <code>fixtures/report-hello.sarif</code> + <code>fixtures/src/</code>.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C7 &mdash; <code>artifacts/triage/triaged.json</code>: array of {finding_id, verdict, confidence, rationale, poc_hints}</li>
-              </ul>
+              <ul><li>C7 &mdash; array of {finding_id, verdict, confidence, rationale, poc_hints, model, prompt_hash}</li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p6-triage &amp;&amp; make build test demo validate</span>
-              Ships a &ldquo;mock LLM&rdquo; provider (fixed responses) so <code>make test</code> runs without network. <code>make demo</code> uses the real LLM.
-            </dd>
-            <dt>Contract test</dt><dd>C7 schema + a small labeled TP/FP set to assert &ge; baseline accuracy in CI.</dd>
-            <dt>Prereq skills</dt><dd>LLM prompting, retrieval, evaluation, at least one SDK</dd>
-            <dt>Stretch</dt><dd>Local model via Ollama / vLLM; chain-of-thought referencing IR excerpts</dd>
-            <dt>Upstream impact</dt><dd>Indirect &mdash; measured by FP rate reduction feeding P8</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p6-triage &amp;&amp; make build test demo validate</span> &mdash; ships a mock LLM provider; <code>make demo</code> uses the real one.</dd>
+            <dt>Contract test</dt><dd>C7 schema + labeled TP/FP set for accuracy &ge; baseline in CI</dd>
+            <dt>Prereq skills</dt><dd>LLM prompting, retrieval, evaluation; local runtimes (Ollama / vLLM) for Req. 5</dd>
+            <dt>Industry driver</dt><dd>Req. 3 (low FPR), Req. 5 (on-prem), Req. 10 (auditable)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Li, Hao, Zhai, Qian. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3649828">Enhancing Static Analysis for Practical Bug Detection: An LLM-Integrated Approach</a>&rdquo; (LLift), OOPSLA 2024.</li>
+              <li>Anon. &ldquo;<a href="https://openreview.net/pdf?id=9LdJDU7E91">IRIS: LLM-Assisted Static Analysis for Detecting Security Vulnerabilities</a>&rdquo;, ICLR 2025 (+103.7 % vs CodeQL alone).</li>
+              <li>Li, Zhou, Sridharan, Zhang, Qian. &ldquo;<a href="https://arxiv.org/abs/2606.15122">Hitchhiker's Guide to Program Analysis, Part III: Mostly Harmless LLMs</a>&rdquo;, 2026.</li>
+              <li>Wang et al. &ldquo;<a href="https://arxiv.org/abs/2506.10322">Minimizing False Positives in Static Bug Detection via LLM-Enhanced Path Feasibility Analysis</a>&rdquo;, 2025.</li>
+              <li>Anon. &ldquo;<a href="https://arxiv.org/abs/2601.18844">Reducing False Positives in Static Bug Detection with LLMs: An Empirical Study in Industry</a>&rdquo;, 2026.</li>
+              <li>Arm <a href="https://github.com/arm/metis">Metis</a> repo &mdash; production LLM triage patterns.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; measured by FP-rate reduction reaching P8</dd>
           </dl>
         </div>
 
@@ -677,37 +864,33 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>PoC / harness generator</h3>
             <span class="cid">P7</span>
           </header>
-          <div class="role">Turn a triaged finding into a runnable C/C++ harness that <em>should</em> crash under a sanitizer if the bug is real.</div>
+          <div class="role">Turn a triaged finding into a runnable C/C++ harness that crashes under a sanitizer if the bug is real.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C7 &mdash; triaged findings</li>
-                <li>Source-file access (read-only)</li>
-                <li>Optional C3 for signature / usage discovery</li>
-              </ul>
+              <ul><li>C7 triaged findings</li><li>Source + C3 for signature discovery</li></ul>
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C8 &mdash; a directory per finding: <code>poc/&lt;id&gt;/{harness.c, build.sh, seed/, metadata.json}</code></li>
-              </ul>
-              <code>metadata.json</code> declares the harness type: <code>reproducer</code> or <code>libfuzzer</code>.
+              <ul><li>C8 &mdash; <code>poc/&lt;id&gt;/{harness.c, build.sh, seed/, metadata.json}</code></li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p7-pocgen &amp;&amp; make build test demo validate</span>
-              Ships golden Poc bundles in <code>test/expected/</code>; <code>make test</code> diffs against them.
-            </dd>
-            <dt>Contract test</dt><dd>
-              Every generated bundle must (a) parse <code>metadata.json</code> against schema and
-              (b) <code>bash build.sh</code> must produce a binary in a scratch container.
-            </dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p7-pocgen &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>Every bundle parses metadata + <code>bash build.sh</code> yields a binary in a scratch container.</dd>
             <dt>Prereq skills</dt><dd>LLM tool use, C/C++, LibFuzzer harnesses, sanitizer semantics</dd>
-            <dt>Stretch</dt><dd>LLM feedback loop from failed builds</dd>
-            <dt>Upstream impact</dt><dd>Indirect &mdash; but the harness <em>is</em> what makes upstream reports reproducible</dd>
+            <dt>Industry driver</dt><dd>Req. 7 (reproducer), Req. 3 (evidence not vibes)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Xia, Paltenghi, Tian, Pradel, Zhang. &ldquo;Fuzz4All: Universal Fuzzing with LLMs&rdquo;, ICSE 2024.</li>
+              <li>Deng et al. &ldquo;TitanFuzz&rdquo;, ISSTA 2023.</li>
+              <li>Lyu et al. &ldquo;<a href="https://arxiv.org/abs/2312.17677">Prompt Fuzzing for Fuzz Driver Generation</a>&rdquo; (PromptFuzz), 2024.</li>
+              <li>Google. &ldquo;<a href="https://github.com/google/oss-fuzz-gen">OSS-Fuzz-Gen</a>&rdquo; &mdash; multi-agent LLM harness gen at industrial scale.</li>
+              <li>Zhang, Meng, Roychoudhury et al. &ldquo;<a href="https://abhikrc.com/pdf/icse2026-seip.pdf">Fixing Security Vulnerabilities with Agentic AI in OSS-Fuzz</a>&rdquo;, ICSE 2026 SEIP.</li>
+              <li>Anon. &ldquo;<a href="https://arxiv.org/abs/2507.18289">Scheduzz: Constraint-based Fuzz Driver Generation with Dual Scheduling</a>&rdquo;, 2025.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; the harness <em>is</em> what makes upstream reports actionable</dd>
           </dl>
         </div>
 
@@ -717,33 +900,34 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>Execution-based verifier</h3>
             <span class="cid">P8</span>
           </header>
-          <div class="role">Compile P7's harness with sanitizers, run it (optionally fuzz / concolic-execute), emit a verdict backed by a real crash log.</div>
+          <div class="role">Compile P7's harness with sanitizers, run &amp; fuzz &amp; concolic-execute, emit a verdict backed by a real crash log.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C8 &mdash; PoC bundles</li>
-                <li>Sandbox limits from <code>config/sandbox.yaml</code></li>
-              </ul>
-              For tests: shipped bundles at <code>contracts/fixtures/poc/</code> including one guaranteed crasher and one non-crasher.
+              <ul><li>C8 PoC bundles</li><li>Sandbox config</li></ul>
+              CI fixture: one guaranteed crasher + one non-crasher.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C9 &mdash; <code>verdicts/&lt;id&gt;.json</code>: verdict in {<code>CONFIRMED</code>, <code>REJECTED_BY_EXECUTION</code>, <code>INCONCLUSIVE</code>}, sanitizer log, minimized input, build recipe</li>
-              </ul>
+              <ul><li>C9 &mdash; verdict in {<code>CONFIRMED</code>, <code>REJECTED_BY_EXECUTION</code>, <code>INCONCLUSIVE</code>} + sanitizer log + minimized input</li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p8-verifier &amp;&amp; make build test demo validate</span>
-              <code>make test</code> runs shipped fixtures &mdash; asserts CONFIRMED on the guaranteed crasher and REJECTED on the non-crasher.
-            </dd>
-            <dt>Contract test</dt><dd>C9 schema on every verdict; golden verdicts for shipped fixtures.</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p8-verifier &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>C9 schema + golden verdicts for shipped fixtures.</dd>
             <dt>Prereq skills</dt><dd>Sanitizers, LibFuzzer/AFL++, KLEE/SymCC, container isolation</dd>
-            <dt>Stretch</dt><dd>KLEE fallback; delta-debug minimization</dd>
-            <dt>Upstream impact</dt><dd><b>Yes</b> (jointly with a P4*)</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 7, Req. 6 (CI-runnable)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Cadar, Dunbar, Engler. &ldquo;KLEE&rdquo;, OSDI 2008.</li>
+              <li>Shoshitaishvili et al. &ldquo;SOK: (State of) The Art of War&rdquo; (angr), IEEE S&amp;P 2016.</li>
+              <li>Serebryany, Bruening, Potapenko, Vyukov. &ldquo;AddressSanitizer&rdquo;, USENIX ATC 2012.</li>
+              <li>B&ouml;hme, Pham, Nguyen, Roychoudhury. &ldquo;Directed Greybox Fuzzing&rdquo; (AFLGo), CCS 2017.</li>
+              <li>Fioraldi, Maier, Ei&szlig;feldt, Heuse. &ldquo;AFL++&rdquo;, WOOT 2020.</li>
+              <li><a href="https://google.github.io/oss-fuzz/">OSS-Fuzz</a> operator docs &mdash; how Google runs sandboxed fuzzing at scale.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> jointly with a P4*</dd>
           </dl>
         </div>
 
@@ -757,28 +941,29 @@ cs5187-ssr/                              # class-wide monorepo
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C6 (SARIF) or C7 (triaged) &mdash; whichever is available</li>
-                <li>C9 (verdicts) &mdash; when available, for crash-log clustering</li>
-              </ul>
-              For tests: fixture bundle of 100 findings with known 15 clusters.
+              <ul><li>C6 / C7 + C9 (verdicts / crash logs)</li></ul>
+              CI fixture: 100 findings with known 15 clusters.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>C10 &mdash; <code>artifacts/clusters/clusters.json</code>: finding_id &rarr; cluster_id, plus per-cluster representative</li>
-              </ul>
+              <ul><li>C10 &mdash; <code>finding_id &rarr; cluster_id</code>, per-cluster representative</li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>2&ndash;3</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p9-dedup &amp;&amp; make build test demo validate</span>
-              Golden test: assert cluster count on the fixture within &plusmn;1.
-            </dd>
-            <dt>Contract test</dt><dd>C10 schema + purity / completeness metrics against the labeled fixture</dd>
-            <dt>Prereq skills</dt><dd>Symbol resolution, MinHash / SimHash, LLM embeddings (stretch)</dd>
-            <dt>Stretch</dt><dd>Cross-run tracking so the same bug retains its ID next scan</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p9-dedup &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>C10 + purity/completeness on the labeled fixture</dd>
+            <dt>Prereq skills</dt><dd>Symbol resolution, MinHash/SimHash, LLM embeddings (stretch)</dd>
+            <dt>Industry driver</dt><dd>Req. 8 (dedup at scale), Req. 10 (auditable)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Dang et al. &ldquo;ReBucket: A Method for Clustering Duplicate Crash Reports Based on Call Stack Similarity&rdquo;.</li>
+              <li>Runeson et al. classical bug-report dedup work.</li>
+              <li>Rodrigues et al. &ldquo;<a href="https://arxiv.org/abs/2205.00212">Aggregation of Stack Trace Similarities for Crash Report Deduplication</a>&rdquo; (TraceSim/FaST), 2022.</li>
+              <li>Herter et al. &ldquo;<a href="https://arxiv.org/abs/2512.01609">GPTrace: Effective Crash Deduplication Using LLM Embeddings</a>&rdquo;, 2025.</li>
+              <li>Anon. &ldquo;<a href="https://arxiv.org/abs/2508.19449">Stack Trace-Based Crash Deduplication with Transformer Adaptation</a>&rdquo; (dedupT), 2025.</li>
+              <li>van Tonder &amp; Le Goues. &ldquo;Semantic Crash Bucketing&rdquo;.</li>
+            </ul></dd>
             <dt>Upstream impact</dt><dd>Indirect</dd>
           </dl>
         </div>
@@ -789,34 +974,31 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>Review dashboard</h3>
             <span class="cid">P10</span>
           </header>
-          <div class="role">Web UI that shows the finding, the LLM rationale, the PoC, the crash log, and a &ldquo;file upstream&rdquo; button.</div>
+          <div class="role">Web UI showing finding + LLM rationale + PoC + crash log + &ldquo;file upstream&rdquo; button.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C6 (SARIF), C7 (triaged), C9 (verdicts), C10 (clusters)</li>
-                <li>Source code (read-only)</li>
-              </ul>
-              For tests: fixture bundle of all four inputs at <code>contracts/fixtures/dashboard/</code>.
+              <ul><li>C6, C7, C9, C10 &mdash; also queries the graph DB directly</li></ul>
+              CI fixture: <code>fixtures/dashboard/</code>.
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>Single-page web app + small backend</li>
-                <li>Exportable review reports (PDF / Markdown) at <code>exports/</code></li>
-                <li>Optional GitHub issue payloads pre-filled with PoC + crash log</li>
-              </ul>
+              <ul><li>SPA + small backend</li><li>PDF/Markdown exports</li><li>Pre-filled GitHub issue payloads</li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>4&ndash;5</dd>
-            <dt>Standalone build</dt><dd>
-              <span class="cmd">cd components/p10-dashboard &amp;&amp; make build test demo validate</span>
-              <code>make demo</code> serves the UI at <code>localhost:5187</code> reading from the fixture bundle.
-            </dd>
-            <dt>Contract test</dt><dd>End-to-end: Playwright scripted flow asserts renders + export produced.</dd>
-            <dt>Prereq skills</dt><dd>Web (React/Svelte/Vite), SARIF, small backend (FastAPI / Flask), GitHub API</dd>
-            <dt>Stretch</dt><dd>Chat with the finding via P6's LLM; direct PR filing</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p10-dashboard &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>Playwright end-to-end asserting render + export</dd>
+            <dt>Prereq skills</dt><dd>Web (React/Svelte/Vite), SARIF, small backend (FastAPI/Flask), GitHub API</dd>
+            <dt>Industry driver</dt><dd>Req. 6 (CI-native), Req. 10 (auditable), Req. 7 (reproducer link)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>K&aacute;szoni-Rozsny&aacute;k et al. &ldquo;<a href="https://arxiv.org/abs/2408.05657">Implementing and Executing Static Analysis Using LLVM and CodeChecker</a>&rdquo;, 2024 (dashboard reference).</li>
+              <li>Microsoft <a href="https://marketplace.visualstudio.com/items?itemName=MS-SarifVSCode.sarif-viewer">SARIF Viewer for VS Code</a> &mdash; UX patterns.</li>
+              <li>Arm <a href="https://github.com/arm/metis">Metis</a> triage CLI as a UX baseline.</li>
+              <li>GitHub Code Scanning UI docs &mdash; industry-standard finding UX.</li>
+            </ul></dd>
             <dt>Upstream impact</dt><dd>Indirect &mdash; makes upstream reports consistent</dd>
           </dl>
         </div>
@@ -827,7 +1009,6 @@ cs5187-ssr/                              # class-wide monorepo
     <!-- Bonus -->
     <section id="bonus">
       <h2>Bonus tracks (P11 &middot; P12)</h2>
-
       <div class="component-grid">
 
         <div class="component" id="p11">
@@ -839,23 +1020,24 @@ cs5187-ssr/                              # class-wide monorepo
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>C6 (SARIF) + C9 (verdicts) from real runs</li>
-                <li>Labeled datasets: <a href="https://samate.nist.gov/SARD/">SARD / Juliet</a>, curated real-CVE micro-benchmarks</li>
-              </ul>
+              <ul><li>C6 + C9 from real runs</li><li>Labeled datasets: SARD/Juliet, MAGMA, real-CVE micro-benchmarks</li></ul>
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li>Precision/recall tables &amp; plots as <code>artifacts/bench/*.csv</code> + <code>*.png</code></li>
-                <li>An HTML report at <code>artifacts/bench/report.html</code></li>
-              </ul>
+              <ul><li>Precision/recall tables + plots</li><li>HTML report at <code>artifacts/bench/report.html</code></li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>2&ndash;3</dd>
             <dt>Standalone build</dt><dd><span class="cmd">cd components/p11-bench &amp;&amp; make build test demo validate</span></dd>
-            <dt>Contract test</dt><dd>Idempotent runs; deterministic tables on fixed dataset</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 4 (reproducible)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Hazimeh, Herrera, Payer. &ldquo;MAGMA: A Ground-Truth Fuzzing Benchmark&rdquo;, SIGMETRICS 2020.</li>
+              <li>Metzman et al. &ldquo;FuzzBench: An Open Fuzzer Benchmarking Platform and Service&rdquo;, ESEC/FSE 2021.</li>
+              <li><a href="https://samate.nist.gov/SARD/">NIST SARD / Juliet</a> reference dataset.</li>
+              <li>Klees, Ruef, Cooper, Wei, Hicks. &ldquo;Evaluating Fuzz Testing&rdquo;, CCS 2018.</li>
+            </ul></dd>
           </dl>
         </div>
 
@@ -864,28 +1046,28 @@ cs5187-ssr/                              # class-wide monorepo
             <h3>Ops / reproducibility harness</h3>
             <span class="cid">P12</span>
           </header>
-          <div class="role">One-command runs, containers, CI, and provenance so graders can reproduce trivially.</div>
+          <div class="role">One-command runs, containers, CI, and SLSA provenance so graders and enterprise adopters can reproduce trivially.</div>
           <div class="io">
             <div class="io-box">
               <h4>Consumes</h4>
-              <ul>
-                <li>All component <code>Makefile</code>s (the four standard targets: build/test/demo/validate)</li>
-                <li>A top-level <code>manifest.yaml</code> declaring components + versions</li>
-              </ul>
+              <ul><li>All component <code>Makefile</code>s</li><li><code>manifest.yaml</code> declaring components + versions</li></ul>
             </div>
             <div class="io-box out">
               <h4>Produces</h4>
-              <ul>
-                <li><code>Dockerfile</code> + <code>docker-compose.yaml</code> for the whole system</li>
-                <li><code>integration/run-e2e.sh</code>: shells P1&rarr;P10 end-to-end</li>
-                <li>GitHub Actions matrix that runs each component's four targets on every PR</li>
-              </ul>
+              <ul><li><code>Dockerfile</code> + compose</li><li><code>integration/run-e2e.sh</code></li><li>GitHub Actions matrix + SLSA v1.0 provenance for every artifact</li></ul>
             </div>
           </div>
           <dl>
             <dt>Team size</dt><dd>2</dd>
-            <dt>Standalone build</dt><dd><span class="cmd">cd components/p12-ops &amp;&amp; make demo</span> = <code>docker run cs5187/ssr scan &lt;git-url&gt;</code> against a canned target</dd>
-            <dt>Contract test</dt><dd>CI green badge on the shared repo; container image builds from scratch on a clean runner</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p12-ops &amp;&amp; make demo</span> = <code>docker run cs5187/ssr scan &lt;git-url&gt;</code></dd>
+            <dt>Industry driver</dt><dd>Req. 4 (SLSA), Req. 6 (CI), Req. 5 (on-prem)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li><a href="https://slsa.dev/spec/v1.0/">SLSA v1.0 specification</a>.</li>
+              <li><a href="https://in-toto.io/">in-toto</a> framework docs.</li>
+              <li><a href="https://www.sigstore.dev/">Sigstore</a> project docs.</li>
+              <li>&ldquo;<a href="https://www.infoq.com/news/2025/08/provenance/">Supply Chain Security: Provenance Tools Becoming Standard in Developer Platforms</a>&rdquo;, InfoQ Aug 2025.</li>
+            </ul></dd>
           </dl>
         </div>
 
@@ -896,10 +1078,10 @@ cs5187-ssr/                              # class-wide monorepo
     <section id="milestones">
       <h2>Milestones</h2>
       <dl class="info-grid">
-        <dt>Proposal due</dt><dd><b>Sun 20 Sep 2026</b> &middot; each group names its component (P1&hellip;P12), OSS targets it will scan (if applicable), and the fixtures it will consume/produce.</dd>
-        <dt>Progress Meeting 1</dt><dd><b>Oct 5&ndash;9</b> &middot; <em>contracts frozen</em>. Every group demonstrates <code>make build test demo validate</code> passing on fixtures alone.</dd>
+        <dt>Proposal due</dt><dd><b>Sun 20 Sep 2026</b> &middot; each group names its component, OSS targets, and fixtures it will consume/produce.</dd>
+        <dt>Progress Meeting 1</dt><dd><b>Oct 5&ndash;9</b> &middot; <em>contracts frozen</em>. Every group demos <code>make build test demo validate</code> passing on fixtures alone. Graph DB adapter merged.</dd>
         <dt>Progress Meeting 2</dt><dd><b>Oct 26&ndash;30</b> &middot; first real end-to-end run on one target. First-bug candidates flowing P4* &rarr; P6 &rarr; P7 &rarr; P8.</dd>
-        <dt>Progress Meeting 3</dt><dd><b>Nov 2&ndash;6</b> &middot; upstream reports/PRs filed. Verdicts and clustering stable. Dashboard usable.</dd>
+        <dt>Progress Meeting 3</dt><dd><b>Nov 2&ndash;6</b> &middot; upstream reports/PRs filed. Verdicts + clustering stable. Dashboard usable.</dd>
         <dt>Final presentation</dt><dd><b>Thu 12 Nov 2026</b> &middot; class demo; each group shows its slice + integrated demo on a live target.</dd>
         <dt>Paper + repo due</dt><dd><b>Fri 13 Nov 2026, 23:59 IST</b>.</dd>
       </dl>
@@ -909,14 +1091,16 @@ cs5187-ssr/                              # class-wide monorepo
     <section id="references">
       <h2>References</h2>
       <ul>
-        <li><a href="https://github.com/arm/metis">Arm Metis</a> &mdash; AI-powered security code-review framework (Python, Tree-sitter, LLM-driven). Inspiration; we specialize on C/C++ and verify by execution.</li>
-        <li><a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">RFC: Scalable Static Analysis Framework</a> &mdash; the SSAF blueprint for per-TU summaries, USR-keyed entities, and cross-TU linking.</li>
-        <li><a href="https://llvm.github.io/clangir/">ClangIR (CIR)</a> &mdash; MLIR-based high-level IR for C/C++ preserving language-level types and operations.</li>
+        <li><a href="https://github.com/arm/metis">Arm Metis</a> &mdash; AI-powered security code-review framework (Python, Tree-sitter, LLM). Model to learn from; we specialize on C/C++ + execution verification.</li>
+        <li><a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">RFC: Scalable Static Analysis Framework (SSAF)</a> &mdash; blueprint for per-TU summaries + USR-keyed entities + cross-TU linking.</li>
+        <li><a href="https://llvm.github.io/clangir/">ClangIR (CIR)</a> &mdash; MLIR-based high-level IR for C/C++.</li>
+        <li><a href="https://iris-sast.github.io/">IRIS</a> &mdash; neurosymbolic LLM + static-analysis framework (ICLR 2025).</li>
         <li><a href="https://sarifweb.azurewebsites.net/">SARIF v2.1.0</a> &mdash; contract C6.</li>
-        <li><a href="https://json-schema.org/">JSON Schema</a> &mdash; the format for contracts C2&ndash;C5, C7, C9&ndash;C10.</li>
-        <li><a href="https://samate.nist.gov/SARD/">NIST SARD / Juliet</a> &mdash; labeled C/C++ CWE test cases for P4* precision/recall.</li>
-        <li><a href="https://google.github.io/oss-fuzz/">OSS-Fuzz</a> &mdash; harness / sanitizer conventions for P7 &amp; P8.</li>
-        <li><a href="https://llvm.org/docs/LibFuzzer.html">LibFuzzer</a>, <a href="https://klee-se.org/">KLEE</a> &mdash; the execution engines P8 defaults to.</li>
+        <li><a href="https://slsa.dev/spec/v1.0/">SLSA v1.0</a> + <a href="https://cyclonedx.org/">CycloneDX SBOM</a> + <a href="https://in-toto.io/">in-toto</a> &mdash; provenance stack.</li>
+        <li><a href="https://github.com/Vela-Engineering/kuzu">Vela Engineering's Kuzu fork</a> (<code>v0.12.0-vela</code>, MIT) &mdash; the graph store, with concurrent multi-writer support. Upstream <a href="https://github.com/kuzudb/kuzu">kuzudb/kuzu</a> was archived Oct 2025 after Apple's acquisition.</li>
+        <li><a href="https://samate.nist.gov/SARD/">NIST SARD / Juliet</a> + <a href="https://github.com/HexHive/magma">MAGMA</a> &mdash; labeled benchmarks.</li>
+        <li><a href="https://google.github.io/oss-fuzz/">OSS-Fuzz</a> + <a href="https://google.github.io/oss-fuzz-gen/">OSS-Fuzz-Gen</a> &mdash; execution &amp; harness generation at industrial scale.</li>
+        <li><a href="https://llvm.org/docs/LibFuzzer.html">LibFuzzer</a>, <a href="https://klee-se.org/">KLEE</a>, <a href="https://github.com/AFLplusplus/AFLplusplus">AFL++</a> &mdash; P8 execution engines.</li>
       </ul>
     </section>
 
