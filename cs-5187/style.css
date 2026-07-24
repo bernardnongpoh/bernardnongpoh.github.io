@@ -153,6 +153,45 @@ section h2 {
 }
 .info-grid dd { margin: 0; }
 
+/* --- Teaching assistants ------------------------------------ */
+
+.ta-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.ta-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ta-photo {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-alt);
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.ta-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ta-name { font-weight: 600; color: var(--text); }
+.ta-info a {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
 /* --- Schedule table ----------------------------------------- */
 
 table.schedule {
