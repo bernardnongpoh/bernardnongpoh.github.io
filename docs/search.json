@@ -144,7 +144,7 @@
     "href": "teaching.html#current-semester",
     "title": "Teaching",
     "section": "Current Semester",
-    "text": "Current Semester\n\nCS1214 — Object Oriented Programming and Data Structure Lab\nA laboratory course covering object-oriented programming principles and the design, implementation, and analysis of fundamental data structures — classes, inheritance, polymorphism, templates, lists, stacks, queues, trees, heaps, and hash tables."
+    "text": "Current Semester\n\nCS5187 — Software Analysis\nMonsoon 2026 · 23 July – 12 November. A graduate course on program analysis and software security: foundations and IRs, dataflow analysis and abstract interpretation, pointer and constraint-based analysis, type systems, symbolic execution, automated test generation, fuzzing, and LLM-assisted analysis.\n\n\nCS1214 — Object Oriented Programming and Data Structure Lab\nA laboratory course covering object-oriented programming principles and the design, implementation, and analysis of fundamental data structures — classes, inheritance, polymorphism, templates, lists, stacks, queues, trees, heaps, and hash tables."
   },
   {
     "objectID": "posts/summer-school-iitkanpur.html",

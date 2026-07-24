@@ -6,6 +6,10 @@ Courses at the Department of Computer Science & Engineering, IIT Guwahati.
 
 ## Current Semester
 
+### [CS5187 — Software Analysis](cs-5187/index.html)
+
+Monsoon 2026 · 23 July – 12 November. A graduate course on program analysis and software security: foundations and IRs, dataflow analysis and abstract interpretation, pointer and constraint-based analysis, type systems, symbolic execution, automated test generation, fuzzing, and LLM-assisted analysis.
+
 ### CS1214 — Object Oriented Programming and Data Structure Lab
 
 A laboratory course covering object-oriented programming principles and the design, implementation, and analysis of fundamental data structures — classes, inheritance, polymorphism, templates, lists, stacks, queues, trees, heaps, and hash tables.
