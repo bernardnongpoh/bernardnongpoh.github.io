@@ -2,6 +2,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/callgraph-bornov.html",
       "/posts/llvm.html",
       "/posts/riscv.html",
       "/posts/summer-school-iitkanpur.html"
