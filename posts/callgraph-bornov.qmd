@@ -1,0 +1,232 @@
+---
+title: "What FFmpeg Taught Us About Call Graph Precision (and About PhASAR's Rough Edges)"
+date: "2026-07-24"
+categories: [Static Analysis, LLVM, PhASAR]
+description: "Empirically comparing CHA, RTA, and OTF call-graph construction on FFmpeg with PhASAR, and the toolchain issues met along the way."
+---
+
+*By Bornov Shyam Kalita — PASS Lab, IIT Guwahati*
+
+## The setup
+
+The goal: build a whole-program call graph for FFmpeg — a 100k+ line C codebase —
+using [PhASAR](https://github.com/secure-software-engineering/phasar), a static
+analysis framework built on LLVM, and empirically compare three call-graph
+construction algorithms (CHA, RTA, OTF) instead of just trusting the textbook
+precision/cost trade-off tables.
+
+That question ended up having a clean answer. Getting there meant working through a
+pile of undocumented behavior in PhASAR, LLVM, and the WLLVM/Docker/WSL2 tooling
+around them. This post covers both: the actual result, and the operational issues we
+ran into along the way, in case they save someone else the same debugging time.
+
+## Building the toolchain
+
+### LLVM needs RTTI on — and prebuilt LLVM ships with it off
+
+PhASAR uses C++ RTTI (`dynamic_cast` and friends) internally. Prebuilt LLVM releases,
+including the official LLVM 21 binaries, ship with `LLVM_ENABLE_RTTI=OFF`. Linking
+PhASAR against one of these fails, and the error isn't always an obvious "RTTI is
+disabled" message — it can show up as confusing linker errors buried in PhASAR's own
+object files.
+
+The fix is to build LLVM from source with RTTI explicitly enabled:
+
+```bash
+LLVM_ENABLE_RTTI=ON
+```
+
+We added a build-time sanity check so this can't silently regress again:
+
+```bash
+llvm-config --has-rtti | grep -q YES || (echo "RTTI missing" && exit 1)
+```
+
+One more thing to cap: `LLVM_PARALLEL_LINK_JOBS`. We set it to `2` — the LLVM linker
+will happily OOM the machine at default parallelism on memory-constrained build hosts.
+
+### `PHASAR_LLVM_VERSION` must be `major.minor`, not bare major
+
+This one cost real time. PhASAR's CMake build takes a `PHASAR_LLVM_VERSION` variable
+to tell it which LLVM it's pointed at. Setting it to `21` looks like the obviously
+correct value, but it fails: LLVM's own `LLVMConfigVersion.cmake` does an exact
+major.minor equality check against the installed version (`21.1.8` for us). `21 !=
+21.1`, so the compatible-version check rejects it, and the resulting CMake error
+doesn't point back at this variable as the cause.
+
+The fix is to set the full major.minor value:
+
+```bash
+PHASAR_LLVM_VERSION=21.1
+```
+
+### Getting FFmpeg into whole-program LLVM bitcode
+
+The instinct is to compile with `-flto` and pull bitcode out of the resulting object's
+LTO section. On modern LLVM that doesn't cleanly give you a standalone, analyzable
+`.bc` file — the section format and extraction tooling around it just aren't reliable
+for this.
+
+What actually works is [WLLVM](https://github.com/travitch/whole-program-llvm). It
+wraps the compiler, tracks every bitcode file produced during the build, and gives you
+a proper `extract-bc` step at the end to link them into one whole-program module:
+
+```bash
+export LLVM_COMPILER=clang
+export LLVM_COMPILER_PATH=/opt/llvm21/bin
+./configure --cc=wllvm --extra-cflags="-O3 -g" --disable-x86asm
+make -j$(nproc) && extract-bc ffmpeg -o ffmpeg.bc
+```
+
+Verify the result before trusting it downstream:
+
+```bash
+opt --passes=verify ffmpeg.bc
+```
+
+That gave us a clean `ffmpeg.bc` — the actual analysis target for everything that
+follows.
+
+*Why not just use `-flto` and pull the bitcode from there? Because `-flto`'s bitcode
+isn't meant to be retrieved by you — it's an internal implementation detail of the LTO
+pipeline, not a deliverable.*
+
+*The bitcode gets consumed and discarded during linking, not preserved as an output.
+Each translation unit becomes a bitcode-object under `-flto`, but that's only an
+intermediate step — the linker reads them all in, runs its own LTO optimization
+passes, and emits a final native binary. Once linking finishes, the intermediate
+bitcode is gone unless you explicitly tell the linker to keep it (`-Wl,-plugin-opt=save-temps`
+for gold, `--save-temps` for lld), and that's a linker-specific flag, not portable
+across `ld.gold`, `lld`, and `ld.bfd`. Even preserved, it isn't one clean `.bc` — those
+flags dump a pile of per-object intermediate files at different pipeline stages, and
+you'd have to reverse-engineer which artifact is the "right" one and `llvm-link` them
+yourself.*
+
+*More fundamentally, the two mechanisms were never compatible at the object-file
+level. WLLVM's approach relies on compiling to a normal native object file plus a
+bitcode side-file, with the side-file's path stashed in a dedicated object-file
+section that concatenates across linking — `extract-bc` just reads those paths back
+out and runs `llvm-link`. Under `-flto`, the compiler instead produces object files
+that are themselves bitcode, with no separate native object for that section-based
+bookkeeping to attach to. The [gllvm README](https://github.com/SRI-CSL/gllvm)
+confirms this is expected behavior for any `-flto` build, and a
+[2021 LLVM dev mailing list thread](https://groups.google.com/g/llvm-dev/c/J22XERIKAyQ)
+explains why: `-flto` object files aren't real object files, they're bitcode the
+linker hands back to LLVM for optimization and codegen.*
+
+*It's not that `-flto` is broken, or that LLVM stopped supporting bitcode extraction —
+its bitcode was simply never designed to be pulled out by a third party for static
+analysis. FFmpeg's build is also a hand-written `configure`/`make`, not CMake, and
+WLLVM is purpose-built for exactly that shape of build: it doesn't touch the
+optimization pipeline at all, and gives you one whole-program `.bc` on demand,
+independent of whichever linker `configure` happens to pick.*
+
+## PhASAR CLI: three behaviors you won't find in the docs
+
+These came from reading `tools/phasar-cli/phasar-cli.cpp`,
+`Controller/AnalysisController.cpp`, and `lib/PhasarLLVM/ControlFlow/LLVMBasedICFG.cpp`
+directly. None of them are documented anywhere.
+
+**1. Omitting `--data-flow-analysis` makes the whole pipeline silently no-op.** No
+error, no warning — it just prints the version banner and exits. Call-graph
+construction seems to be gated behind the data-flow analysis stage internally, even if
+you only care about the call graph. Workaround: pass PhASAR's built-in no-op analysis
+just to force the pipeline through:
+
+```bash
+--data-flow-analysis=ifds-solvertest
+```
+
+**2. `--emit-cg-as-dot` writes a file named `psr-cg.txt`, not `.dot`.** Upstream naming
+inconsistency — compare with `--emit-th-as-dot`, which does what its name says. The
+content is valid Graphviz DOT syntax despite the `.txt` extension, the filename just
+won't tell you that.
+
+**3. `--out=<dir>` doesn't write into `<dir>`.** It creates a timestamped subdirectory
+inside it. The real path is `<dir>/<project-id>-<timestamp>/psr-cg.txt`, so any
+tooling that consumes PhASAR output needs to recursively search for the file rather than
+assume a fixed path.
+
+Full working invocation, all three algorithms sharing every flag except the algorithm
+name and output directory:
+
+```bash
+phasar-cli --module=/work/ffmpeg-build/ffmpeg.bc --call-graph-analysis=<cha|rta|otf> \
+  --entry-points=main --data-flow-analysis=ifds-solvertest --emit-cg-as-dot \
+  --out=/work/ffmpeg-build/algo-comparison/<algo>
+```
+
+## Operational landmines: Docker, WSL2, and trusting live output
+
+A few infrastructure lessons that had nothing to do with PhASAR itself but ate real
+debugging time:
+
+- **Never run two `phasar-cli` processes concurrently.** On Docker Desktop's WSL2
+  backend this reliably crashes the VM — `unexpected EOF`, Docker API 500 errors, an
+  unresponsive container. Read-only monitoring (`top`, `ls`, `grep`, `wc`, `ps aux`)
+  from a second shell is fine; a second analysis process is not.
+- **Disable Docker Desktop's "Enable Resource Saver."** It throttles the WSL2 VM
+  mid-build — you'll see the GUI reporting 0% CPU / 0.00 GB RAM while a build is
+  actually running. Set explicit limits via `.wslconfig` instead.
+- **Never trust edge/node counts from a still-running analysis.** `psr-cg.txt` is
+  written incrementally, so grepping it mid-run gives you a real but partial count
+  that looks exactly like a stalled process. We killed an early CHA run at around 50
+  minutes because a count of 1.4M edges looked like it had plateaued. It hadn't — the
+  count was still climbing between two consecutive checks. The only reliable signal
+  that a run is done is the process exiting with code 0 (confirmed via `ps aux | grep
+  phasar-cli` returning nothing, or a completed `time` log), never the file's growing
+  size.
+- **1.2M+ edges is not renderable as a diagram.** Neither `dot` nor `sfdp` can produce
+  anything legible at that scale. Past a few hundred thousand edges, a summary table
+  of node/edge counts communicates more than an image can — don't waste time trying
+  to force a visualization here.
+
+## The actual finding: a precision ceiling, not an algorithm problem
+
+With the toolchain working, we ran CHA, RTA, and OTF against `ffmpeg.bc` from the
+`main` entry point and diffed the resulting call graphs by `(caller, callee)` name
+pairs — never by raw node ID, since those get reassigned independently on every run.
+
+| Algorithm | Wall time | Nodes | Unique edges |
+|---|---|---|---|
+| CHA | 139m44s | 18,720 | 1,219,191 |
+| RTA | 137m20s | 18,720 | 1,219,191 |
+| OTF | overnight | 18,599 | 1,189,907 |
+
+Two things stood out. CHA and RTA produced byte-for-byte identical call graphs. Every
+one of RTA's extra checks — its instantiation-liveness fixpoint, specifically designed
+to prune edges CHA can't — pruned nothing on this codebase. And OTF, the most
+expensive and precise of the three, only pruned 2.4% of edges (29,284 out of
+1,219,191) relative to CHA/RTA, discovering zero edges that CHA/RTA had both missed.
+OTF's result is a pure subset of the CHA/RTA graph.
+
+So across the full spectrum from cheapest/most conservative to most expensive/most
+precise, the max precision gain on FFmpeg from a single `main` entry point was 2.4%.
+
+The false-positive source here is structural, not algorithmic. FFmpeg registers its
+codecs, formats, and filters through large dispatch/registration tables (`AVCodec`,
+`AVFormat`, `AVFilter`), which makes nearly everything reachable from `main` almost
+immediately. There's very little left for any call-graph algorithm to prune, no
+matter how sophisticated, because the imprecision isn't coming from indirect-call
+resolution difficulty — it's coming from the program's own architecture making almost
+everything reachable by design. This should generalize to any codebase built around
+the same registration-table/plugin-dispatch pattern, and testing it against a
+codebase without that pattern is a natural next step to confirm or refute it.
+
+One smaller note: CHA and RTA both showed roughly a 27-minute gap between wall time
+and user (CPU) time. That's I/O wait from writing out a multi-hundred-megabyte DOT
+file, not analysis compute cost. Worth separating "computing the call graph" from
+"writing it to disk" in future timing comparisons, since lumping them together
+overstates algorithm cost.
+
+## What's next
+
+- Rerun the comparison with `--entry-points=__ALL__` instead of `main`, to see whether
+  the 2.4% ceiling holds once everything is nominally reachable.
+- Add VTA as a fourth algorithm and check whether it lands in the same narrow band as
+  OTF, or prunes meaningfully more.
+- Test the registration-table theory against a codebase that isn't built that way, as
+  a control.
+- Scale the same pipeline to other large C/C++ codebases — OpenSSL, OpenCV, and the
+  C++ cores of ML frameworks like PyTorch and TensorFlow — as part of the longer-term
+  goal of using call graph structure as feature data for AI-assisted malware analysis.
