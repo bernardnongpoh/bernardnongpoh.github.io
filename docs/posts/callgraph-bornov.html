@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-07-24">
+<meta name="description" content="Empirically comparing CHA, RTA, and OTF call-graph construction on FFmpeg with PhASAR, and the toolchain issues met along the way.">
+
+<title>What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges) – Bernard Nongpoh</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Bernard Nongpoh</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../students.html"> 
+<span class="menu-text">Students</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../posts/index.html"> 
+<span class="menu-text">Writeups</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../travels.html"> 
+<span class="menu-text">Travels</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-setup" id="toc-the-setup" class="nav-link active" data-scroll-target="#the-setup">The setup</a></li>
+  <li><a href="#building-the-toolchain" id="toc-building-the-toolchain" class="nav-link" data-scroll-target="#building-the-toolchain">Building the toolchain</a>
+  <ul class="collapse">
+  <li><a href="#llvm-needs-rtti-on-and-prebuilt-llvm-ships-with-it-off" id="toc-llvm-needs-rtti-on-and-prebuilt-llvm-ships-with-it-off" class="nav-link" data-scroll-target="#llvm-needs-rtti-on-and-prebuilt-llvm-ships-with-it-off">LLVM needs RTTI on — and prebuilt LLVM ships with it off</a></li>
+  <li><a href="#phasar_llvm_version-must-be-major.minor-not-bare-major" id="toc-phasar_llvm_version-must-be-major.minor-not-bare-major" class="nav-link" data-scroll-target="#phasar_llvm_version-must-be-major.minor-not-bare-major"><code>PHASAR_LLVM_VERSION</code> must be <code>major.minor</code>, not bare major</a></li>
+  <li><a href="#getting-ffmpeg-into-whole-program-llvm-bitcode" id="toc-getting-ffmpeg-into-whole-program-llvm-bitcode" class="nav-link" data-scroll-target="#getting-ffmpeg-into-whole-program-llvm-bitcode">Getting FFmpeg into whole-program LLVM bitcode</a></li>
+  </ul></li>
+  <li><a href="#phasar-cli-three-behaviors-you-wont-find-in-the-docs" id="toc-phasar-cli-three-behaviors-you-wont-find-in-the-docs" class="nav-link" data-scroll-target="#phasar-cli-three-behaviors-you-wont-find-in-the-docs">PhASAR CLI: three behaviors you won’t find in the docs</a></li>
+  <li><a href="#operational-landmines-docker-wsl2-and-trusting-live-output" id="toc-operational-landmines-docker-wsl2-and-trusting-live-output" class="nav-link" data-scroll-target="#operational-landmines-docker-wsl2-and-trusting-live-output">Operational landmines: Docker, WSL2, and trusting live output</a></li>
+  <li><a href="#the-actual-finding-a-precision-ceiling-not-an-algorithm-problem" id="toc-the-actual-finding-a-precision-ceiling-not-an-algorithm-problem" class="nav-link" data-scroll-target="#the-actual-finding-a-precision-ceiling-not-an-algorithm-problem">The actual finding: a precision ceiling, not an algorithm problem</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Static Analysis</div>
+    <div class="quarto-category">LLVM</div>
+    <div class="quarto-category">PhASAR</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Empirically comparing CHA, RTA, and OTF call-graph construction on FFmpeg with PhASAR, and the toolchain issues met along the way.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 24, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>By Bornov Shyam Kalita — PASS Lab, IIT Guwahati</em></p>
+<section id="the-setup" class="level2">
+<h2 class="anchored" data-anchor-id="the-setup">The setup</h2>
+<p>The goal: build a whole-program call graph for FFmpeg — a 100k+ line C codebase — using <a href="https://github.com/secure-software-engineering/phasar">PhASAR</a>, a static analysis framework built on LLVM, and empirically compare three call-graph construction algorithms (CHA, RTA, OTF) instead of just trusting the textbook precision/cost trade-off tables.</p>
+<p>That question ended up having a clean answer. Getting there meant working through a pile of undocumented behavior in PhASAR, LLVM, and the WLLVM/Docker/WSL2 tooling around them. This post covers both: the actual result, and the operational issues we ran into along the way, in case they save someone else the same debugging time.</p>
+</section>
+<section id="building-the-toolchain" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-toolchain">Building the toolchain</h2>
+<section id="llvm-needs-rtti-on-and-prebuilt-llvm-ships-with-it-off" class="level3">
+<h3 class="anchored" data-anchor-id="llvm-needs-rtti-on-and-prebuilt-llvm-ships-with-it-off">LLVM needs RTTI on — and prebuilt LLVM ships with it off</h3>
+<p>PhASAR uses C++ RTTI (<code>dynamic_cast</code> and friends) internally. Prebuilt LLVM releases, including the official LLVM 21 binaries, ship with <code>LLVM_ENABLE_RTTI=OFF</code>. Linking PhASAR against one of these fails, and the error isn’t always an obvious “RTTI is disabled” message — it can show up as confusing linker errors buried in PhASAR’s own object files.</p>
+<p>The fix is to build LLVM from source with RTTI explicitly enabled:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">LLVM_ENABLE_RTTI</span><span class="op">=</span>ON</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We added a build-time sanity check so this can’t silently regress again:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">llvm-config</span> <span class="at">--has-rtti</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-q</span> YES <span class="kw">||</span> <span class="kw">(</span><span class="bu">echo</span> <span class="st">"RTTI missing"</span> <span class="kw">&amp;&amp;</span> <span class="bu">exit</span> 1<span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>One more thing to cap: <code>LLVM_PARALLEL_LINK_JOBS</code>. We set it to <code>2</code> — the LLVM linker will happily OOM the machine at default parallelism on memory-constrained build hosts.</p>
+</section>
+<section id="phasar_llvm_version-must-be-major.minor-not-bare-major" class="level3">
+<h3 class="anchored" data-anchor-id="phasar_llvm_version-must-be-major.minor-not-bare-major"><code>PHASAR_LLVM_VERSION</code> must be <code>major.minor</code>, not bare major</h3>
+<p>This one cost real time. PhASAR’s CMake build takes a <code>PHASAR_LLVM_VERSION</code> variable to tell it which LLVM it’s pointed at. Setting it to <code>21</code> looks like the obviously correct value, but it fails: LLVM’s own <code>LLVMConfigVersion.cmake</code> does an exact major.minor equality check against the installed version (<code>21.1.8</code> for us). <code>21 != 21.1</code>, so the compatible-version check rejects it, and the resulting CMake error doesn’t point back at this variable as the cause.</p>
+<p>The fix is to set the full major.minor value:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">PHASAR_LLVM_VERSION</span><span class="op">=</span>21.1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="getting-ffmpeg-into-whole-program-llvm-bitcode" class="level3">
+<h3 class="anchored" data-anchor-id="getting-ffmpeg-into-whole-program-llvm-bitcode">Getting FFmpeg into whole-program LLVM bitcode</h3>
+<p>The instinct is to compile with <code>-flto</code> and pull bitcode out of the resulting object’s LTO section. On modern LLVM that doesn’t cleanly give you a standalone, analyzable <code>.bc</code> file — the section format and extraction tooling around it just aren’t reliable for this.</p>
+<p>What actually works is <a href="https://github.com/travitch/whole-program-llvm">WLLVM</a>. It wraps the compiler, tracks every bitcode file produced during the build, and gives you a proper <code>extract-bc</code> step at the end to link them into one whole-program module:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LLVM_COMPILER</span><span class="op">=</span>clang</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LLVM_COMPILER_PATH</span><span class="op">=</span>/opt/llvm21/bin</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span> <span class="at">--cc</span><span class="op">=</span>wllvm <span class="at">--extra-cflags</span><span class="op">=</span><span class="st">"-O3 -g"</span> <span class="at">--disable-x86asm</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-j</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span> <span class="kw">&amp;&amp;</span> <span class="ex">extract-bc</span> ffmpeg <span class="at">-o</span> ffmpeg.bc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verify the result before trusting it downstream:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opt</span> <span class="at">--passes</span><span class="op">=</span>verify ffmpeg.bc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That gave us a clean <code>ffmpeg.bc</code> — the actual analysis target for everything that follows.</p>
+<p><em>Why not just use <code>-flto</code> and pull the bitcode from there? Because <code>-flto</code>’s bitcode isn’t meant to be retrieved by you — it’s an internal implementation detail of the LTO pipeline, not a deliverable.</em></p>
+<p><em>The bitcode gets consumed and discarded during linking, not preserved as an output. Each translation unit becomes a bitcode-object under <code>-flto</code>, but that’s only an intermediate step — the linker reads them all in, runs its own LTO optimization passes, and emits a final native binary. Once linking finishes, the intermediate bitcode is gone unless you explicitly tell the linker to keep it (<code>-Wl,-plugin-opt=save-temps</code> for gold, <code>--save-temps</code> for lld), and that’s a linker-specific flag, not portable across <code>ld.gold</code>, <code>lld</code>, and <code>ld.bfd</code>. Even preserved, it isn’t one clean <code>.bc</code> — those flags dump a pile of per-object intermediate files at different pipeline stages, and you’d have to reverse-engineer which artifact is the “right” one and <code>llvm-link</code> them yourself.</em></p>
+<p><em>More fundamentally, the two mechanisms were never compatible at the object-file level. WLLVM’s approach relies on compiling to a normal native object file plus a bitcode side-file, with the side-file’s path stashed in a dedicated object-file section that concatenates across linking — <code>extract-bc</code> just reads those paths back out and runs <code>llvm-link</code>. Under <code>-flto</code>, the compiler instead produces object files that are themselves bitcode, with no separate native object for that section-based bookkeeping to attach to. The <a href="https://github.com/SRI-CSL/gllvm">gllvm README</a> confirms this is expected behavior for any <code>-flto</code> build, and a <a href="https://groups.google.com/g/llvm-dev/c/J22XERIKAyQ">2021 LLVM dev mailing list thread</a> explains why: <code>-flto</code> object files aren’t real object files, they’re bitcode the linker hands back to LLVM for optimization and codegen.</em></p>
+<p><em>It’s not that <code>-flto</code> is broken, or that LLVM stopped supporting bitcode extraction — its bitcode was simply never designed to be pulled out by a third party for static analysis. FFmpeg’s build is also a hand-written <code>configure</code>/<code>make</code>, not CMake, and WLLVM is purpose-built for exactly that shape of build: it doesn’t touch the optimization pipeline at all, and gives you one whole-program <code>.bc</code> on demand, independent of whichever linker <code>configure</code> happens to pick.</em></p>
+</section>
+</section>
+<section id="phasar-cli-three-behaviors-you-wont-find-in-the-docs" class="level2">
+<h2 class="anchored" data-anchor-id="phasar-cli-three-behaviors-you-wont-find-in-the-docs">PhASAR CLI: three behaviors you won’t find in the docs</h2>
+<p>These came from reading <code>tools/phasar-cli/phasar-cli.cpp</code>, <code>Controller/AnalysisController.cpp</code>, and <code>lib/PhasarLLVM/ControlFlow/LLVMBasedICFG.cpp</code> directly. None of them are documented anywhere.</p>
+<p><strong>1. Omitting <code>--data-flow-analysis</code> makes the whole pipeline silently no-op.</strong> No error, no warning — it just prints the version banner and exits. Call-graph construction seems to be gated behind the data-flow analysis stage internally, even if you only care about the call graph. Workaround: pass PhASAR’s built-in no-op analysis just to force the pipeline through:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--data-flow-analysis=ifds-solvertest</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>2. <code>--emit-cg-as-dot</code> writes a file named <code>psr-cg.txt</code>, not <code>.dot</code>.</strong> Upstream naming inconsistency — compare with <code>--emit-th-as-dot</code>, which does what its name says. The content is valid Graphviz DOT syntax despite the <code>.txt</code> extension, the filename just won’t tell you that.</p>
+<p><strong>3. <code>--out=&lt;dir&gt;</code> doesn’t write into <code>&lt;dir&gt;</code>.</strong> It creates a timestamped subdirectory inside it. The real path is <code>&lt;dir&gt;/&lt;project-id&gt;-&lt;timestamp&gt;/psr-cg.txt</code>, so any tooling that consumes PhASAR output needs to recursively search for the file rather than assume a fixed path.</p>
+<p>Full working invocation, all three algorithms sharing every flag except the algorithm name and output directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">phasar-cli</span> <span class="at">--module</span><span class="op">=</span>/work/ffmpeg-build/ffmpeg.bc <span class="at">--call-graph-analysis</span><span class="op">=&lt;</span>cha<span class="kw">|</span><span class="ex">rta</span><span class="kw">|</span><span class="ex">otf</span><span class="op">&gt;</span> <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--entry-points</span><span class="op">=</span>main <span class="at">--data-flow-analysis</span><span class="op">=</span>ifds-solvertest <span class="at">--emit-cg-as-dot</span> <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span><span class="op">=</span>/work/ffmpeg-build/algo-comparison/<span class="op">&lt;</span>algo<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="operational-landmines-docker-wsl2-and-trusting-live-output" class="level2">
+<h2 class="anchored" data-anchor-id="operational-landmines-docker-wsl2-and-trusting-live-output">Operational landmines: Docker, WSL2, and trusting live output</h2>
+<p>A few infrastructure lessons that had nothing to do with PhASAR itself but ate real debugging time:</p>
+<ul>
+<li><strong>Never run two <code>phasar-cli</code> processes concurrently.</strong> On Docker Desktop’s WSL2 backend this reliably crashes the VM — <code>unexpected EOF</code>, Docker API 500 errors, an unresponsive container. Read-only monitoring (<code>top</code>, <code>ls</code>, <code>grep</code>, <code>wc</code>, <code>ps aux</code>) from a second shell is fine; a second analysis process is not.</li>
+<li><strong>Disable Docker Desktop’s “Enable Resource Saver.”</strong> It throttles the WSL2 VM mid-build — you’ll see the GUI reporting 0% CPU / 0.00 GB RAM while a build is actually running. Set explicit limits via <code>.wslconfig</code> instead.</li>
+<li><strong>Never trust edge/node counts from a still-running analysis.</strong> <code>psr-cg.txt</code> is written incrementally, so grepping it mid-run gives you a real but partial count that looks exactly like a stalled process. We killed an early CHA run at around 50 minutes because a count of 1.4M edges looked like it had plateaued. It hadn’t — the count was still climbing between two consecutive checks. The only reliable signal that a run is done is the process exiting with code 0 (confirmed via <code>ps aux | grep phasar-cli</code> returning nothing, or a completed <code>time</code> log), never the file’s growing size.</li>
+<li><strong>1.2M+ edges is not renderable as a diagram.</strong> Neither <code>dot</code> nor <code>sfdp</code> can produce anything legible at that scale. Past a few hundred thousand edges, a summary table of node/edge counts communicates more than an image can — don’t waste time trying to force a visualization here.</li>
+</ul>
+</section>
+<section id="the-actual-finding-a-precision-ceiling-not-an-algorithm-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-actual-finding-a-precision-ceiling-not-an-algorithm-problem">The actual finding: a precision ceiling, not an algorithm problem</h2>
+<p>With the toolchain working, we ran CHA, RTA, and OTF against <code>ffmpeg.bc</code> from the <code>main</code> entry point and diffed the resulting call graphs by <code>(caller, callee)</code> name pairs — never by raw node ID, since those get reassigned independently on every run.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Algorithm</th>
+<th>Wall time</th>
+<th>Nodes</th>
+<th>Unique edges</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CHA</td>
+<td>139m44s</td>
+<td>18,720</td>
+<td>1,219,191</td>
+</tr>
+<tr class="even">
+<td>RTA</td>
+<td>137m20s</td>
+<td>18,720</td>
+<td>1,219,191</td>
+</tr>
+<tr class="odd">
+<td>OTF</td>
+<td>overnight</td>
+<td>18,599</td>
+<td>1,189,907</td>
+</tr>
+</tbody>
+</table>
+<p>Two things stood out. CHA and RTA produced byte-for-byte identical call graphs. Every one of RTA’s extra checks — its instantiation-liveness fixpoint, specifically designed to prune edges CHA can’t — pruned nothing on this codebase. And OTF, the most expensive and precise of the three, only pruned 2.4% of edges (29,284 out of 1,219,191) relative to CHA/RTA, discovering zero edges that CHA/RTA had both missed. OTF’s result is a pure subset of the CHA/RTA graph.</p>
+<p>So across the full spectrum from cheapest/most conservative to most expensive/most precise, the max precision gain on FFmpeg from a single <code>main</code> entry point was 2.4%.</p>
+<p>The false-positive source here is structural, not algorithmic. FFmpeg registers its codecs, formats, and filters through large dispatch/registration tables (<code>AVCodec</code>, <code>AVFormat</code>, <code>AVFilter</code>), which makes nearly everything reachable from <code>main</code> almost immediately. There’s very little left for any call-graph algorithm to prune, no matter how sophisticated, because the imprecision isn’t coming from indirect-call resolution difficulty — it’s coming from the program’s own architecture making almost everything reachable by design. This should generalize to any codebase built around the same registration-table/plugin-dispatch pattern, and testing it against a codebase without that pattern is a natural next step to confirm or refute it.</p>
+<p>One smaller note: CHA and RTA both showed roughly a 27-minute gap between wall time and user (CPU) time. That’s I/O wait from writing out a multi-hundred-megabyte DOT file, not analysis compute cost. Worth separating “computing the call graph” from “writing it to disk” in future timing comparisons, since lumping them together overstates algorithm cost.</p>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s next</h2>
+<ul>
+<li>Rerun the comparison with <code>--entry-points=__ALL__</code> instead of <code>main</code>, to see whether the 2.4% ceiling holds once everything is nominally reachable.</li>
+<li>Add VTA as a fourth algorithm and check whether it lands in the same narrow band as OTF, or prunes meaningfully more.</li>
+<li>Test the registration-table theory against a codebase that isn’t built that way, as a control.</li>
+<li>Scale the same pipeline to other large C/C++ codebases — OpenSSL, OpenCV, and the C++ cores of ML frameworks like PyTorch and TensorFlow — as part of the longer-term goal of using call graph structure as feature data for AI-assisted malware analysis.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

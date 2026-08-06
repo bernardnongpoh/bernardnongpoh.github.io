@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Term Project Architecture &mdash; CS 5187</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .diagram {
+      background: var(--bg-alt); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 18px;
+      font-family: var(--mono); font-size: 12.5px; line-height: 1.35;
+      white-space: pre; overflow-x: auto; color: var(--text);
+    }
+    .component-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .component {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px 16px; background: #fff;
+    }
+    .component > header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 6px; gap: 10px;
+    }
+    .component > header h3 { margin: 0; color: var(--blue-700); font-size: 16px; }
+    .component .cid {
+      background: var(--blue-700); color: #fff; font-family: var(--mono);
+      font-size: 11.5px; padding: 2px 6px; border-radius: 3px; flex-shrink: 0;
+    }
+    .component .role {
+      font-style: italic; color: var(--text-muted);
+      font-size: 13.5px; margin: 2px 0 10px;
+    }
+    .component .io {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin: 8px 0 10px;
+    }
+    .io-box {
+      background: var(--bg-alt); border-left: 3px solid var(--blue-500);
+      padding: 8px 10px; border-radius: 3px; font-size: 13px;
+    }
+    .io-box.out { border-left-color: #059669; }
+    .io-box h4 {
+      margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.03em; color: var(--text-muted); font-weight: 600;
+    }
+    .io-box code { font-size: 12px; }
+    .io-box ul { margin: 4px 0 0 16px; padding: 0; }
+    .io-box li { margin: 2px 0; }
+    .component dl {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 3px 12px; margin: 0; font-size: 13.5px;
+    }
+    .component dt { color: var(--text-muted); font-weight: 600; }
+    .component dd { margin: 0; }
+    .cmd {
+      display: block; background: var(--text); color: #f5f5f5;
+      font-family: var(--mono); font-size: 12px; padding: 4px 8px;
+      border-radius: 3px; margin: 2px 0; overflow-x: auto; white-space: pre;
+    }
+    table.contracts { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    table.contracts th, table.contracts td {
+      border: 1px solid var(--border); padding: 6px 10px; vertical-align: top;
+      text-align: left;
+    }
+    table.contracts th { background: var(--blue-700); color: #fff; font-size: 12.5px; }
+    table.contracts td code { font-size: 12px; }
+    .callout {
+      background: var(--blue-50); border: 1px solid var(--blue-200);
+      border-radius: var(--radius); padding: 10px 14px; font-size: 13.5px;
+      margin: 10px 0;
+    }
+    .callout.warn { background: #fef3c7; border-color: #fde68a; }
+    .callout.critique { background: #fee2e2; border-color: #fecaca; }
+    .papers { font-size: 13px; color: var(--text); }
+    .papers li { margin: 2px 0; }
+    @media (max-width: 900px) { .component .io { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <h1>CS 5187</h1>
+    <div class="term">Monsoon 2026 &middot; IIT Guwahati</div>
+    <nav>
+      <h2>Course</h2>
+      <ul>
+        <li><a href="index.html">&larr; Home / Schedule</a></li>
+        <li><a href="lectures.html">Lectures &amp; readings</a></li>
+        <li><a href="index.html#project">Project rubric</a></li>
+      </ul>
+
+      <h2>This page</h2>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#industry">Industry requirements</a></li>
+        <li><a href="#critique">Design v4 &mdash; AIxCC critique</a></li>
+        <li><a href="#pipeline">Reference pipeline (v4)</a></li>
+        <li><a href="#contracts">Contracts (C1&ndash;C13)</a></li>
+        <li><a href="#storage">Data model &amp; storage</a></li>
+        <li><a href="#repo">Shared repo layout</a></li>
+        <li><a href="#independence">Independence guarantees</a></li>
+        <li><a href="#components">Components (P0&ndash;P10)</a></li>
+        <li><a href="#bonus">Bonus tracks</a></li>
+        <li><a href="#milestones">Milestones</a></li>
+        <li><a href="#references">References</a></li>
+      </ul>
+
+      <h2>Jump to component</h2>
+      <ul>
+        <li><a href="#p0">P0 &middot; CP-Manager</a></li>
+        <li><a href="#p1">P1 &middot; Build + CIR ingestion</a></li>
+        <li><a href="#p2">P2 &middot; CIR + graph DB</a></li>
+        <li><a href="#p3">P3 &middot; Fuzzer ensemble</a></li>
+        <li><a href="#p4">P4 &middot; Directed fuzzer</a></li>
+        <li><a href="#p5">P5 &middot; LLM input generator</a></li>
+        <li><a href="#p6">P6 &middot; Concolic</a></li>
+        <li><a href="#p7">P7 &middot; PoV verifier + dedup</a></li>
+        <li><a href="#p8">P8 &middot; Multi-model triage</a></li>
+        <li><a href="#p9">P9 &middot; Patch generator</a></li>
+        <li><a href="#p10">P10 &middot; Bundle + dashboard</a></li>
+        <li><a href="#p11">P11 &middot; Benchmark (bonus)</a></li>
+        <li><a href="#p12">P12 &middot; Ops (bonus)</a></li>
+        <li><a href="#p13">P13 &middot; Fine-tuned patch (bonus)</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+
+    <header class="course">
+      <h1>Term Project Architecture</h1>
+      <div class="subtitle">
+        A C/C++ Cyber Reasoning System &mdash; ATLANTIS &amp; MDASH-informed,
+        scaled down for a semester
+      </div>
+    </header>
+
+    <!-- Overview -->
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>
+        The class-wide term project builds a <strong>miniature Cyber Reasoning
+        System (CRS)</strong> for C/C++. The design is patterned after
+        <a href="https://arxiv.org/abs/2509.14589"><b>Team Atlanta's ATLANTIS</b></a>
+        (winner of DARPA AIxCC final, Aug 2025 &middot; $4 M prize &middot;
+        43/70 vulns &middot; 41/47 patches) and Microsoft's
+        <a href="https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/"><b>MDASH</b></a>
+        multi-model agentic security system (Taesoo Kim, VP Agentic Security,
+        Microsoft &mdash; the same lead as ATLANTIS). The CRS goal is to
+        autonomously <em>find</em> a PoV, <em>prove</em> it via sanitized
+        execution, and <em>fix</em> it with a semantically-correct patch,
+        bundled for upstream submission.
+      </p>
+      <p>
+        Eleven groups (P0&ndash;P10) each own one component. Three bonus
+        tracks (P11&ndash;P13) exist for teams that finish early. Every
+        component is a standalone project with a JSON-Schema contract, a
+        Makefile with the four standard targets
+        (<code>build test demo validate</code>), fixtures under
+        <code>contracts/fixtures/</code>, and its own CI. Groups depend on
+        <em>schemas and fixtures</em>, not on each other's builds.
+      </p>
+      <div class="callout">
+        <b>Why a CRS and not a &ldquo;SAST tool&rdquo;.</b> Modern winning
+        vulnerability-discovery systems (ATLANTIS, MDASH, OSS-Fuzz-Gen) are
+        <b>fuzzing-first with LLM assistance and execution-based validation</b>,
+        not static-analysis-first with LLM triage. Static analysis serves to
+        <em>guide</em> fuzzing (sinkpoint distance, reachability), and LLMs
+        serve to <em>synthesize</em> inputs, harnesses, and patches &mdash;
+        not to be the primary bug source. Our v4 architecture reflects this.
+      </div>
+    </section>
+
+    <!-- Industry requirements -->
+    <section id="industry">
+      <h2>Industry requirements this system is designed to meet</h2>
+      <ol>
+        <li><b>SARIF-first output</b> so GitHub Code Scanning / Azure DevOps / GitLab / VS Code consume our findings.</li>
+        <li><b>Incremental analysis on PRs</b> (&lt; 5 min on a PR touching &lt; 1 % of code) via per-TU summaries + delta over the graph store.</li>
+        <li><b>Low false-positive rate on delivered findings</b>: only <code>CONFIRMED</code> PoVs reach the dashboard.</li>
+        <li><b>Reproducible builds &amp; scans</b> with SLSA v1.0 provenance and CycloneDX SBOMs on every artifact.</li>
+        <li><b>Runs on-prem, no code egress</b>: local-LLM path via Ollama / vLLM by default; SaaS is opt-in.</li>
+        <li><b>CI-native</b>: one-command scan, SARIF upload, PR comments, issue filing.</li>
+        <li><b>A minimized reproducer for every reported bug</b>, in a format upstream maintainers accept.</li>
+        <li><b>Deduplication at scale</b>: fuzzers routinely produce 1000&times; duplicate crashes for one bug.</li>
+        <li><b>Cross-language scaling story</b>: C/C++ is the beachhead; ClangIR + graph DB leaves room for Rust/Java without a rewrite.</li>
+        <li><b>Auditable triage decisions</b>: LLM verdicts record model, prompt hash, and the code slice they saw.</li>
+        <li><b>Budgeted LLM spend and rate limits</b>: LiteLLM proxy, per-module RPM/TPM caps, graceful degradation when budget runs low (this is the reality &mdash; ATLANTIS spent $103K in one 12-hour final round).</li>
+        <li><b>Fail-safe orchestration</b>: no single-task failure cascades. Every task is idempotent and restartable.</li>
+      </ol>
+    </section>
+
+    <!-- Critique -->
+    <section id="critique">
+      <h2>Design v4 &mdash; what changed after studying AIxCC</h2>
+      <p>
+        The v3 of this page (a static-analysis-first SAST with LLM triage) was
+        the wrong shape. Reading the full
+        <a href="https://arxiv.org/pdf/2509.14589">ATLANTIS technical report</a>,
+        the <a href="https://arxiv.org/abs/2602.07666">SoK on AIxCC</a>, the
+        <a href="https://arxiv.org/abs/2509.07225">Fuzzing Brain</a> (4th place)
+        paper, and Taesoo Kim's
+        <a href="https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/">MDASH announcement</a>,
+        the following gaps became clear:
+      </p>
+      <div class="callout critique">
+      <ol>
+        <li><b>Fuzzing is the primary bug source, not static analysis.</b>
+          ATLANTIS-C runs a Kafka-microservice ensemble of LibAFL + AFL++ +
+          libFuzzer + a custom directed fuzzer (Bullseye) + a custom
+          format-aware fuzzer, all sharing a corpus through an Ensembler that
+          dedups seeds. Static analysis guides fuzzing (sinkpoint distance),
+          it does not replace it.</li>
+        <li><b>Patches are a first-class output</b> (25 % of AIxCC score is
+          Program Repair). ATLANTIS-Patch is a 5-agent framework (MARTIAN,
+          MULTIRETRIEVAL, PRISM, VINCENT, CLAUDELIKE) coordinated by CRETE,
+          plus a <em>custom fine-tuned LLM</em> trained via multi-turn GRPO
+          on code-context retrieval. Our v3 had no patcher.</li>
+        <li><b>An orchestrator is a subsystem, not a script.</b> ATLANTIS's
+          CP-MANAGER handles CP build, Azure/LLM budget allocation, PoV
+          verification, stack-trace-based dedup, workflow across modules,
+          and bundling for submission. Our v3 &ldquo;P12 = shell scripts&rdquo;
+          was underspec'd by an order of magnitude.</li>
+        <li><b>PoV, patch, and bundle are missing contracts.</b> Our v3
+          contracts had finding / SARIF / verdict / cluster &mdash; but not
+          the actual AIxCC-scored artifacts: <b>PoV</b> (harness id +
+          crashing input + sanitizer signature + duration), <b>patch</b>
+          (unified diff + affected file + build verified), <b>bundle</b>
+          (PoV + patch + SARIF, submitted together for scoring bonus).</li>
+        <li><b>Language specialization matters.</b> ATLANTIS split into
+          <em>ATLANTIS-C</em> (LibAFL / AFL++ / libFuzzer), <em>ATLANTIS-Java</em>
+          (Jazzer + LibAFL-Jazzer + directed Jazzer), and
+          <em>ATLANTIS-Multilang</em> (LLM-heavy cross-language MLLA agent).
+          Multilang produced <b>64.4 %</b> of verified PoVs in the final.</li>
+        <li><b>Sinkpoint-directed fuzzing is a competitive advantage.</b>
+          ATLANTIS uses CodeQL-enhanced sink detection + static distance
+          computation to build a directed fuzzer (Bullseye / directed Jazzer)
+          that fuzzes toward known-dangerous API sites. Not a bonus &mdash; core.</li>
+        <li><b>Multi-model debate for triage</b> (MDASH). Microsoft runs SOTA
+          auditor + distilled debater + independent SOTA counterpoint agents;
+          disagreement between them raises finding credibility. Our v3 P6 was
+          a single-model classifier.</li>
+        <li><b>The last-mile / ExpKit gap.</b> Fuzzers produce many
+          non-scorable crashes (timeouts, OOMs, benign asserts). ATLANTIS
+          built ExpKit to close the gap from crash to scorable vulnerability.
+          We need a subsystem that says &ldquo;this crash is a real memory
+          corruption, this one is a timeout&rdquo;.</li>
+        <li><b>Budget management is a first-class subsystem.</b> ATLANTIS's
+          LiteLLM proxy centrally allocates LLM budget: 25 % to Patch, 37.5 %
+          each to Multilang and C/Java. Per-module RPM/TPM limits prevent one
+          module from starving another. On $50K/round.</li>
+        <li><b>Fail-safe orchestration is a requirement, not a stretch.</b>
+          Task failures cannot cascade. Every module is a k8s pod with
+          idempotent tasks, Redis for state, and web APIs for inter-module
+          communication.</li>
+      </ol>
+      </div>
+      <p>
+        v4 keeps everything that survived critique &mdash; the industry
+        requirements, the JSON+graph-DB contracts, KuzuDB-Vela as the graph
+        store, the independence guarantees, milestones aligned with the
+        course &mdash; and rebuilds the component list around the ATLANTIS
+        pattern, scaled down for a semester and 55 students.
+      </p>
+      <div class="callout warn">
+        <b>Scope reality-check.</b> ATLANTIS was built by ~50 experts over
+        2 years with $100K/round. We can't rebuild it in a semester. What we
+        <em>can</em> do is ship one working slice of the same shape: a
+        multi-fuzzer ensemble on one or two OSS targets, a working PoV
+        verifier + dedup, a multi-agent LLM triager and a 2-agent patcher
+        against one CWE class. That's already a paper-worthy contribution.
+      </div>
+    </section>
+
+    <!-- Reference pipeline -->
+    <section id="pipeline">
+      <h2>Reference pipeline (v4)</h2>
+<div class="diagram">
+                                     Target OSS
+                                         |
+                                         v
+                +----------------------------------------+
+                | P0. CP-Manager (orchestrator)          |
+                |    CP Builder | Budget Allocator       |
+                |    PoV Verifier | Bundler | Submitter  |
+                +----------------------------------------+
+                     |     |     |     |     |     |
+                     v     v     v     v     v     v
+     P1 build & CIR -->   P2 CIR frontend + graph DB (KuzuDB)
+                              |
+              +---------------+----------------+
+              |               |                |
+              v               v                v
+        [Fuzzing tier]   [LLM synthesis]  [Symbolic tier]
+        P3 Fuzzer        P5 LLM input     P6 Concolic
+           ensemble         generator +      execution
+        P4 Sinkpoint-        harness         (interpreter
+           directed          reverser         based)
+           fuzzer            (Testlang)
+              \_____________  |  ______________/
+                            \ | /
+                             \|/
+                              v
+                 +-------------------------+
+                 |  P7 PoV Verifier + dedup| stack-trace
+                 |  (crash reproducer,     | based dedup
+                 |   ExpKit-style filter)  |
+                 +-------------------------+
+                              |    C11 pov.json
+                              v
+                 +-------------------------+
+                 |  P8 Multi-model triage  | MDASH-style:
+                 |  (auditor + debater +   | debate raises
+                 |   counterpoint)         | credibility
+                 +-------------------------+
+                              |    C7 triaged.json
+                              v
+                 +-------------------------+
+                 |  P9 Multi-agent patcher | CRETE-style:
+                 |  (retrieve, root-cause, | 3-5 patch
+                 |   property, generate,   | agents
+                 |   verify)               |
+                 +-------------------------+
+                              |    C12 patch.json
+                              v
+                 +-------------------------+
+                 |  P10 Bundle + Dashboard | SARIF emit,
+                 |  (PoV + patch + SARIF)  | bundle for
+                 |                         | upstream
+                 +-------------------------+
+                              |    C13 bundle.json + C6 SARIF
+                              v
+              Upstream (GitHub PR / OSS-Fuzz / CVE / advisory)
+
+  +----------------------------------------------------+
+  | Shared graph store (KuzuDB / Vela fork):           |
+  |   nodes: TranslationUnit, Function, BasicBlock,    |
+  |          Value, Sink, Summary, PoV, Finding,       |
+  |          Verdict, Patch, Bundle, Cluster           |
+  |   edges: CALLS, FLOWS_TO, DEFINES, IN_TU,          |
+  |          TARGETS_SINK, CONFIRMS, FIXES, BUNDLES    |
+  +----------------------------------------------------+
+
+  +----------------------------------------------------+
+  | Shared bus (Kafka + Redis, provided by P12):       |
+  |   topics: seeds, crashes, povs, patches, sarif     |
+  +----------------------------------------------------+
+</div>
+    </section>
+
+    <!-- Contracts -->
+    <section id="contracts">
+      <h2>Contracts (C1&ndash;C13)</h2>
+      <p style="font-size:13.5px;color:var(--text-muted);">
+        JSON schemas under <code>contracts/&lt;name&gt;.schema.json</code>,
+        frozen at Progress Meeting 1. Fixtures at
+        <code>contracts/fixtures/</code>. Large artifacts also materialize
+        in the graph DB.
+      </p>
+      <table class="contracts">
+        <thead>
+          <tr>
+            <th style="width:50px;">ID</th>
+            <th>Contract</th>
+            <th style="width:70px;">Producer</th>
+            <th style="width:130px;">Consumers</th>
+            <th>Format &amp; path</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><b>C1</b></td><td>Compilation database</td><td>P1</td><td>P2, P3, P4, P5, P6</td><td><code>compile_commands.json</code></td></tr>
+          <tr><td><b>C2</b></td><td>CIR manifest + bitcode</td><td>P1</td><td>P2, P6</td><td><code>cir-manifest.schema.json</code> + <code>*.cir.bc</code></td></tr>
+          <tr><td><b>C3</b></td><td>Program model (functions, BBs, USRs, callgraph, sinks)</td><td>P2</td><td>P4, P5, P6, P8, P9</td><td><code>program-model.schema.json</code> + KuzuDB</td></tr>
+          <tr><td><b>C4</b></td><td>Cross-TU summary (may-write, escape, callgraph)</td><td>P2</td><td>P4</td><td><code>summary.schema.json</code> + KuzuDB</td></tr>
+          <tr><td><b>C5</b></td><td>Seed / crash message on the bus</td><td>P3, P4, P5</td><td>P3, P4, P5, P7</td><td>Kafka topic (Avro / JSON)</td></tr>
+          <tr><td><b>C6</b></td><td>SARIF report</td><td>P10</td><td>upstream / dashboard</td><td>SARIF v2.1.0</td></tr>
+          <tr><td><b>C7</b></td><td>Triaged finding</td><td>P8</td><td>P9, P10</td><td><code>triaged.schema.json</code></td></tr>
+          <tr><td><b>C8</b></td><td>Harness bundle (source, build, seed)</td><td>P1, P5</td><td>P3, P4, P6, P7</td><td>Directory + <code>metadata.json</code></td></tr>
+          <tr><td><b>C9</b></td><td>Execution verdict (sanitizer log)</td><td>P7</td><td>P8, P10</td><td><code>verdict.schema.json</code></td></tr>
+          <tr><td><b>C10</b></td><td>Finding cluster</td><td>P7</td><td>P10</td><td><code>cluster.schema.json</code></td></tr>
+          <tr><td><b>C11</b></td><td><b>PoV</b> (harness_id + input + sanitizer_sig + duration)</td><td>P7</td><td>P8, P9, P10</td><td><code>pov.schema.json</code></td></tr>
+          <tr><td><b>C12</b></td><td><b>Patch</b> (unified diff + affected files + build_hash + tests_passed)</td><td>P9</td><td>P10</td><td><code>patch.schema.json</code></td></tr>
+          <tr><td><b>C13</b></td><td><b>Bundle</b> (PoV + patch + SARIF + provenance)</td><td>P10</td><td>upstream</td><td><code>bundle.schema.json</code></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:10px;">
+        C11&ndash;C13 are new in v4, matching the AIxCC-scored artifacts.
+        Every artifact carries SLSA v1.0 provenance + in-toto attestation
+        + a content-hash ID.
+      </p>
+    </section>
+
+    <!-- Data model & storage (kept, condensed) -->
+    <section id="storage">
+      <h2>Data model &amp; storage</h2>
+      <p>
+        JSON contracts remain authoritative for CI, cross-component
+        exchange, and fixtures. Large-scale artifacts (C2, C3, C4, C7, C9,
+        C10, C11, C12) also materialize in an embedded graph DB so that
+        cross-TU / cross-finding queries are graph traversals instead of
+        bespoke code &mdash; this is how CodeQL, Kythe, and Ant Group's
+        YASA all model this.
+      </p>
+      <p>
+        Pinned graph store:
+        <a href="https://github.com/Vela-Engineering/kuzu"><b>Vela Engineering's Kuzu fork</b></a>
+        (<code>v0.12.0-vela</code>, March 2026, MIT). Rationale:
+        upstream <code>kuzudb/kuzu</code> was archived Oct 2025 after
+        Apple's acquisition; the Vela fork adds <b>concurrent multi-writer
+        support</b>, which we need because P3, P4, P5 all write findings and
+        edges into the same graph store in parallel. Everything else from
+        upstream (Cypher, vector search, FT search) is preserved. Bindings
+        for Python / C++ / Rust / Go / Java / Node / WASM. Independent
+        benchmarks: ~374&times; faster than Neo4j on multi-hop paths.
+      </p>
+      <div class="callout warn">
+        <b>Isolation rule.</b> Every component touches the DB only via
+        <code>tools/graph/adapter.py</code>. Schema at
+        <code>tools/graph/schema.cypher</code>. If the Vela fork stalls,
+        we swap for DuckDB with a JSON blob column and recursive CTEs
+        &mdash; JSON contracts are the source of truth, no component rewrite.
+      </div>
+
+      <h3 style="font-size:16px;color:var(--blue-700);margin-top:14px;">Graph schema sketch</h3>
+<div class="diagram">
+// Nodes
+(:TranslationUnit {tu_id, path, hash})
+(:Function        {usr, name, file, line, tu_id})
+(:BasicBlock      {bb_id, function_usr, index})
+(:Value           {value_id, function_usr, kind})
+(:Sink            {sink_id, api, cwe, kind})           // dangerous API site
+(:Summary         {kind, function_usr, payload_hash})
+(:PoV             {pov_id, harness_id, input_hash, sig, duration_ms})
+(:Finding         {finding_id, cwe, severity, detector, sarif_ref})
+(:Verdict         {finding_id, status, log_hash})
+(:Patch           {patch_id, pov_id, diff_hash, build_ok, tests_ok})
+(:Bundle          {bundle_id, pov_id, patch_id, sarif_ref})
+(:Cluster         {cluster_id, representative_finding_id})
+
+// Edges
+(:Function)-[:IN_TU]->(:TranslationUnit)
+(:BasicBlock)-[:IN_FUNCTION]->(:Function)
+(:Function)-[:CALLS {site}]->(:Function)
+(:Value)-[:DEFINES]->(:Value)                          // def-use
+(:Value)-[:FLOWS_TO {via}]->(:Value)                   // dataflow / taint
+(:Function)-[:REACHES_SINK {distance}]->(:Sink)        // directed-fuzz signal
+(:PoV)-[:TRIGGERS]->(:Finding)
+(:Verdict)-[:CONFIRMS]->(:PoV)
+(:Patch)-[:FIXES]->(:PoV)
+(:Bundle)-[:BUNDLES]->(:PoV)|(:Patch)|(:Finding)
+(:Cluster)-[:CONTAINS]->(:Finding)
+</div>
+    </section>
+
+    <!-- Shared repo layout -->
+    <section id="repo">
+      <h2>Shared repo layout</h2>
+<div class="diagram">
+cs5187-ssr/
+├── contracts/                           # C1..C13 schemas + fixtures
+│   ├── *.schema.json
+│   └── fixtures/*.json
+├── tools/
+│   ├── validate.py                      # JSON-Schema + SARIF validator
+│   ├── provenance.py                    # SLSA / in-toto emitter
+│   ├── budget.py                        # LiteLLM proxy + RPM/TPM caps
+│   ├── bus/                             # Kafka topic definitions
+│   └── graph/                           # KuzuDB adapter
+│       ├── schema.cypher
+│       └── adapter.py
+├── components/
+│   ├── p0-cp-manager/           p6-concolic/       p12-ops/        # bonus
+│   ├── p1-ingest/               p7-pov-verifier/   p13-tuned-patch/# bonus
+│   ├── p2-cir-graph-frontend/   p8-triage/
+│   ├── p3-fuzzer-ensemble/      p9-patcher/
+│   ├── p4-directed-fuzzer/      p10-bundle-dashboard/
+│   ├── p5-llm-input-gen/        p11-bench/         # bonus
+└── integration/
+    ├── run-e2e.sh
+    └── slsa-provenance.yaml
+</div>
+    </section>
+
+    <!-- Independence guarantees -->
+    <section id="independence">
+      <h2>Independence guarantees</h2>
+      <ol>
+        <li>Own directory under <code>components/p&lt;N&gt;/</code>. Own build system. Own <code>Makefile</code> with <code>build test demo validate</code>.</li>
+        <li>Inputs come from <code>contracts/fixtures/</code> at test time; DB via <code>tools/graph/adapter.py</code>; bus via <code>tools/bus/</code>.</li>
+        <li>No in-process peer calls. Every cross-component signal is a JSON artifact + Kafka message + DB write.</li>
+        <li>Every emitted artifact runs <code>make validate</code> against its JSON Schema + SARIF validator + provenance emitter.</li>
+        <li>Integration lives in <code>integration/run-e2e.sh</code>. Owned by P12.</li>
+        <li>Every component ships a <code>README.md</code>: install, fixtures, outputs, one example command.</li>
+      </ol>
+    </section>
+
+    <!-- Components -->
+    <section id="components">
+      <h2>Components (11 groups)</h2>
+
+      <div class="component-grid">
+
+        <!-- P0 -->
+        <div class="component" id="p0">
+          <header>
+            <h3>CP-Manager (orchestrator)</h3>
+            <span class="cid">P0</span>
+          </header>
+          <div class="role">The brain. Builds the target, allocates budget, runs the workflow across modules, dedups PoVs, and bundles submissions. Modeled after ATLANTIS's CP-MANAGER.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>Target OSS URL / directory + <code>config/target.yaml</code></li>
+                <li>Budget: <code>config/budget.yaml</code> (LLM $, compute, deadline)</li>
+                <li>Kafka bus (from all other components)</li>
+                <li>Graph DB (for state queries)</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>Trigger builds via P1 (CP Builder role)</li>
+                <li>Budget allocation to each module (LiteLLM keys with RPM/TPM caps)</li>
+                <li>Verified <code>PoV</code>s (C11) after P7 deduplication</li>
+                <li>C13 <code>bundle.json</code> for upstream submission</li>
+                <li>OpenTelemetry traces of every workflow step</li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>4&ndash;5</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p0-cp-manager &amp;&amp; make build test demo validate</span></dd>
+            <dt>Contract test</dt><dd>End-to-end orchestration on shipped fixtures &mdash; asserts submission bundle validates against C13.</dd>
+            <dt>Prereq skills</dt><dd>k8s, Kafka, Redis, Terraform (aspirational), Python/Go, OpenTelemetry</dd>
+            <dt>Industry driver</dt><dd>Req. 4 (SLSA), Req. 6 (CI-native), Req. 11 (budget), Req. 12 (fail-safe)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Team Atlanta. &ldquo;<a href="https://arxiv.org/abs/2509.14589">ATLANTIS: AI-driven Threat Localization, Analysis, and Triage Intelligence System</a>&rdquo;, arXiv 2509.14589 (2025) &mdash; especially &sect;3.2 &ldquo;CP-MANAGER&rdquo;.</li>
+              <li>Kim et al. &ldquo;<a href="https://arxiv.org/abs/2602.07666">SoK: DARPA's AI Cyber Challenge (AIxCC): Competition Design, Architectures, and Lessons Learned</a>&rdquo;.</li>
+              <li>o2lab. &ldquo;<a href="https://arxiv.org/abs/2509.07225">All You Need Is A Fuzzing Brain</a>&rdquo; (AIxCC 4th place) &mdash; alternative orchestration.</li>
+              <li>Microsoft &ldquo;<a href="https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/">MDASH</a>&rdquo; blog &mdash; multi-agent orchestration in production.</li>
+              <li><a href="https://github.com/BerriAI/litellm">LiteLLM</a> proxy docs &mdash; centralized LLM budget + rate limits.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; enables the entire pipeline</dd>
+          </dl>
+        </div>
+
+        <!-- P1 -->
+        <div class="component" id="p1">
+          <header>
+            <h3>Build ingestion &amp; ClangIR emission</h3>
+            <span class="cid">P1</span>
+          </header>
+          <div class="role">Get real OSS builds to hand us a compilation database, per-TU ClangIR bitcode, and harness locations. Emits SBOM.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul><li>Cloned OSS + <code>config/build-&lt;proj&gt;.yaml</code></li></ul>
+              CI fixture: <code>fixtures/tree-hello.tar.gz</code>.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C1 <code>compile_commands.json</code></li>
+                <li>C2 <code>cir-manifest.json</code> + <code>*.cir.bc</code></li>
+                <li>C8 harness bundles at <code>harness/&lt;id&gt;/</code> (source + build + seed corpus)</li>
+                <li>SLSA provenance + CycloneDX SBOM</li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>3&ndash;4</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p1-ingest &amp;&amp; make build test demo validate</span></dd>
+            <dt>Prereq skills</dt><dd>make/cmake/ninja/kbuild; Bear / intercept-build / WLLVM; Docker; CycloneDX</dd>
+            <dt>Industry driver</dt><dd>Req. 4, Req. 5, Req. 6</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Lattner &amp; Adve. LLVM, CGO 2004.</li>
+              <li>K&aacute;szoni-Rozsny&aacute;k et al. &ldquo;<a href="https://arxiv.org/abs/2408.05657">Implementing and Executing Static Analysis Using LLVM and CodeChecker</a>&rdquo;, 2024.</li>
+              <li>GSoC 2025 blog: <a href="https://blog.llvm.org/posts/2025-gsoc-clangir-upstreaming/">ClangIR upstreaming</a>.</li>
+              <li><a href="https://google.github.io/oss-fuzz/getting-started/new-project-guide/">OSS-Fuzz project-integration guide</a>.</li>
+              <li><a href="https://slsa.dev/spec/v1.0/">SLSA v1.0</a> + <a href="https://cyclonedx.org/">CycloneDX</a>.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect</dd>
+          </dl>
+        </div>
+
+        <!-- P2 -->
+        <div class="component" id="p2">
+          <header>
+            <h3>ClangIR frontend + graph-DB materialization</h3>
+            <span class="cid">P2</span>
+          </header>
+          <div class="role">Turn CIR modules into a USR-keyed program model in JSON and Cypher, with cross-TU summaries and sink annotations. Provides the substrate every downstream group queries.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul><li>C1, C2</li></ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C3 <code>program-model.json</code></li>
+                <li>C4 cross-TU summaries (function effects, callgraph, may-write)</li>
+                <li>Node/edge inserts into KuzuDB: <code>Function</code>, <code>BasicBlock</code>, <code>Value</code>, <code>Sink</code>, <code>Summary</code>, <code>CALLS</code>, <code>DEFINES</code>, <code>FLOWS_TO</code></li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>4&ndash;5</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p2-cir-graph-frontend &amp;&amp; make build test demo validate</span></dd>
+            <dt>Prereq skills</dt><dd>C++, ClangIR/MLIR, USRs, IFDS, KuzuDB via adapter</dd>
+            <dt>Industry driver</dt><dd>Req. 2 (incremental), Req. 9 (cross-lang)</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Sui, Xue. &ldquo;<a href="https://dl.acm.org/doi/10.1145/2892208.2892235">SVF: Interprocedural Static Value-Flow Analysis in LLVM</a>&rdquo;, CC 2016.</li>
+              <li>Yamaguchi et al. Code Property Graphs, IEEE S&amp;P 2014.</li>
+              <li>Reps, Horwitz, Sagiv. IFDS, POPL 1995.</li>
+              <li>Calcagno, Distefano et al. Biabduction, POPL 2009.</li>
+              <li>Szab&oacute; et al. &ldquo;<a href="https://arxiv.org/abs/2308.09660">Incrementalizing Production CodeQL Analyses</a>&rdquo;, ESEC/FSE 2023.</li>
+              <li>LLVM Discourse RFC: <a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">SSAF</a>.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect</dd>
+          </dl>
+        </div>
+
+        <!-- P3 -->
+        <div class="component" id="p3">
+          <header>
+            <h3>Multi-fuzzer ensemble</h3>
+            <span class="cid">P3</span>
+          </header>
+          <div class="role">The primary bug source. Run LibFuzzer + AFL++ + LibAFL side-by-side against every harness, sharing corpus over Kafka, deduplicating seeds. Modeled after ATLANTIS-C.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C1, C8 harness bundles</li>
+                <li>Kafka <code>seeds</code> topic (from P5)</li>
+                <li>Time-based scheduling requests from P0</li>
+              </ul>
+              CI fixture: 3 harnesses with one guaranteed crash each.
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C5 seed messages on <code>seeds</code> topic</li>
+                <li>C5 crash messages on <code>crashes</code> topic</li>
+                <li>Coverage bitmaps in <code>artifacts/coverage/</code></li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>4&ndash;5</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p3-fuzzer-ensemble &amp;&amp; make build test demo validate</span></dd>
+            <dt>Prereq skills</dt><dd>LibFuzzer, AFL++, LibAFL internals; sanitizer runtimes; Kafka; corpus scheduling</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 7 &mdash; the workhorse that generates real crashes</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Team Atlanta ATLANTIS &sect;4 (ATLANTIS-C) &mdash; Kafka microservice ensemble, TaskScheduler, Ensembler.</li>
+              <li>B&ouml;hme, Pham, Roychoudhury. &ldquo;Coverage-based Greybox Fuzzing as Markov Chain&rdquo; (AFLFast), CCS 2016.</li>
+              <li>Fioraldi, Maier, Ei&szlig;feldt, Heuse. &ldquo;AFL++&rdquo;, WOOT 2020.</li>
+              <li>Fioraldi et al. &ldquo;LibAFL: A Framework to Build Modular and Reusable Fuzzers&rdquo;, CCS 2022.</li>
+              <li>Metzman et al. &ldquo;<a href="https://google.github.io/fuzzbench/">FuzzBench</a>&rdquo;, ESEC/FSE 2021.</li>
+              <li>OSS-Fuzz operator docs &mdash; industry-scale ensemble.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> (jointly with P7)</dd>
+          </dl>
+        </div>
+
+        <!-- P4 -->
+        <div class="component" id="p4">
+          <header>
+            <h3>Sinkpoint-directed fuzzer</h3>
+            <span class="cid">P4</span>
+          </header>
+          <div class="role">Fuzz <em>toward</em> known-dangerous API sites. Use static analysis (P2's <code>Sink</code> nodes) to compute distance from harness entry to each sink, then bias fuzzing toward reducing that distance. Modeled after ATLANTIS's Bullseye / directed Jazzer.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C1, C3 (Sink nodes + <code>REACHES_SINK</code> distances from KuzuDB)</li>
+                <li>C8 harness bundles</li>
+                <li>Kafka <code>seeds</code> topic</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C5 seeds / crashes on the bus (tagged with <code>sink_id</code>)</li>
+                <li>Sink-hit metrics in <code>artifacts/directed/&lt;run&gt;.json</code></li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>3&ndash;4</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p4-directed-fuzzer &amp;&amp; make build test demo validate</span></dd>
+            <dt>Prereq skills</dt><dd>AFLGo-style directed fuzzing, distance-based instrumentation, ClangIR pass writing</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 7</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>B&ouml;hme, Pham, Nguyen, Roychoudhury. &ldquo;Directed Greybox Fuzzing&rdquo; (AFLGo), CCS 2017.</li>
+              <li>Chen et al. &ldquo;Hawkeye: Towards a Desired Directed Grey-box Fuzzer&rdquo;, CCS 2018.</li>
+              <li>ATLANTIS &sect;4.6 (Bullseye) + &sect;5.5 (Sinkpoint-Focused Directed Fuzzing).</li>
+              <li>Zhang, Zhang. &ldquo;<a href="https://arxiv.org/abs/2510.23101">Beyond Imprecise Distance Metrics: Trace-Guided Directed Greybox Fuzzing via LLM-Predicted Call Stacks</a>&rdquo;, 2025.</li>
+              <li>She et al. &ldquo;<a href="https://arxiv.org/abs/2406.04517">FOX: Coverage-guided Fuzzing as Online Stochastic Control</a>&rdquo;, CCS 2024.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> (jointly with P7)</dd>
+          </dl>
+        </div>
+
+        <!-- P5 -->
+        <div class="component" id="p5">
+          <header>
+            <h3>LLM input generator + harness reverser</h3>
+            <span class="cid">P5</span>
+          </header>
+          <div class="role">Synthesize hard-to-reach inputs and reverse-engineer harness input formats. Modeled after ATLANTIS's DeepGenerator, LLM-Augmented Mutator, and Testlang.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C3 program model</li>
+                <li>C8 harness source</li>
+                <li>Kafka <code>seeds</code> feedback (which seeds increased coverage)</li>
+                <li>LLM API keys via LiteLLM proxy</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C5 seed messages tagged with <code>generator: llm</code>, <code>prompt_hash</code>, <code>model</code></li>
+                <li>Testlang grammar files at <code>artifacts/grammars/&lt;harness&gt;.testlang</code></li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>4&ndash;5</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p5-llm-input-gen &amp;&amp; make build test demo validate</span> &mdash; ships a mock LLM provider for CI.</dd>
+            <dt>Prereq skills</dt><dd>LLM prompting, retrieval; grammar synthesis; LibFuzzer FuzzedDataProvider modelling</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 5</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>ATLANTIS &sect;4.5 (LLM components: LibAgents, DeepGenerator, LLM-Augmented Mutator) + &sect;6.6 (Testlang).</li>
+              <li>Xia et al. &ldquo;Fuzz4All: Universal Fuzzing with LLMs&rdquo;, ICSE 2024.</li>
+              <li>Deng et al. &ldquo;TitanFuzz&rdquo;, ISSTA 2023.</li>
+              <li>Lyu et al. &ldquo;<a href="https://arxiv.org/abs/2312.17677">PromptFuzz</a>&rdquo;, 2024.</li>
+              <li>Google. &ldquo;<a href="https://github.com/google/oss-fuzz-gen">OSS-Fuzz-Gen</a>&rdquo;.</li>
+              <li>Anon. &ldquo;<a href="https://arxiv.org/abs/2507.18289">Scheduzz: Constraint-based Fuzz Driver Generation with Dual Scheduling</a>&rdquo;, 2025.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> (jointly with P7)</dd>
+          </dl>
+        </div>
+
+        <!-- P6 -->
+        <div class="component" id="p6">
+          <header>
+            <h3>Concolic execution complement</h3>
+            <span class="cid">P6</span>
+          </header>
+          <div class="role">Interpreter-based symbolic emulation for coverage-gated crashes fuzzers can't reach. Modeled after ATLANTIS-Multilang &sect;5.7 (concolic) + &sect;5.8 (path-based PoV generator).</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C2 CIR bitcode</li>
+                <li>C3 program model + Sink nodes</li>
+                <li>C8 harness</li>
+                <li>&ldquo;Hard branches&rdquo; hints from P3/P4 (branches that fuzzers can't cover)</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C5 seeds (concolic-derived inputs pushed onto the bus)</li>
+                <li>Reachability facts pushed into KuzuDB</li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>3&ndash;4</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p6-concolic &amp;&amp; make build test demo validate</span></dd>
+            <dt>Prereq skills</dt><dd>Symbolic execution, SMT (Z3), interpreter-based emulation, KLEE / SymCC internals</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 7</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>ATLANTIS &sect;5.7 (Concolic Execution: interpreter-based symbolic emulation, SymState, constraint solving optimisation) + &sect;5.8 (Path-Based PoV Generator).</li>
+              <li>Cadar, Dunbar, Engler. &ldquo;KLEE&rdquo;, OSDI 2008.</li>
+              <li>Shoshitaishvili et al. angr, IEEE S&amp;P 2016.</li>
+              <li>Poeplau, Francillon. &ldquo;SymCC: Symbolic execution with compile-time code generation&rdquo;, USENIX Security 2020.</li>
+              <li>Bailey, Nicholas. &ldquo;<a href="https://arxiv.org/abs/2508.06643">Symbolic Execution in Practice: A Survey</a>&rdquo;, 2025.</li>
+              <li>Li, Meng, Duck. &ldquo;<a href="https://dl.acm.org/doi/abs/10.1145/3763163">Large Language Model Powered Symbolic Execution</a>&rdquo; (AutoBug), OOPSLA 2025.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> (jointly with P7)</dd>
+          </dl>
+        </div>
+
+        <!-- P7 -->
+        <div class="component" id="p7">
+          <header>
+            <h3>PoV verifier + stack-trace deduplication</h3>
+            <span class="cid">P7</span>
+          </header>
+          <div class="role">Consume crashes from the bus, replay them under sanitizers, decide <code>CONFIRMED</code> / <code>REJECTED</code> / <code>INCONCLUSIVE</code>, and dedup by stack trace. This is the exact function ATLANTIS's CP-MANAGER PoV Verifier + custom stack-trace dedup performs.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>Kafka <code>crashes</code> topic (from P3, P4, P6)</li>
+                <li>C8 harness bundles (for replay)</li>
+                <li>Sandbox limits from <code>config/sandbox.yaml</code></li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C11 <code>pov.json</code> for each unique confirmed crash</li>
+                <li>C9 verdict + sanitizer log + minimized input</li>
+                <li>C10 cluster IDs (stack-trace-based)</li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>3</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p7-pov-verifier &amp;&amp; make build test demo validate</span></dd>
+            <dt>Prereq skills</dt><dd>Sanitizers (ASan/UBSan/MSan), container isolation, stack-trace canonicalization, delta-debug minimization</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 7, Req. 8, Req. 12</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>ATLANTIS &sect;3.2 (CP-MANAGER PoV Verifier &mdash; custom stack-trace-based dedup).</li>
+              <li>Serebryany, Bruening, Potapenko, Vyukov. &ldquo;AddressSanitizer&rdquo;, USENIX ATC 2012.</li>
+              <li>Herter et al. &ldquo;<a href="https://arxiv.org/abs/2512.01609">GPTrace: Effective Crash Deduplication Using LLM Embeddings</a>&rdquo;, 2025.</li>
+              <li>Anon. &ldquo;<a href="https://arxiv.org/abs/2508.19449">Stack Trace-Based Crash Deduplication with Transformer Adaptation</a>&rdquo; (dedupT), 2025.</li>
+              <li>Dang et al. ReBucket (call-stack clustering).</li>
+              <li>ATLANTIS &sect;5.6 (ExpKit &mdash; last-mile crash-to-vuln gap).</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> &mdash; without P7 nothing is bug-worthy</dd>
+          </dl>
+        </div>
+
+        <!-- P8 -->
+        <div class="component" id="p8">
+          <header>
+            <h3>Multi-model LLM triage (MDASH pattern)</h3>
+            <span class="cid">P8</span>
+          </header>
+          <div class="role">Take confirmed PoVs and findings, run <b>multi-model debate</b>: SOTA auditor + distilled debater + independent SOTA counterpoint. Disagreement raises credibility. Modeled after Microsoft MDASH.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C11 PoVs</li>
+                <li>C3 program model (for code slicing)</li>
+                <li>Source access (read-only)</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C7 triaged findings with {verdict, confidence, rationale, poc_hints, models_used, prompt_hashes, debate_transcript_hash}</li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>4&ndash;5</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p8-triage &amp;&amp; make build test demo validate</span> &mdash; ships mock LLM providers; <code>make demo</code> uses real ones.</dd>
+            <dt>Prereq skills</dt><dd>LLM prompting, multi-agent orchestration, prompt evaluation, RAG</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 5, Req. 10</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>Microsoft. &ldquo;<a href="https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/">Defense at AI speed: MDASH</a>&rdquo;, 2026 (multi-model debate pattern).</li>
+              <li>Li, Hao, Zhai, Qian. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3649828">LLift: LLM-Integrated Static Analysis for Bug Detection</a>&rdquo;, OOPSLA 2024.</li>
+              <li>Anon. &ldquo;<a href="https://openreview.net/pdf?id=9LdJDU7E91">IRIS: LLM-Assisted Static Analysis</a>&rdquo;, ICLR 2025 (+103.7 % vs CodeQL).</li>
+              <li>Li, Zhou, Sridharan, Zhang, Qian. &ldquo;<a href="https://arxiv.org/abs/2606.15122">Hitchhiker's Guide to Program Analysis, Part III: Mostly Harmless LLMs</a>&rdquo;, 2026.</li>
+              <li>Wang et al. &ldquo;<a href="https://arxiv.org/abs/2506.10322">Minimizing False Positives in Static Bug Detection via LLM-Enhanced Path Feasibility</a>&rdquo;, 2025.</li>
+              <li>Arm <a href="https://github.com/arm/metis">Metis</a> &mdash; production LLM triage patterns.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; measured by FP reduction into P9</dd>
+          </dl>
+        </div>
+
+        <!-- P9 -->
+        <div class="component" id="p9">
+          <header>
+            <h3>Multi-agent patch generator</h3>
+            <span class="cid">P9</span>
+          </header>
+          <div class="role">Turn a PoV into a semantically-correct patch. Multi-agent framework: retrieve → root-cause → property → generate → verify. Modeled after ATLANTIS-Patch's CRETE + MARTIAN, MULTIRETRIEVAL, PRISM, VINCENT, CLAUDELIKE agents.</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C11 PoV (with harness id + minimized input)</li>
+                <li>C7 triaged finding (LLM rationale)</li>
+                <li>C3 program model</li>
+                <li>Source access</li>
+                <li>Rate-limited LLM keys (via P0's budget allocator; max 10 patch requests per fuzzer-sanitizer combo &mdash; ATLANTIS heuristic)</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C12 <code>patch.json</code>: {unified_diff, affected_files, build_hash, tests_ok, sanitizer_ok, pov_no_longer_crashes}</li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>4&ndash;5</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p9-patcher &amp;&amp; make build test demo validate</span> &mdash; verifies against golden PoVs that patched code no longer crashes.</dd>
+            <dt>Prereq skills</dt><dd>LLM agentic frameworks (Aider / SWE-Agent style); C/C++ patch generation; sanitized re-execution; retrieval</dd>
+            <dt>Industry driver</dt><dd>Req. 3, Req. 6, Req. 7</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>ATLANTIS &sect;7 (ATLANTIS-Patching &mdash; CRETE framework + MARTIAN + MULTIRETRIEVAL + PRISM + VINCENT + CLAUDELIKE agents).</li>
+              <li>ATLANTIS &sect;8 (Custom fine-tuned LLM for patching &mdash; multi-turn GRPO on code-context retrieval).</li>
+              <li>Zhang, Meng, Roychoudhury et al. &ldquo;<a href="https://abhikrc.com/pdf/icse2026-seip.pdf">Fixing Security Vulnerabilities with Agentic AI in OSS-Fuzz</a>&rdquo;, ICSE 2026 SEIP.</li>
+              <li>Anon. &ldquo;<a href="https://arxiv.org/abs/2601.17471">PatchIsland: Orchestration of LLM Agents for Continuous Vulnerability Repair</a>&rdquo;, 2026.</li>
+              <li>Ye et al. &ldquo;<a href="https://arxiv.org/abs/2603.01257">A Systematic Study of LLM-Based Architectures for Automated Patching</a>&rdquo;, 2026.</li>
+              <li>SWE-Agent + Aider architectures (the two open-source references ATLANTIS builds on).</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd><b>Yes</b> &mdash; a patch that lands is worth more than any finding</dd>
+          </dl>
+        </div>
+
+        <!-- P10 -->
+        <div class="component" id="p10">
+          <header>
+            <h3>Bundle emitter + review dashboard</h3>
+            <span class="cid">P10</span>
+          </header>
+          <div class="role">Emit SARIF, bundle PoV + patch + SARIF for submission, and serve a review UI. Modeled after ATLANTIS's CP-MANAGER Submitter + ATLANTIS-SARIF (SARIF validity check).</div>
+          <div class="io">
+            <div class="io-box">
+              <h4>Consumes</h4>
+              <ul>
+                <li>C11 PoV, C12 patch, C7 triage, C9 verdicts, C10 clusters</li>
+                <li>Graph DB (for cross-links)</li>
+              </ul>
+            </div>
+            <div class="io-box out">
+              <h4>Produces</h4>
+              <ul>
+                <li>C6 SARIF v2.1.0 report</li>
+                <li>C13 <code>bundle.json</code> (PoV + patch + SARIF + provenance)</li>
+                <li>Web UI (SPA + backend) with syntax-highlighted code, PoV replay, patch review, one-click GitHub issue payload</li>
+                <li>PDF / Markdown exports</li>
+              </ul>
+            </div>
+          </div>
+          <dl>
+            <dt>Team size</dt><dd>4&ndash;5</dd>
+            <dt>Standalone build</dt><dd><span class="cmd">cd components/p10-bundle-dashboard &amp;&amp; make build test demo validate</span></dd>
+            <dt>Prereq skills</dt><dd>SARIF, web (React/Svelte/Vite), backend (FastAPI/Flask), GitHub API</dd>
+            <dt>Industry driver</dt><dd>Req. 1, Req. 4, Req. 6, Req. 10</dd>
+            <dt>Papers to read</dt>
+            <dd><ul class="papers">
+              <li>ATLANTIS &sect;3.2 (CP-MANAGER Submitter &mdash; bundling algorithm) + &sect;9 (ATLANTIS-SARIF &mdash; Reachability + Validity Check).</li>
+              <li><a href="https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata02/os/sarif-v2.1.0-errata02-os-complete.html">SARIF v2.1.0 spec</a>.</li>
+              <li><a href="https://docs.github.com/en/code-security/code-scanning">GitHub Code Scanning</a> SARIF ingestion.</li>
+              <li>Microsoft <a href="https://marketplace.visualstudio.com/items?itemName=MS-SarifVSCode.sarif-viewer">SARIF Viewer for VS Code</a> &mdash; UX patterns.</li>
+              <li>Arm <a href="https://github.com/arm/metis">Metis</a> triage CLI &mdash; UX baseline.</li>
+            </ul></dd>
+            <dt>Upstream impact</dt><dd>Indirect &mdash; makes upstream reports consistent</dd>
+          </dl>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Bonus -->
+    <section id="bonus">
+      <h2>Bonus tracks (P11 &middot; P12 &middot; P13)</h2>
+      <div class="component-grid">
+
+        <div class="component" id="p11">
+          <header>
+            <h3>Benchmark harness</h3>
+            <span class="cid">P11</span>
+          </header>
+          <div class="role">Reproducible &ldquo;how well does the whole pipeline do?&rdquo; on MAGMA, FuzzBench, SARD, real-CVE micro-benchmarks &mdash; and the ATLANTIS benchmark itself (&sect;10).</div>
+          <dl>
+            <dt>Team size</dt><dd>2&ndash;3</dd>
+            <dt>Papers</dt>
+            <dd><ul class="papers">
+              <li>Hazimeh, Herrera, Payer. &ldquo;<a href="https://github.com/HexHive/magma">MAGMA</a>&rdquo;, SIGMETRICS 2020.</li>
+              <li>Metzman et al. &ldquo;<a href="https://google.github.io/fuzzbench/">FuzzBench</a>&rdquo;, ESEC/FSE 2021.</li>
+              <li>Klees, Ruef, Cooper, Wei, Hicks. &ldquo;Evaluating Fuzz Testing&rdquo;, CCS 2018.</li>
+              <li>ATLANTIS &sect;10 (Benchmark design &mdash; component-specific and realistic).</li>
+              <li>o2lab FuzzingBrain Leaderboard.</li>
+            </ul></dd>
+          </dl>
+        </div>
+
+        <div class="component" id="p12">
+          <header>
+            <h3>Ops: Kafka bus, k8s, SLSA</h3>
+            <span class="cid">P12</span>
+          </header>
+          <div class="role">Provides the Kafka bus, k8s manifests, Terraform, GitHub Actions matrix, SLSA v1.0 provenance, in-toto attestations for every artifact. Makes every other component reproducibly runnable.</div>
+          <dl>
+            <dt>Team size</dt><dd>2</dd>
+            <dt>Papers / specs</dt>
+            <dd><ul class="papers">
+              <li>ATLANTIS &sect;3.1 (Two-tier k8s: CRS-level + CP-level; Terraform on Azure; Redis; OpenTelemetry).</li>
+              <li><a href="https://slsa.dev/spec/v1.0/">SLSA v1.0</a> + <a href="https://in-toto.io/">in-toto</a> + <a href="https://www.sigstore.dev/">Sigstore</a>.</li>
+              <li><a href="https://cyclonedx.org/">CycloneDX SBOM</a>.</li>
+              <li>&ldquo;<a href="https://www.infoq.com/news/2025/08/provenance/">Supply Chain Security: Provenance Tools Becoming Standard in Developer Platforms</a>&rdquo;, InfoQ 2025.</li>
+            </ul></dd>
+          </dl>
+        </div>
+
+        <div class="component" id="p13">
+          <header>
+            <h3>Fine-tuned patch model</h3>
+            <span class="cid">P13</span>
+          </header>
+          <div class="role">Train a small (7B&ndash;13B) open-weights model for patch generation via multi-turn GRPO on code-context retrieval &mdash; matching ATLANTIS &sect;8's custom LLM (only Atlanta ran a custom fine-tuned model at AIxCC finals). Serves as a cost-optimised fallback when the frontier-API budget in P9 runs out.</div>
+          <dl>
+            <dt>Team size</dt><dd>3&ndash;4 (needs GPU access)</dd>
+            <dt>Papers</dt>
+            <dd><ul class="papers">
+              <li>ATLANTIS &sect;8 (Custom LLMs in Patching &mdash; multi-turn GRPO, code-context learning, <code>babynginx/cpv-0</code> use case).</li>
+              <li>Shao et al. &ldquo;DeepSeek-Math: Pushing the Limits of Mathematical Reasoning in Open Language Models&rdquo; (GRPO origin).</li>
+              <li><a href="https://huggingface.co/docs/trl/main/en/grpo_trainer">TRL GRPO Trainer</a> docs.</li>
+              <li>o2lab FuzzingBrain Leaderboard (fine-tuning targets).</li>
+            </ul></dd>
+          </dl>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Milestones -->
+    <section id="milestones">
+      <h2>Milestones</h2>
+      <dl class="info-grid">
+        <dt>Proposal due</dt><dd><b>Sun 20 Sep 2026</b> &middot; groups name their component (P0&hellip;P13), OSS targets, fixtures.</dd>
+        <dt>Progress Meeting 1</dt><dd><b>Oct 5&ndash;9</b> &middot; <em>contracts C1&ndash;C13 frozen</em>. Every group demos <code>make build test demo validate</code> passing on fixtures alone. KuzuDB adapter, Kafka bus, LiteLLM proxy, provenance emitter merged.</dd>
+        <dt>Progress Meeting 2</dt><dd><b>Oct 26&ndash;30</b> &middot; first real end-to-end on <em>one</em> target OSS: PoV flows P3/P4 &rarr; P7 &rarr; P8 &rarr; P9. First patch candidate.</dd>
+        <dt>Progress Meeting 3</dt><dd><b>Nov 2&ndash;6</b> &middot; upstream reports/PRs filed. Bundles stable. Dashboard usable.</dd>
+        <dt>Final presentation</dt><dd><b>Thu 12 Nov 2026</b> &middot; class demo; each group shows its slice + integrated demo on a live target.</dd>
+        <dt>Paper + repo due</dt><dd><b>Fri 13 Nov 2026, 23:59 IST</b>.</dd>
+      </dl>
+    </section>
+
+    <!-- References -->
+    <section id="references">
+      <h2>References</h2>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2509.14589"><b>Team Atlanta &mdash; ATLANTIS: AI-driven Threat Localization, Analysis, and Triage Intelligence System</b></a> (arXiv 2509.14589, Sep 2025). Winner of DARPA AIxCC finals. 150-page technical report; every component here has a section pointer into it.</li>
+        <li><a href="https://arxiv.org/abs/2602.07666"><b>SoK: DARPA's AI Cyber Challenge (AIxCC): Competition Design, Architectures, and Lessons Learned</b></a> (arXiv 2602.07666). Cross-team analysis of all seven finalist CRSes.</li>
+        <li><a href="https://arxiv.org/abs/2509.07225">All You Need Is A Fuzzing Brain: An LLM-Powered System for Automated Vulnerability Detection and Patching</a> (arXiv 2509.07225). AIxCC 4th place; system open-sourced at <a href="https://github.com/o2lab/afc-crs-all-you-need-is-a-fuzzing-brain">github.com/o2lab/afc-crs-all-you-need-is-a-fuzzing-brain</a>.</li>
+        <li><a href="https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/"><b>Microsoft MDASH announcement</b></a> (Kim, May 2026). Multi-model debate pattern in production; 21/21 planted vulns with 0 FP; 96 % recall on 5-year CLFS MSRC cases.</li>
+        <li><a href="https://blog.trailofbits.com/2025/08/09/trail-of-bits-buttercup-wins-2nd-place-in-aixcc-challenge/">Trail of Bits Buttercup</a> &mdash; AIxCC 2nd place; open-source CRS at github.com/trailofbits/buttercup.</li>
+        <li><a href="https://theori.io/blog/building-effective-llm-agents-63446">Theori</a> AIxCC 3rd place blog on LLM-agent design.</li>
+        <li><a href="https://github.com/arm/metis">Arm Metis</a> &mdash; production LLM security-review CLI.</li>
+        <li><a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">SSAF RFC</a> on LLVM Discourse.</li>
+        <li><a href="https://llvm.github.io/clangir/">ClangIR (CIR)</a>.</li>
+        <li><a href="https://iris-sast.github.io/">IRIS</a> (ICLR 2025) &mdash; neurosymbolic LLM + static analysis.</li>
+        <li><a href="https://github.com/Vela-Engineering/kuzu">Vela Kuzu fork</a> (v0.12.0-vela) &mdash; graph store, MIT.</li>
+        <li><a href="https://sarifweb.azurewebsites.net/">SARIF v2.1.0</a>, <a href="https://slsa.dev/spec/v1.0/">SLSA v1.0</a>, <a href="https://cyclonedx.org/">CycloneDX</a>, <a href="https://in-toto.io/">in-toto</a>, <a href="https://www.sigstore.dev/">Sigstore</a>.</li>
+        <li><a href="https://google.github.io/oss-fuzz/">OSS-Fuzz</a> + <a href="https://google.github.io/oss-fuzz-gen/">OSS-Fuzz-Gen</a>.</li>
+        <li><a href="https://github.com/HexHive/magma">MAGMA</a> + <a href="https://google.github.io/fuzzbench/">FuzzBench</a> + <a href="https://samate.nist.gov/SARD/">NIST SARD / Juliet</a>.</li>
+        <li><a href="https://llvm.org/docs/LibFuzzer.html">LibFuzzer</a>, <a href="https://klee-se.org/">KLEE</a>, <a href="https://github.com/AFLplusplus/AFLplusplus">AFL++</a>, <a href="https://github.com/AFLplusplus/LibAFL">LibAFL</a>.</li>
+      </ul>
+    </section>
+
+    <footer>
+      CS 5187 &middot; IIT Guwahati &middot; Monsoon Semester 2026 &middot;
+      last updated <time datetime="2026-07-12">2026-07-12</time>
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

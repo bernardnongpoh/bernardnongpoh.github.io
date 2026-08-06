@@ -1,0 +1,289 @@
+[
+  {
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Google Scholar · DBLP"
+  },
+  {
+    "objectID": "publications.html#journals",
+    "href": "publications.html#journals",
+    "title": "Publications",
+    "section": "Journals",
+    "text": "Journals\n\nFine-Grained Coverage-Based Fuzzing.\nWei-Cheng Wu, Bernard Nongpoh, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser.\nACM Transactions on Software Engineering and Methodology · CORE Ranking A*.\nPDF · Artefact · Slides · Benchmark\nEnhancing speculative execution with selective approximate computing.\nB. Nongpoh, R. Ray, M. Das, and A. Banerjee.\nACM Trans. Des. Autom. Electron. Syst., vol. 24, no. 2, 26:1–26:29, Feb. 2019.\ndoi:10.1145/3307651\nAutoSense: A Framework for Automated Sensitivity Analysis of Program Data.\nB. Nongpoh, R. Ray, S. Dutta, A. Banerjee.\nIEEE Transactions on Software Engineering.\nPaper"
+  },
+  {
+    "objectID": "publications.html#conferences",
+    "href": "publications.html#conferences",
+    "title": "Publications",
+    "section": "Conferences",
+    "text": "Conferences\n\nFine-Grained Coverage-Based Fuzzing.\nWei-Cheng Wu, Bernard Nongpoh, Marwan Nour, Michaël Marcozzi, Sébastien Bardin, Christophe Hauser.\nASE’23 (journal-first track) · CORE Ranking A*.\nPDF · Artefact · Slides · Benchmark\nApproximate computing for multithreaded programs in shared memory architectures.\nB. Nongpoh, R. Ray, A. Banerjee.\n17th ACM-IEEE International Conference on Formal Methods and Models for System Design, 2019.\nPaper · Slides\nAutoSense: A Framework for Automated Sensitivity Analysis of Program Data.\nB. Nongpoh, R. Ray, S. Dutta, A. Banerjee.\nInvited as Journal-first paper at ESEC/FSE 2017.\nSlides · Poster\nAnomaly based intrusion detection using meta ensemble classifier.\nDebojit Boro, Bernard Nongpoh, Dhruba K. Bhattacharyya.\nSIN ’12, ACM, New York, NY, USA, 143–147.\nPaper"
+  },
+  {
+    "objectID": "publications.html#workshops",
+    "href": "publications.html#workshops",
+    "title": "Publications",
+    "section": "Workshops",
+    "text": "Workshops\n\nFine-Grained Coverage-Based Fuzzing.\nBernard Nongpoh, Marwan Nour, Michaël Marcozzi, Sébastien Bardin.\n1st International Fuzzing Workshop 2022, co-located with NDSS’22, San Diego, California, April 24 2022.\nPaper · Slides"
+  },
+  {
+    "objectID": "publications.html#posters",
+    "href": "publications.html#posters",
+    "title": "Publications",
+    "section": "Posters",
+    "text": "Posters\n\nEnhancing Speculative Execution with Selective Approximate Computing.\nB. Nongpoh, R. Ray, Moumita Das, A. Banerjee.\nWorkshop on Program Analysis, Software Engineering and Formal Methods, 6 November 2017, Department of CSE, NIT Meghalaya.\nPoster"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Bernard Nongpoh",
+    "section": "",
+    "text": "I am Bernard Nongpoh, an Assistant Professor in the Department of Computer Science & Engineering at the Indian Institute of Technology Guwahati. My research interests lie at the intersection of systems, software security, program analysis, and approximate computing — with a current focus on fuzzing, vulnerability discovery, and secure systems software.\nPreviously, I was a Staff Engineer with the QPSI (Product Security) team at Qualcomm, Hyderabad, and before that a Post-Doctorate Researcher at CEA LIST, University of Paris-Saclay, France, where I was a member of the BINSEC Team headed by Sébastien Bardin and supervised by Michaël Marcozzi. I completed my Ph.D. at the National Institute of Technology Meghalaya under the guidance of Dr. Rajarshi Ray and Dr. Ansuman Banerjee. You can read my Ph.D. thesis on Approximate Computing.\nMy hometown is in Meghalaya, India."
+  },
+  {
+    "objectID": "index.html#khublei-bonjour-namaste",
+    "href": "index.html#khublei-bonjour-namaste",
+    "title": "Bernard Nongpoh",
+    "section": "",
+    "text": "I am Bernard Nongpoh, an Assistant Professor in the Department of Computer Science & Engineering at the Indian Institute of Technology Guwahati. My research interests lie at the intersection of systems, software security, program analysis, and approximate computing — with a current focus on fuzzing, vulnerability discovery, and secure systems software.\nPreviously, I was a Staff Engineer with the QPSI (Product Security) team at Qualcomm, Hyderabad, and before that a Post-Doctorate Researcher at CEA LIST, University of Paris-Saclay, France, where I was a member of the BINSEC Team headed by Sébastien Bardin and supervised by Michaël Marcozzi. I completed my Ph.D. at the National Institute of Technology Meghalaya under the guidance of Dr. Rajarshi Ray and Dr. Ansuman Banerjee. You can read my Ph.D. thesis on Approximate Computing.\nMy hometown is in Meghalaya, India."
+  },
+  {
+    "objectID": "index.html#prospective-students",
+    "href": "index.html#prospective-students",
+    "title": "Bernard Nongpoh",
+    "section": "Prospective Students",
+    "text": "Prospective Students\nI am looking for motivated M.Tech and Ph.D. students interested in systems security, fuzzing, program analysis, operating systems, and compilers. If that sounds like you, please get in touch via email."
+  },
+  {
+    "objectID": "index.html#events",
+    "href": "index.html#events",
+    "title": "Bernard Nongpoh",
+    "section": "Events",
+    "text": "Events\n\nSeptember 2025 — Joined IIT Guwahati as an Assistant Professor in the Department of Computer Science & Engineering.\nDecember 2024 — Promoted to Staff Engineer, QPSI Team, Qualcomm, Hyderabad.\nJuly 2022 — Joined Qualcomm, Hyderabad as a Senior Lead Engineer with the QPSI team.\nMay 2021 — Joined CEA LIST, University of Paris-Saclay, France as a Post-Doctorate Researcher.\nFebruary 2020 — Defended my Ph.D. thesis.\nJuly 2019 — Joined NIC Meghalaya as a Senior Programmer."
+  },
+  {
+    "objectID": "talks.html",
+    "href": "talks.html",
+    "title": "Talks",
+    "section": "",
+    "text": "Cyber Security Landscape in Today’s Technology Scenario.\nWorkshop on Cyber Security in the Era of Emerging Technologies, IIT Guwahati.\n7 May 2026.\nSlides\nAI Can Code. So Why Should You Learn CS?\nWorld Creativity and Innovation Day, St. Edmund’s College, Shillong.\n18 April 2026.\nSlides"
+  },
+  {
+    "objectID": "talks.html#section",
+    "href": "talks.html#section",
+    "title": "Talks",
+    "section": "",
+    "text": "Cyber Security Landscape in Today’s Technology Scenario.\nWorkshop on Cyber Security in the Era of Emerging Technologies, IIT Guwahati.\n7 May 2026.\nSlides\nAI Can Code. So Why Should You Learn CS?\nWorld Creativity and Innovation Day, St. Edmund’s College, Shillong.\n18 April 2026.\nSlides"
+  },
+  {
+    "objectID": "talks.html#section-1",
+    "href": "talks.html#section-1",
+    "title": "Talks",
+    "section": "2025",
+    "text": "2025\n\nIntroduction to Software Security: Why It Matters.\nInvited talk, Research and Industrial Conclave 2025, IIT Guwahati.\nSlides"
+  },
+  {
+    "objectID": "talks.html#section-2",
+    "href": "talks.html#section-2",
+    "title": "Talks",
+    "section": "2022",
+    "text": "2022\n\nIntroduction to Fuzzing.\nInvited talk, Department of Computer Application, St. Edmund’s College, Shillong.\n19 October 2022.\nSlides · Video"
+  },
+  {
+    "objectID": "talks.html#section-3",
+    "href": "talks.html#section-3",
+    "title": "Talks",
+    "section": "2021",
+    "text": "2021\n\nReact 101.\nMeghalaya Dev Community.\n5 June 2021.\nVideo"
+  },
+  {
+    "objectID": "posts/index.html",
+    "href": "posts/index.html",
+    "title": "Writeups",
+    "section": "",
+    "text": "Notes and short posts, mostly about tooling and systems.\n\n\n\n\n\n\n\n\n\nWhat FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)\n\n\n\nStatic Analysis\n\nLLVM\n\nPhASAR\n\n\n\nEmpirically comparing CHA, RTA, and OTF call-graph construction on FFmpeg with PhASAR, and the toolchain issues met along the way.\n\n\n\n\n\nJul 24, 2026\n\n\n\n\n\n\n\nInstalling LLVM Compiler Infrastructure\n\n\n\nLLVM\n\n\n\nSteps for installing the LLVM Compiler Infrastructure from source, including common build errors.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nInstalling & Building RISC-V Toolchain\n\n\n\nRISC-V\n\n\n\nA walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nComputer Architecture Summer School (CASS) 2018, IIT Kanpur\n\n\n\nSummer School\n\n\n\nMy experience attending the first Computer Architecture Summer School at IIT Kanpur.\n\n\n\n\n\nAug 19, 2018\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/callgraph-bornov.html",
+    "href": "posts/callgraph-bornov.html",
+    "title": "What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)",
+    "section": "",
+    "text": "By Bornov Shyam Kalita — PASS Lab, IIT Guwahati"
+  },
+  {
+    "objectID": "posts/callgraph-bornov.html#the-setup",
+    "href": "posts/callgraph-bornov.html#the-setup",
+    "title": "What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)",
+    "section": "The setup",
+    "text": "The setup\nThe goal: build a whole-program call graph for FFmpeg — a 100k+ line C codebase — using PhASAR, a static analysis framework built on LLVM, and empirically compare three call-graph construction algorithms (CHA, RTA, OTF) instead of just trusting the textbook precision/cost trade-off tables.\nThat question ended up having a clean answer. Getting there meant working through a pile of undocumented behavior in PhASAR, LLVM, and the WLLVM/Docker/WSL2 tooling around them. This post covers both: the actual result, and the operational issues we ran into along the way, in case they save someone else the same debugging time."
+  },
+  {
+    "objectID": "posts/callgraph-bornov.html#building-the-toolchain",
+    "href": "posts/callgraph-bornov.html#building-the-toolchain",
+    "title": "What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)",
+    "section": "Building the toolchain",
+    "text": "Building the toolchain\n\nLLVM needs RTTI on — and prebuilt LLVM ships with it off\nPhASAR uses C++ RTTI (dynamic_cast and friends) internally. Prebuilt LLVM releases, including the official LLVM 21 binaries, ship with LLVM_ENABLE_RTTI=OFF. Linking PhASAR against one of these fails, and the error isn’t always an obvious “RTTI is disabled” message — it can show up as confusing linker errors buried in PhASAR’s own object files.\nThe fix is to build LLVM from source with RTTI explicitly enabled:\nLLVM_ENABLE_RTTI=ON\nWe added a build-time sanity check so this can’t silently regress again:\nllvm-config --has-rtti | grep -q YES || (echo \"RTTI missing\" && exit 1)\nOne more thing to cap: LLVM_PARALLEL_LINK_JOBS. We set it to 2 — the LLVM linker will happily OOM the machine at default parallelism on memory-constrained build hosts.\n\n\nPHASAR_LLVM_VERSION must be major.minor, not bare major\nThis one cost real time. PhASAR’s CMake build takes a PHASAR_LLVM_VERSION variable to tell it which LLVM it’s pointed at. Setting it to 21 looks like the obviously correct value, but it fails: LLVM’s own LLVMConfigVersion.cmake does an exact major.minor equality check against the installed version (21.1.8 for us). 21 != 21.1, so the compatible-version check rejects it, and the resulting CMake error doesn’t point back at this variable as the cause.\nThe fix is to set the full major.minor value:\nPHASAR_LLVM_VERSION=21.1\n\n\nGetting FFmpeg into whole-program LLVM bitcode\nThe instinct is to compile with -flto and pull bitcode out of the resulting object’s LTO section. On modern LLVM that doesn’t cleanly give you a standalone, analyzable .bc file — the section format and extraction tooling around it just aren’t reliable for this.\nWhat actually works is WLLVM. It wraps the compiler, tracks every bitcode file produced during the build, and gives you a proper extract-bc step at the end to link them into one whole-program module:\nexport LLVM_COMPILER=clang\nexport LLVM_COMPILER_PATH=/opt/llvm21/bin\n./configure --cc=wllvm --extra-cflags=\"-O3 -g\" --disable-x86asm\nmake -j$(nproc) && extract-bc ffmpeg -o ffmpeg.bc\nVerify the result before trusting it downstream:\nopt --passes=verify ffmpeg.bc\nThat gave us a clean ffmpeg.bc — the actual analysis target for everything that follows.\nWhy not just use -flto and pull the bitcode from there? Because -flto’s bitcode isn’t meant to be retrieved by you — it’s an internal implementation detail of the LTO pipeline, not a deliverable.\nThe bitcode gets consumed and discarded during linking, not preserved as an output. Each translation unit becomes a bitcode-object under -flto, but that’s only an intermediate step — the linker reads them all in, runs its own LTO optimization passes, and emits a final native binary. Once linking finishes, the intermediate bitcode is gone unless you explicitly tell the linker to keep it (-Wl,-plugin-opt=save-temps for gold, --save-temps for lld), and that’s a linker-specific flag, not portable across ld.gold, lld, and ld.bfd. Even preserved, it isn’t one clean .bc — those flags dump a pile of per-object intermediate files at different pipeline stages, and you’d have to reverse-engineer which artifact is the “right” one and llvm-link them yourself.\nMore fundamentally, the two mechanisms were never compatible at the object-file level. WLLVM’s approach relies on compiling to a normal native object file plus a bitcode side-file, with the side-file’s path stashed in a dedicated object-file section that concatenates across linking — extract-bc just reads those paths back out and runs llvm-link. Under -flto, the compiler instead produces object files that are themselves bitcode, with no separate native object for that section-based bookkeeping to attach to. The gllvm README confirms this is expected behavior for any -flto build, and a 2021 LLVM dev mailing list thread explains why: -flto object files aren’t real object files, they’re bitcode the linker hands back to LLVM for optimization and codegen.\nIt’s not that -flto is broken, or that LLVM stopped supporting bitcode extraction — its bitcode was simply never designed to be pulled out by a third party for static analysis. FFmpeg’s build is also a hand-written configure/make, not CMake, and WLLVM is purpose-built for exactly that shape of build: it doesn’t touch the optimization pipeline at all, and gives you one whole-program .bc on demand, independent of whichever linker configure happens to pick."
+  },
+  {
+    "objectID": "posts/callgraph-bornov.html#phasar-cli-three-behaviors-you-wont-find-in-the-docs",
+    "href": "posts/callgraph-bornov.html#phasar-cli-three-behaviors-you-wont-find-in-the-docs",
+    "title": "What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)",
+    "section": "PhASAR CLI: three behaviors you won’t find in the docs",
+    "text": "PhASAR CLI: three behaviors you won’t find in the docs\nThese came from reading tools/phasar-cli/phasar-cli.cpp, Controller/AnalysisController.cpp, and lib/PhasarLLVM/ControlFlow/LLVMBasedICFG.cpp directly. None of them are documented anywhere.\n1. Omitting --data-flow-analysis makes the whole pipeline silently no-op. No error, no warning — it just prints the version banner and exits. Call-graph construction seems to be gated behind the data-flow analysis stage internally, even if you only care about the call graph. Workaround: pass PhASAR’s built-in no-op analysis just to force the pipeline through:\n--data-flow-analysis=ifds-solvertest\n2. --emit-cg-as-dot writes a file named psr-cg.txt, not .dot. Upstream naming inconsistency — compare with --emit-th-as-dot, which does what its name says. The content is valid Graphviz DOT syntax despite the .txt extension, the filename just won’t tell you that.\n3. --out=&lt;dir&gt; doesn’t write into &lt;dir&gt;. It creates a timestamped subdirectory inside it. The real path is &lt;dir&gt;/&lt;project-id&gt;-&lt;timestamp&gt;/psr-cg.txt, so any tooling that consumes PhASAR output needs to recursively search for the file rather than assume a fixed path.\nFull working invocation, all three algorithms sharing every flag except the algorithm name and output directory:\nphasar-cli --module=/work/ffmpeg-build/ffmpeg.bc --call-graph-analysis=&lt;cha|rta|otf&gt; \\\n  --entry-points=main --data-flow-analysis=ifds-solvertest --emit-cg-as-dot \\\n  --out=/work/ffmpeg-build/algo-comparison/&lt;algo&gt;"
+  },
+  {
+    "objectID": "posts/callgraph-bornov.html#operational-landmines-docker-wsl2-and-trusting-live-output",
+    "href": "posts/callgraph-bornov.html#operational-landmines-docker-wsl2-and-trusting-live-output",
+    "title": "What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)",
+    "section": "Operational landmines: Docker, WSL2, and trusting live output",
+    "text": "Operational landmines: Docker, WSL2, and trusting live output\nA few infrastructure lessons that had nothing to do with PhASAR itself but ate real debugging time:\n\nNever run two phasar-cli processes concurrently. On Docker Desktop’s WSL2 backend this reliably crashes the VM — unexpected EOF, Docker API 500 errors, an unresponsive container. Read-only monitoring (top, ls, grep, wc, ps aux) from a second shell is fine; a second analysis process is not.\nDisable Docker Desktop’s “Enable Resource Saver.” It throttles the WSL2 VM mid-build — you’ll see the GUI reporting 0% CPU / 0.00 GB RAM while a build is actually running. Set explicit limits via .wslconfig instead.\nNever trust edge/node counts from a still-running analysis. psr-cg.txt is written incrementally, so grepping it mid-run gives you a real but partial count that looks exactly like a stalled process. We killed an early CHA run at around 50 minutes because a count of 1.4M edges looked like it had plateaued. It hadn’t — the count was still climbing between two consecutive checks. The only reliable signal that a run is done is the process exiting with code 0 (confirmed via ps aux | grep phasar-cli returning nothing, or a completed time log), never the file’s growing size.\n1.2M+ edges is not renderable as a diagram. Neither dot nor sfdp can produce anything legible at that scale. Past a few hundred thousand edges, a summary table of node/edge counts communicates more than an image can — don’t waste time trying to force a visualization here."
+  },
+  {
+    "objectID": "posts/callgraph-bornov.html#the-actual-finding-a-precision-ceiling-not-an-algorithm-problem",
+    "href": "posts/callgraph-bornov.html#the-actual-finding-a-precision-ceiling-not-an-algorithm-problem",
+    "title": "What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)",
+    "section": "The actual finding: a precision ceiling, not an algorithm problem",
+    "text": "The actual finding: a precision ceiling, not an algorithm problem\nWith the toolchain working, we ran CHA, RTA, and OTF against ffmpeg.bc from the main entry point and diffed the resulting call graphs by (caller, callee) name pairs — never by raw node ID, since those get reassigned independently on every run.\n\n\n\nAlgorithm\nWall time\nNodes\nUnique edges\n\n\n\n\nCHA\n139m44s\n18,720\n1,219,191\n\n\nRTA\n137m20s\n18,720\n1,219,191\n\n\nOTF\novernight\n18,599\n1,189,907\n\n\n\nTwo things stood out. CHA and RTA produced byte-for-byte identical call graphs. Every one of RTA’s extra checks — its instantiation-liveness fixpoint, specifically designed to prune edges CHA can’t — pruned nothing on this codebase. And OTF, the most expensive and precise of the three, only pruned 2.4% of edges (29,284 out of 1,219,191) relative to CHA/RTA, discovering zero edges that CHA/RTA had both missed. OTF’s result is a pure subset of the CHA/RTA graph.\nSo across the full spectrum from cheapest/most conservative to most expensive/most precise, the max precision gain on FFmpeg from a single main entry point was 2.4%.\nThe false-positive source here is structural, not algorithmic. FFmpeg registers its codecs, formats, and filters through large dispatch/registration tables (AVCodec, AVFormat, AVFilter), which makes nearly everything reachable from main almost immediately. There’s very little left for any call-graph algorithm to prune, no matter how sophisticated, because the imprecision isn’t coming from indirect-call resolution difficulty — it’s coming from the program’s own architecture making almost everything reachable by design. This should generalize to any codebase built around the same registration-table/plugin-dispatch pattern, and testing it against a codebase without that pattern is a natural next step to confirm or refute it.\nOne smaller note: CHA and RTA both showed roughly a 27-minute gap between wall time and user (CPU) time. That’s I/O wait from writing out a multi-hundred-megabyte DOT file, not analysis compute cost. Worth separating “computing the call graph” from “writing it to disk” in future timing comparisons, since lumping them together overstates algorithm cost."
+  },
+  {
+    "objectID": "posts/callgraph-bornov.html#whats-next",
+    "href": "posts/callgraph-bornov.html#whats-next",
+    "title": "What FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)",
+    "section": "What’s next",
+    "text": "What’s next\n\nRerun the comparison with --entry-points=__ALL__ instead of main, to see whether the 2.4% ceiling holds once everything is nominally reachable.\nAdd VTA as a fourth algorithm and check whether it lands in the same narrow band as OTF, or prunes meaningfully more.\nTest the registration-table theory against a codebase that isn’t built that way, as a control.\nScale the same pipeline to other large C/C++ codebases — OpenSSL, OpenCV, and the C++ cores of ML frameworks like PyTorch and TensorFlow — as part of the longer-term goal of using call graph structure as feature data for AI-assisted malware analysis."
+  },
+  {
+    "objectID": "teaching.html",
+    "href": "teaching.html",
+    "title": "Teaching",
+    "section": "",
+    "text": "Courses at the Department of Computer Science & Engineering, IIT Guwahati."
+  },
+  {
+    "objectID": "teaching.html#current-semester",
+    "href": "teaching.html#current-semester",
+    "title": "Teaching",
+    "section": "Current Semester",
+    "text": "Current Semester\n\nCS5187 — Software Analysis\nMonsoon 2026 · 23 July – 12 November. A graduate course on program analysis and software security: foundations and IRs, dataflow analysis and abstract interpretation, pointer and constraint-based analysis, type systems, symbolic execution, automated test generation, fuzzing, and LLM-assisted analysis.\n\n\nCS1214 — Object Oriented Programming and Data Structure Lab\nA laboratory course covering object-oriented programming principles and the design, implementation, and analysis of fundamental data structures — classes, inheritance, polymorphism, templates, lists, stacks, queues, trees, heaps, and hash tables."
+  },
+  {
+    "objectID": "posts/llvm.html",
+    "href": "posts/llvm.html",
+    "title": "Installing LLVM Compiler Infrastructure",
+    "section": "",
+    "text": "This post walks you through how to install the LLVM Compiler Infrastructure from scratch."
+  },
+  {
+    "objectID": "posts/llvm.html#prerequisites",
+    "href": "posts/llvm.html#prerequisites",
+    "title": "Installing LLVM Compiler Infrastructure",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nInstall git on your system:\n\nsudo apt install git-all\n\nA Linux machine (tested on Ubuntu 20 LTS).\nMake sure you have sufficient storage (around 20 GB free).\nWhile building, your CPU might freeze — close other programs before installation."
+  },
+  {
+    "objectID": "posts/llvm.html#clone-the-llvm-source",
+    "href": "posts/llvm.html#clone-the-llvm-source",
+    "title": "Installing LLVM Compiler Infrastructure",
+    "section": "Clone the LLVM source",
+    "text": "Clone the LLVM source\nTo save space we do a shallow clone. This also pulls LLVM subprojects such as Clang. See Getting the source code and building LLVM for the full source.\nmkdir llvm\ncd llvm\ngit clone --depth 1 https://github.com/llvm/llvm-project.git"
+  },
+  {
+    "objectID": "posts/llvm.html#configure-and-build-llvm-and-clang",
+    "href": "posts/llvm.html#configure-and-build-llvm-and-clang",
+    "title": "Installing LLVM Compiler Infrastructure",
+    "section": "Configure and build LLVM and Clang",
+    "text": "Configure and build LLVM and Clang\ncd llvm-project\nmkdir build\ncd build\ncmake -G Ninja ../llvm\n\nNote that -G Ninja is a build-system generator — you can choose others too. Check the official documentation if you would like to use something other than Ninja.\n\nIf you haven’t installed cmake:\nsudo apt install cmake\nThen run:\ncmake -G Ninja ../llvm\nIf Ninja is missing, you’ll see errors like:\nError: CMake was unable to find a build program corresponding to \"Ninja\".\nCMAKE_MAKE_PROGRAM is not set. You probably need to select a different build tool.\nError: CMAKE_C_COMPILER not set, after EnableLanguage\nError: CMAKE_CXX_COMPILER not set, after EnableLanguage\nError: CMAKE_ASM_COMPILER not set, after EnableLanguage\n-- Configuring incomplete, errors occurred!\n\nInstall Ninja\nsudo apt-get install -y ninja-build\nThen generate the build files:\ncmake -G Ninja ../llvm\n\n\nBuilding LLVM and Clang\ncmake --build .\nThis might take hours depending on your machine. It took about 1 hour on my machine (Intel Xeon, 32 GB RAM).\nI also encountered a linking error similar to:\nFAILED: lib/libLTO.so.13git\nDo the following — see this Stack Overflow answer:\ncmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_PARALLEL_LINK_JOBS=1 ../llvm\ncmake --build .\nThis error likely happens because you are running out of memory."
+  },
+  {
+    "objectID": "posts/summer-school-iitkanpur.html",
+    "href": "posts/summer-school-iitkanpur.html",
+    "title": "Computer Architecture Summer School (CASS) 2018, IIT Kanpur",
+    "section": "",
+    "text": "CASS 2018 banner\n\n\nIf you’re reading this, you might be looking for information about computer architecture or you followed some link that led you to this post. This short blog is about my experience attending the first Computer Architecture Summer School (CASS) 2018, organised by top researchers and architects at IIT Kanpur. Listening to their lectures and talking to them personally gives you a feel for the state of the art — what can be done, what cannot, and what it really means to pull up our socks and pursue research in computer systems. It ignites our minds with ideas and the striving for excellence. Coming from the northeastern region of India, I felt lucky and grateful to the organisers for selecting me to participate in CASS 2018.\nI applied for the school and informed my friend Phrangboklang Thangkhiew (Phrang), who applied subsequently. We booked our train tickets and reached Kanpur on July 1st, Sunday at noon. We were expecting temperatures close to 40 °C, but Kanpur welcomed us with pleasant weather and a little rainfall. From Kanpur Central Station we made our way to IIT Kanpur. I was allocated Room 313 at Hall-VII. Phrang and I went straight to the mess for lunch — what surprised me was the cost of juice, just ₹12, which would easily cost ₹80 or more back in Shillong. That first day we walked from Hall-VII to the Rajeev Motwani Building (about 1.5 km) where the summer school was held.\n\n\n\nRajeev Motwani Building\n\n\nLavanya delivered a tutorial on performance metrics, moved on to ISA, and finally introduced us to RISC-V. Biswa walked us through the memory hierarchy. I really enjoyed Biswa’s teaching style — he kept asking question after question before giving the answer. This was great: it forced us to think and use our neurons, rather than being spoon-fed information we could never apply. Thanks, Biswa — I’ll apply your style if I secure a teaching position.\nIn one of the discussions, a question was raised on how to read a research paper. Mainak offered another angle: while reading a paper, before reading the solution, first think about what your own solution would be — another way to exercise the brain. The teaching assistants were great: Nayan (follow the link, his blog is interesting) and Sudhanshu — really an amazing experience with you folks.\nOn Day 2, Manu had us explore out-of-order pipelines and the components needed to make the pipeline OOO. The assignment was great — we pulled the ChampSim simulator and ran it on our laptops, tweaking it. It was a great pleasure to meet Arka, co-author of the gem5 simulator. Discussing with Arka really helped, giving exact direction on what can and cannot be done. The hands-on session was amazing, and Sudhanshu helped figure out the GPU bug in the Day 4 assignment — I was amazed by his skill at locating it so quickly.\nDay 3: Arka introduced us to virtual memory concepts and how they interact with the OS. Govind gave an in-depth discussion on DRAM organisation. We were convinced that DRAM was the main component degrading throughput due to both the memory and bandwidth wall. The TLB hands-on session was an eye-opener on how we can control the page size in real systems.\nDay 4: Mainak discussed shared-memory architecture and issues relating to the memory consistency model. We were excited about the industry talk, where Anasua presented on AMD’s Ryzen processor design and architecture.\n\n\n\nAMD Ryzen\n\n\nWe were moved by the amount of work AMD has been doing over the years and its ability to capture the market and compete with Intel. On the last day the hands-on session was amazing — it was my first time programming for a GPU system. Kanishka showed us how industry (in particular AMD) was doing performance analysis. He pinpointed why trace-driven simulation won’t work for real performance analysis and directed us on how to approach it — one example being event-driven simulation to capture server workloads where the dynamics of the system change. Kanishka’s personal life was itself a great motivation: don’t give up. Finally, there was a panel discussion that gave us direction on where to publish a research paper in top-tier conferences and journals. The following picture shows the list from the panel.\n\n\n\nTop-tier publications.\n\n\n\n\n\nGroup photo.\n\n\nThanks to Moumita Das for informing us about the course, and to Biswa and the organisers for selecting me to be one of the students at the 1st CASS 2018 at IIT Kanpur."
+  },
+  {
+    "objectID": "posts/riscv.html",
+    "href": "posts/riscv.html",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "",
+    "text": "This post walks you through how to install and build the RISC-V toolchain from scratch."
+  },
+  {
+    "objectID": "posts/riscv.html#prerequisites",
+    "href": "posts/riscv.html#prerequisites",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nInstall git on your system:\n\nsudo apt install git-all\n\nA Linux machine (tested on Ubuntu 20 LTS).\nSufficient storage — around 30 GB free.\nInstall a few dependencies:\n\nsudo apt-get install autoconf automake autotools-dev curl python3 \\\n  libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison \\\n  flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev"
+  },
+  {
+    "objectID": "posts/riscv.html#create-a-directory-and-clone",
+    "href": "posts/riscv.html#create-a-directory-and-clone",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Create a directory and clone",
+    "text": "Create a directory and clone\nmkdir risc-v\ncd risc-v\ngit clone https://github.com/riscv/riscv-gnu-toolchain"
+  },
+  {
+    "objectID": "posts/riscv.html#create-a-directory-in-opt",
+    "href": "posts/riscv.html#create-a-directory-in-opt",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Create a directory in /opt",
+    "text": "Create a directory in /opt\nmkdir /opt/riscv"
+  },
+  {
+    "objectID": "posts/riscv.html#configure-and-make",
+    "href": "posts/riscv.html#configure-and-make",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Configure and make",
+    "text": "Configure and make\n./configure --prefix=/opt/riscv\nmake linux\nThis might take several hours depending on your machine configuration. The tool will be available in /opt/riscv/bin."
+  },
+  {
+    "objectID": "posts/riscv.html#add-optriscvbin-to-path",
+    "href": "posts/riscv.html#add-optriscvbin-to-path",
+    "title": "Installing & Building RISC-V Toolchain",
+    "section": "Add /opt/riscv/bin to PATH",
+    "text": "Add /opt/riscv/bin to PATH\nOpen ~/.bashrc:\nsudo gedit ~/.bashrc\nAdd near the end of the file and save:\nexport PATH=\"$PATH:/opt/riscv/bin\"\nNow the RISC-V tools will be available without specifying the path."
+  },
+  {
+    "objectID": "travels.html",
+    "href": "travels.html",
+    "title": "Travels",
+    "section": "",
+    "text": "Paris\nLourdes\nSan Diego, California\nHyderabad\nThailand\nGermany"
+  },
+  {
+    "objectID": "students.html",
+    "href": "students.html",
+    "title": "Students",
+    "section": "",
+    "text": "I work with students at IIT Guwahati on systems, security, and program analysis."
+  },
+  {
+    "objectID": "students.html#current-students",
+    "href": "students.html#current-students",
+    "title": "Students",
+    "section": "Current Students",
+    "text": "Current Students\n\nRohit Patil\n\nProgramme: M.Tech (CSE), 2026 Batch\nProject: USB Driver Fuzzing\n\nWorking on techniques to automatically discover vulnerabilities in USB device drivers."
+  },
+  {
+    "objectID": "students.html#incoming-interns",
+    "href": "students.html#incoming-interns",
+    "title": "Students",
+    "section": "Incoming Interns",
+    "text": "Incoming Interns\n\nBornov Shyam Kalita\n\nRole: Incoming Intern"
+  },
+  {
+    "objectID": "students.html#past-interns",
+    "href": "students.html#past-interns",
+    "title": "Students",
+    "section": "Past Interns",
+    "text": "Past Interns\n\nShreyas Gupta\n\nRole: Intern\n\n\n\nDas Aemili\n\nRole: Intern"
+  },
+  {
+    "objectID": "students.html#joining-the-group",
+    "href": "students.html#joining-the-group",
+    "title": "Students",
+    "section": "Joining the Group",
+    "text": "Joining the Group\nIf you are an M.Tech or Ph.D. student (or prospective) at IIT Guwahati interested in systems security, fuzzing, program analysis, compilers, or operating systems, please get in touch via email."
+  }
+]

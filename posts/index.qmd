@@ -1,0 +1,11 @@
+---
+title: "Writeups"
+listing:
+  contents: .
+  sort: "date desc"
+  type: default
+  fields: [date, title, description, categories]
+  categories: true
+---
+
+Notes and short posts, mostly about tooling and systems.

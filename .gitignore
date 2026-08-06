@@ -1,0 +1,8 @@
+/.quarto/
+.DS_Store
+.idea
+*.log
+
+**/*.quarto_ipynb
+
+.claude/worktrees/

@@ -1,0 +1,31 @@
+project:
+  type: website
+  output-dir: docs
+  resources:
+    - "static/**"
+    - "cs-5187/**"
+
+website:
+  title: "Bernard Nongpoh"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: publications.qmd
+        text: Publications
+      - href: teaching.qmd
+        text: Teaching
+      - href: students.qmd
+        text: Students
+      - href: posts/index.qmd
+        text: Writeups
+      - href: talks.qmd
+        text: Talks
+      - href: travels.qmd
+        text: Travels
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

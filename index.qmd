@@ -1,0 +1,45 @@
+---
+title: "Bernard Nongpoh"
+subtitle: "Assistant Professor"
+about:
+  template: trestles
+  image: static/photo.jpg
+  links:
+    - icon: envelope
+      text: bnongpoh@iitg.ac.in
+      href: mailto:bnongpoh@iitg.ac.in
+    - icon: github
+      text: GitHub
+      href: https://github.com/bernardnongpoh
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/bernardnongpoh
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/bernard-nongpoh
+    - text: Google Scholar
+      href: https://scholar.google.co.in/citations?user=T0yqLoUAAAAJ&hl=en
+    - text: DBLP
+      href: https://dblp.org/pers/hd/n/Nongpoh:Bernard
+---
+
+## Khublei, Bonjour, Namaste
+
+I am Bernard Nongpoh, an **Assistant Professor** in the Department of Computer Science & Engineering at the **Indian Institute of Technology Guwahati**. My research interests lie at the intersection of systems, software security, program analysis, and approximate computing — with a current focus on fuzzing, vulnerability discovery, and secure systems software.
+
+Previously, I was a Staff Engineer with the QPSI (Product Security) team at Qualcomm, Hyderabad, and before that a Post-Doctorate Researcher at CEA LIST, University of Paris-Saclay, France, where I was a member of the [BINSEC Team](https://binsec.github.io/) headed by [Sébastien Bardin](https://binsec.github.io/people/bardin.html) and supervised by [Michaël Marcozzi](https://binsec.github.io/people/marcozzi.html). I completed my Ph.D. at the National Institute of Technology Meghalaya under the guidance of [Dr. Rajarshi Ray](http://iacs.res.in/faculty-profile.html?id=146) and [Dr. Ansuman Banerjee](https://www.isical.ac.in/~ansuman/). You can read my [Ph.D. thesis on Approximate Computing](static/pdf/BernardNongpohPhDThesis.pdf).
+
+My hometown is in Meghalaya, India.
+
+## Prospective Students
+
+I am looking for motivated M.Tech and Ph.D. students interested in systems security, fuzzing, program analysis, operating systems, and compilers. If that sounds like you, please get in touch via [email](mailto:bnongpoh@iitg.ac.in).
+
+## Events
+
+- **September 2025** — Joined IIT Guwahati as an Assistant Professor in the Department of Computer Science & Engineering.
+- **December 2024** — Promoted to Staff Engineer, QPSI Team, Qualcomm, Hyderabad.
+- **July 2022** — Joined Qualcomm, Hyderabad as a Senior Lead Engineer with the QPSI team.
+- **May 2021** — Joined CEA LIST, University of Paris-Saclay, France as a Post-Doctorate Researcher.
+- **February 2020** — Defended my Ph.D. thesis.
+- **July 2019** — Joined NIC Meghalaya as a Senior Programmer.
