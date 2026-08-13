@@ -4,9 +4,13 @@ Lightweight static site for the course — plain HTML + one CSS file, no build
 step, no framework. Open `index.html` in a browser to preview.
 
 Schedule follows the official IITG Academic Calendar 2026 (Monsoon Semester
-of AY 2026-2027). Course meets **Mon / Tue / Wed** across 15 teaching weeks
-and totals **42 lectures** mapped to the 9-topic 42-lecture syllabus. Two
-in-class quizzes (Wed 9 Sep before mid-sem, Tue 10 Nov before end-sem).
+of AY 2026-2027). Course meets **Mon / Tue / Wed** for weeks 1–3 and
+**Tue / Wed / Thu** from week 4 (18 Aug) onwards, across 15 teaching weeks,
+totalling **42 lectures** mapped to the 9-topic 42-lecture syllabus. Four
+pairs are delivered as combined 55-min sessions (L20–L21, L22–L23, L38–L39,
+L41–L42), so 42 lectures fit into 38 sessions. Two in-class quizzes
+(Thu 10 Sep before mid-sem, Thu 5 Nov before end-sem), both in the Thursday
+2 PM slot.
 
 ## Files
 
@@ -33,9 +37,9 @@ handouts; Quarto's `resources: cs-5187/**` rule will pick them up automatically.
   `index.html` (Sep 13–20 mid-sem row is a good template).
 - **Change theme colors** — edit the `--blue-*` variables at the top of
   `style.css`. Everything on the page recolors from there.
-- **Change lecture days (e.g. TThu instead of MWTh)** — modify the schedule
-  cells in `index.html`; the layout is 4 columns Mon–Thu, so unused days can
-  stay empty (class `.notes-slot`).
+- **Change lecture days** — modify the schedule cells in `index.html`; the
+  layout is 4 columns Mon–Thu, so unused days stay as an em-dash cell
+  (class `.notes-slot`). Weeks 1–3 leave Thu empty; weeks 4+ leave Mon empty.
 
 ## Tag styles
 
