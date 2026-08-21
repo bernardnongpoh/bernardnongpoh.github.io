@@ -229,7 +229,7 @@
 
     <!-- ================== Week 4 ================== -->
     <section class="week-block" id="w4">
-      <header><span>Week 4 &middot; Topic 1 &rarr; 2 (Specifications; fuzzing starts)</span><span class="range">Aug 18 &ndash; 20 &middot; first Tue/Wed/Thu week</span></header>
+      <header><span>Week 4 &middot; Topic 1 &mdash; Specifications, Hoare logic &amp; invariants</span><span class="range">Aug 18 &ndash; 20 &middot; first Tue/Wed/Thu week</span></header>
       <p style="margin:0 0 10px;font-size:13px;color:var(--text-muted);">
         <b>Timetable change.</b> From this week the class meets on
         <b>Tuesday, Wednesday and Thursday</b> (announced in <a href="#L09">L9</a>).
@@ -240,16 +240,9 @@
 
         <b>Weekly readings (classical).</b>
         <ul>
-          <li>Godefroid, Kiezun, Levin. &ldquo;Grammar-based Whitebox Fuzzing&rdquo;, PLDI 2008.</li>
-          <li>B&ouml;hme, Pham, Roychoudhury. &ldquo;Coverage-based Greybox Fuzzing as Markov Chain&rdquo; (AFLFast), CCS 2016.</li>
-          <li>Musuvathi, Qadeer. &ldquo;Iterative Context Bounding for Systematic Testing of Multithreaded Programs&rdquo;, PLDI 2007.</li>
-        </ul>
-        <b>Recent (2024&ndash;2026).</b>
-        <ul>
-          <li>She, Storek, Xie, Kweon, Srivastava, Jana. &ldquo;<a href="https://arxiv.org/abs/2406.04517">FOX: Coverage-guided Fuzzing as Online Stochastic Control</a>&rdquo;, CCS 2024.</li>
-          <li>Zhang, Rong, He, Chen. &ldquo;<a href="https://arxiv.org/abs/2406.07714">LLAMAFUZZ: Large Language Model Enhanced Greybox Fuzzing</a>&rdquo;, arXiv 2406.07714 (2024).</li>
-          <li>Qiu, Jiang, Miao, Luo, Pan, Zheng. &ldquo;<a href="https://dl.acm.org/doi/10.1016/j.infsof.2025.107797">A Survey of Coverage-Guided Greybox Fuzzing with Deep Neural Models</a>&rdquo;, <i>Information &amp; Software Technology</i> 2025.</li>
-          <li>Dac&iacute;k, Vojnar. &ldquo;<a href="https://arxiv.org/abs/2502.04905">RacerF: Lightweight Static Data Race Detection for C Code</a>&rdquo;, arXiv 2502.04905 (2025) &mdash; concurrency angle for L13.</li>
+          <li>Alpern, Schneider. &ldquo;Defining Liveness&rdquo;, IPL 1985.</li>
+          <li>Hoare. &ldquo;An Axiomatic Basis for Computer Programming&rdquo;, CACM 12(10), 1969.</li>
+          <li>Flanagan, Leino. &ldquo;Houdini, an Annotation Assistant for ESC/Java&rdquo;, FME 2001.</li>
         </ul>
         -->
       </div>
@@ -257,58 +250,58 @@
       <div class="lecture" id="L10">
         <h3>L10. Software specifications; safety &amp; liveness</h3>
         <div class="meta">Tue 18 Aug (Tue-4) &middot; Topic 1</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>Lamport, &ldquo;Proving the Correctness of Multiprocess Programs&rdquo;, TSE 1977; RY ch. 2</dd>
-          <dt>Paper</dt><dd>Alpern &amp; Schneider 1985.</dd>
-          <dt>Outline</dt><dd>Formal specs; assertions; safety vs liveness properties; temporal properties overview.</dd>
+          <dt>Slides</dt><dd><a href="slides/L10.pdf">L10 &mdash; Software specifications (PDF)</a></dd>
+          <dt>Follow</dt><dd>Naik, &ldquo;Software Specifications&rdquo;, CIS 5470 (Penn); <a href="https://checkerframework.org/manual/">The Checker Framework manual</a></dd>
+          <dt>Paper</dt><dd></dd>
+          <dt>Outline</dt><dd>What a specification is and why there is nothing to test without one; kinds of specifications; pre- and post-conditions and weakest pre-conditions; contracts in testing vs verification; safety and liveness; typestate properties; types as lightweight specs and the Checker Framework; black-box vs white-box, automated vs manual testing.</dd>
         </dl>
-        -->
       </div>
 
       <div class="lecture" id="L11">
-        <h3>L11. Pre/post conditions, invariants, coverage, mutation</h3>
+        <h3>L11. Hoare logic</h3>
         <div class="meta">Wed 19 Aug (Wed-4) &middot; Topic 1</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>Meyer, <i>Object-Oriented Software Construction</i>, ch. 11 (Design by Contract); Zhu, Hall, May, &ldquo;Software Unit Test Coverage and Adequacy&rdquo;, ACM CSUR 1997</dd>
-          <dt>Paper</dt><dd>Jia, Harman, &ldquo;An Analysis and Survey of the Development of Mutation Testing&rdquo;, TSE 2011.</dd>
-          <dt>Outline</dt><dd>Pre/post/loop/class invariants; specification inference (Daikon); line/branch/MC-DC coverage; mutation-based adequacy.</dd>
+          <dt>Slides</dt><dd><a href="slides/L11.pdf">L11 &mdash; Hoare logic (PDF)</a></dd>
+          <dt>Follow</dt><dd>Svendsen, <a href="https://www.cl.cam.ac.uk/teaching/2122/HLog+ModC/">Hoare Logic and Model Checking</a> (Cambridge), lectures 1&ndash;3</dd>
+          <dt>Paper</dt><dd>Hoare, &ldquo;An Axiomatic Basis for Computer Programming&rdquo;, CACM 12(10), 1969.</dd>
+          <dt>Outline</dt><dd>Program state and assertions; the Hoare triple <code>{P} C {Q}</code>; partial vs total correctness; inference rules for <code>skip</code>, assignment, sequence, conditional and consequence; the assignment rule read backwards; the while rule, loop invariants and the three proof obligations.</dd>
         </dl>
-        -->
       </div>
 
       <div class="lecture" id="L12">
-        <h3>L12. Fuzz testing: intro &amp; coverage-guided fuzzing (AFL, LibFuzzer, AFL++)</h3>
-        <div class="meta">Thu 20 Aug (Thu-4) &middot; Topic 2 &middot; two lectures merged</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L12. Invariants &amp; specification inference</h3>
+        <div class="meta">Thu 20 Aug (Thu-4) &middot; Topic 1</div>
         <dl>
-          <dt>Follow</dt><dd>FB &ldquo;Introduction to Fuzzing&rdquo; &amp; &ldquo;Greybox Fuzzing&rdquo;; AFL technical whitepaper (M. Zalewski)</dd>
-          <dt>Paper</dt><dd>Miller, Fredriksen, So 1990 (original fuzz); B&ouml;hme, Pham, Roychoudhury 2016 (AFLFast); Fioraldi, Maier, Ei&szlig;feldt, Heuse, &ldquo;AFL++&rdquo;, WOOT 2020. Modern: She et al. FOX (see recent list).</dd>
-          <dt>Outline</dt><dd>Blind fuzzing; mutation-based generation; sanitizers as oracles; landscape of modern fuzzers; edge-coverage instrumentation; corpus scheduling; power schedules; seed selection.</dd>
-          <dt>Note</dt><dd>The original &ldquo;fuzz testing: intro&rdquo; and &ldquo;coverage-guided fuzzing&rdquo; lectures are merged into this single session; grammar-based fuzzing follows in <a href="#L13">L13</a>.</dd>
+          <dt>Slides</dt><dd><a href="slides/L12.pdf">L12 &mdash; Invariants and specification inference (PDF)</a></dd>
+          <dt>Follow</dt><dd>Naik, &ldquo;Software Specifications&rdquo;, CIS 5470 (Penn); JML <code>//@invariant</code> / <code>//@requires</code> annotations</dd>
+          <dt>Paper</dt><dd>Flanagan, Leino, &ldquo;Houdini, an Annotation Assistant for ESC/Java&rdquo;, FME 2001; Ernst et al., &ldquo;Dynamically Discovering Likely Program Invariants&rdquo; (Daikon), TSE 2001.</dd>
+          <dt>Outline</dt><dd>Program, loop and class invariants; why validity is not enough &mdash; the useful invariant is the one implying the post-condition; inferring specifications instead of writing them; the Houdini algorithm (candidate invariants, refutation, workflow) on buggy and corrected programs; pros and cons.</dd>
         </dl>
-        -->
       </div>
     </section>
 
     <!-- ================== Week 5 ================== -->
     <section class="week-block" id="w5">
-      <header><span>Week 5 &middot; Topic 2 &rarr; 3 (Concurrency; dataflow foundations)</span><span class="range">Aug 25 &ndash; 27</span></header>
+      <header><span>Week 5 &middot; Topic 2 &rarr; 3 (Coverage, mutation, fuzzing, concurrency; dataflow starts)</span><span class="range">Aug 25 &ndash; 27</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
 
         <b>Weekly readings (classical).</b>
         <ul>
+          <li>Miller, Fredriksen, So. &ldquo;An Empirical Study of the Reliability of UNIX Utilities&rdquo;, CACM 1990.</li>
+          <li>B&ouml;hme, Pham, Roychoudhury. &ldquo;Coverage-based Greybox Fuzzing as Markov Chain&rdquo; (AFLFast), CCS 2016.</li>
+          <li>Godefroid, Kiezun, Levin. &ldquo;Grammar-based Whitebox Fuzzing&rdquo;, PLDI 2008.</li>
+          <li>Musuvathi, Qadeer. &ldquo;Iterative Context Bounding for Systematic Testing of Multithreaded Programs&rdquo;, PLDI 2007.</li>
           <li>Cousot, Cousot. &ldquo;Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs&rdquo;, POPL 1977.</li>
           <li>Kildall. &ldquo;A Unified Approach to Global Program Optimization&rdquo;, POPL 1973.</li>
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
+          <li>She, Storek, Xie, Kweon, Srivastava, Jana. &ldquo;<a href="https://arxiv.org/abs/2406.04517">FOX: Coverage-guided Fuzzing as Online Stochastic Control</a>&rdquo;, CCS 2024.</li>
+          <li>Zhang, Rong, He, Chen. &ldquo;<a href="https://arxiv.org/abs/2406.07714">LLAMAFUZZ: Large Language Model Enhanced Greybox Fuzzing</a>&rdquo;, arXiv 2406.07714 (2024).</li>
+          <li>Dac&iacute;k, Vojnar. &ldquo;<a href="https://arxiv.org/abs/2502.04905">RacerF: Lightweight Static Data Race Detection for C Code</a>&rdquo;, arXiv 2502.04905 (2025) &mdash; concurrency angle for <a href="#L14">L14</a>.</li>
           <li>Stein, Chang, Sridharan. &ldquo;<a href="https://pldi24.sigplan.org/details/pldi-2024-papers/96/-TOPLAS-Interactive-Abstract-Interpretation-with-Demanded-Summarization">Interactive Abstract Interpretation with Demanded Summarization</a>&rdquo;, TOPLAS 2023 / PLDI 2024.</li>
           <li>Lesbre, Lemerre. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3656392">Compiling with Abstract Interpretation</a>&rdquo;, PLDI 2024 &mdash; treats compilation itself as an abstract-interpretation problem.</li>
         </ul>
@@ -316,41 +309,40 @@
       </div>
 
       <div class="lecture" id="L13">
-        <h3>L13. Grammar-based fuzzing</h3>
-        <div class="meta">Tue 25 Aug (Tue-5) &middot; Topic 2</div>
+        <h3>L13. Coverage &amp; mutation testing; fuzz testing</h3>
+        <div class="meta">Tue 25 Aug (Tue-5) &middot; Topic 1 &rarr; 2</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>FB &ldquo;Grammar-based Fuzzing&rdquo;</dd>
-          <dt>Paper</dt><dd>Godefroid, Kiezun, Levin 2008; Aschermann, Frassetto, Holz, Jauernig, Sadeghi, Teuchert. &ldquo;NAUTILUS: Fishing for Deep Bugs with Grammars&rdquo;, NDSS 2019.</dd>
-          <dt>Outline</dt><dd>CFG-driven input generation; language fuzzing (JS engines); mutating structured inputs.</dd>
+          <dt>Follow</dt><dd>Zhu, Hall, May, &ldquo;Software Unit Test Coverage and Adequacy&rdquo;, ACM CSUR 1997; FB &ldquo;Introduction to Fuzzing&rdquo; &amp; &ldquo;Greybox Fuzzing&rdquo;; AFL technical whitepaper (M. Zalewski)</dd>
+          <dt>Paper</dt><dd>Jia, Harman, &ldquo;An Analysis and Survey of the Development of Mutation Testing&rdquo;, TSE 2011; Miller, Fredriksen, So 1990; B&ouml;hme, Pham, Roychoudhury 2016 (AFLFast); Fioraldi et al., &ldquo;AFL++&rdquo;, WOOT 2020.</dd>
+          <dt>Outline</dt><dd>Line / branch / MC-DC coverage and adequacy; mutation testing; blind and mutation-based fuzzing; sanitizers as oracles; coverage-guided fuzzing (AFL, LibFuzzer, AFL++), edge-coverage instrumentation, corpus scheduling and power schedules.</dd>
         </dl>
         -->
       </div>
 
       <div class="lecture" id="L14">
-        <h3>L14. Concurrency testing</h3>
+        <h3>L14. Grammar-based fuzzing &amp; concurrency testing</h3>
         <div class="meta">Wed 26 Aug (Wed-5) &middot; Topic 2</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>Musuvathi &amp; Qadeer 2007</dd>
-          <dt>Paper</dt><dd>Sen. &ldquo;Race-directed random testing of concurrent programs&rdquo; (CalFuzzer), PLDI 2008. Modern: Dac&iacute;k &amp; Vojnar 2025 (see recent list).</dd>
-          <dt>Outline</dt><dd>Data races; happens-before; TSan/KCSAN; context bounding; systematic interleaving exploration.</dd>
+          <dt>Follow</dt><dd>FB &ldquo;Grammar-based Fuzzing&rdquo;; Musuvathi &amp; Qadeer 2007</dd>
+          <dt>Paper</dt><dd>Godefroid, Kiezun, Levin 2008; Aschermann et al., &ldquo;NAUTILUS&rdquo;, NDSS 2019; Sen, &ldquo;Race-directed random testing of concurrent programs&rdquo; (CalFuzzer), PLDI 2008. Modern: Dac&iacute;k &amp; Vojnar 2025.</dd>
+          <dt>Outline</dt><dd>CFG-driven input generation; language fuzzing (JS engines); mutating structured inputs; data races and happens-before; TSan/KCSAN; context bounding and systematic interleaving exploration.</dd>
         </dl>
         -->
       </div>
 
       <div class="lecture" id="L15">
         <h3>L15. Dataflow analysis: lattices, fixed points, worklist algorithms &amp; MOP</h3>
-        <div class="meta">Thu 27 Aug (Thu-5) &middot; Topic 3 &middot; two lectures merged</div>
+        <div class="meta">Thu 27 Aug (Thu-5) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
           <dt>Follow</dt><dd>NNH ch. 4 &amp; &sect;2.4; M&amp;S ch. 4; Aho &sect;9.2&ndash;9.3</dd>
           <dt>Paper</dt><dd>Cousot &amp; Cousot 1977; Kildall 1973.</dd>
           <dt>Outline</dt><dd>Posets, lattices; join / meet; Kleene &amp; Tarski fixed points; the monotone framework; chaotic vs worklist iteration; join-over-all-paths; distributive vs monotone.</dd>
-          <dt>Note</dt><dd>The original &ldquo;lattices &amp; fixed points&rdquo; and &ldquo;worklist algorithms &amp; MOP&rdquo; lectures are merged into this single session.</dd>
         </dl>
         -->
       </div>
@@ -442,7 +434,7 @@
 
       <div class="lecture" id="L20">
         <h3>L20&ndash;L21. Interval analysis; widening &amp; abstract interpretation (combined session)</h3>
-        <div class="meta">Wed 9 Sep (Wed-7) &middot; Topic 3 &middot; two lectures merged</div>
+        <div class="meta">Wed 9 Sep (Wed-7) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
@@ -506,7 +498,6 @@
           <dt>Follow</dt><dd>Andersen 1994 ch. 3&ndash;4; Steensgaard 1996</dd>
           <dt>Paper</dt><dd>Andersen 1994; Steensgaard 1996.</dd>
           <dt>Outline</dt><dd>Inclusion-based (Andersen) vs equality-based (Steensgaard) points-to; subset constraints &amp; O(n&sup3;) worst case; union-find &amp; almost-linear time; precision trade-off; cycle elimination.</dd>
-          <dt>Note</dt><dd>Two lectures merged into one 55-min session because the Tue 22 Sep slot is taken by <a href="#IT1">Industry Talk 1</a>.</dd>
         </dl>
         -->
       </div>
@@ -865,7 +856,6 @@
           <dt>Follow</dt><dd>Claessen &amp; Hughes 2000; Pacheco, Lahiri, Ernst, Ball 2007; Fraser &amp; Arcuri 2011</dd>
           <dt>Paper</dt><dd>QuickCheck (ICFP 2000); Randoop (ICSE 2007); EvoSuite (FSE 2011); modern &mdash; Abdullin, Derakhshanfar, Panichella 2025 (see recent list).</dd>
           <dt>Outline</dt><dd>Property-based testing with generators &amp; shrinking; feedback-directed random generation; search-based (genetic) test generation; regression oracles.</dd>
-          <dt>Note</dt><dd>Two lectures merged into one 55-min session: Tue 3 Nov is taken by <a href="#IT2">Industry Talk 3</a> and Thu 5 Nov by <a href="#Q2">Quiz 2</a>.</dd>
         </dl>
         -->
       </div>
@@ -923,7 +913,7 @@
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <h3>L41&ndash;L42. LLM-based vulnerability discovery; LLM + static/dynamic integration &amp; course wrap-up (combined session)</h3>
-        <div class="meta">Wed 11 Nov (Wed-15) &middot; Topic 9 &middot; Last teaching day &middot; two lectures merged</div>
+        <div class="meta">Wed 11 Nov (Wed-15) &middot; Topic 9 &middot; Last teaching day</div>
         <dl>
           <dt>Follow</dt><dd>Meng, Mirchev, B&ouml;hme, Roychoudhury (NDSS 2024); Google Project Zero &ldquo;Naptime&rdquo; / &ldquo;Big Sleep&rdquo; technical reports; Li, Hao, Zhai, Qian OOPSLA 2024 (LLift); Fan et al. &ldquo;LLMs for Software Engineering: Survey and Open Problems&rdquo;, ICSE FoSE 2023</dd>
           <dt>Paper</dt><dd>Meng et al. NDSS 2024; Huang, Wang, Zhou arXiv 2508.01750; Li, Hao, Zhai, Qian OOPSLA 2024; Li, Zhou, Sridharan, Zhang, Qian arXiv 2606.15122 (see recent list).</dd>
