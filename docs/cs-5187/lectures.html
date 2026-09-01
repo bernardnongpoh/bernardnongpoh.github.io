@@ -30,7 +30,7 @@
         <li><a href="#w3">Wk 3 &middot; Aug 10</a></li>
         <li><a href="#w4">Wk 4 &middot; Aug 18</a></li>
         <li><a href="#w5">Wk 5 &middot; Aug 25</a></li>
-        <li><a href="#w6">Wk 6 &middot; Sep 1</a></li>
+        <li><a href="#w6">Wk 6 &middot; Sep 2</a></li>
         <li><a href="#w7">Wk 7 &middot; Sep 8</a></li>
         <li><a href="#w8">Wk 8 &middot; Sep 22</a></li>
         <li><a href="#w9">Wk 9 &middot; Sep 29</a></li>
@@ -283,15 +283,64 @@
 
     <!-- ================== Week 5 ================== -->
     <section class="week-block" id="w5">
-      <header><span>Week 5 &middot; Topic 2 &rarr; 3 (Coverage, mutation, fuzzing, concurrency; dataflow starts)</span><span class="range">Aug 25 &ndash; 27</span></header>
+      <header><span>Week 5 &middot; Topic 1 &rarr; 2 &mdash; Coverage, mutation testing &amp; fuzzing</span><span class="range">Aug 25 &amp; 27 &middot; Wed 26 Aug holiday</span></header>
+      <p style="margin:0 0 10px;font-size:13px;color:var(--text-muted);">
+        <b>Wed 26 Aug &mdash; no class</b> (holiday).
+      </p>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
 
         <b>Weekly readings (classical).</b>
         <ul>
+          <li>Zhu, Hall, May. &ldquo;Software Unit Test Coverage and Adequacy&rdquo;, ACM CSUR 1997.</li>
+          <li>Jia, Harman. &ldquo;An Analysis and Survey of the Development of Mutation Testing&rdquo;, TSE 2011.</li>
           <li>Miller, Fredriksen, So. &ldquo;An Empirical Study of the Reliability of UNIX Utilities&rdquo;, CACM 1990.</li>
           <li>B&ouml;hme, Pham, Roychoudhury. &ldquo;Coverage-based Greybox Fuzzing as Markov Chain&rdquo; (AFLFast), CCS 2016.</li>
+        </ul>
+        <b>Recent (2024&ndash;2026).</b>
+        <ul>
+          <li>She, Storek, Xie, Kweon, Srivastava, Jana. &ldquo;<a href="https://arxiv.org/abs/2406.04517">FOX: Coverage-guided Fuzzing as Online Stochastic Control</a>&rdquo;, CCS 2024.</li>
+          <li>Zhang, Rong, He, Chen. &ldquo;<a href="https://arxiv.org/abs/2406.07714">LLAMAFUZZ: Large Language Model Enhanced Greybox Fuzzing</a>&rdquo;, arXiv 2406.07714 (2024).</li>
+        </ul>
+        -->
+      </div>
+
+      <div class="lecture" id="L13">
+        <h3>L13. Coverage &amp; mutation testing</h3>
+        <div class="meta">Tue 25 Aug (Tue-5) &middot; Topic 1 &rarr; 2</div>
+        <dl>
+          <dt>Slides</dt><dd><a href="slides/L13.pdf">L13 &mdash; Coverage &amp; mutation testing (PDF)</a></dd>
+          <dt>Follow</dt><dd>Zhu, Hall, May, &ldquo;Software Unit Test Coverage and Adequacy&rdquo;, ACM CSUR 1997; Aho &sect;9 (CFG background for branch coverage)</dd>
+          <dt>Paper</dt><dd>Jia, Harman, &ldquo;An Analysis and Survey of the Development of Mutation Testing&rdquo;, TSE 2011.</dd>
+          <dt>Outline</dt><dd>Test adequacy &mdash; when is a test suite &ldquo;enough&rdquo;; statement / line, branch, condition and MC-DC coverage; coverage on the CFG and what coverage does <i>not</i> tell you; instrumenting a program to measure it; mutation testing &mdash; mutation operators, mutants and the mutation score; killed vs surviving mutants; equivalent mutants and undecidability; cost and mutant-reduction techniques.</dd>
+        </dl>
+      </div>
+
+      <div class="lecture" id="L14">
+        <h3>L14. Introduction to fuzzing</h3>
+        <div class="meta">Thu 27 Aug (Thu-5) &middot; Topic 2</div>
+        <dl>
+          <dt>Slides</dt><dd><a href="slides/L14.pdf">L14 &mdash; Introduction to fuzzing (PDF)</a></dd>
+          <dt>Follow</dt><dd>FB &ldquo;Introduction to Fuzzing&rdquo; &amp; &ldquo;Greybox Fuzzing&rdquo;; AFL technical whitepaper (M. Zalewski)</dd>
+          <dt>Paper</dt><dd>Miller, Fredriksen, So, &ldquo;An Empirical Study of the Reliability of UNIX Utilities&rdquo;, CACM 1990; B&ouml;hme, Pham, Roychoudhury, &ldquo;Coverage-based Greybox Fuzzing as Markov Chain&rdquo; (AFLFast), CCS 2016; Fioraldi et al., &ldquo;AFL++&rdquo;, WOOT 2020.</dd>
+          <dt>Outline</dt><dd>Random testing and the 1990 UNIX utilities study; blind vs mutation-based fuzzing; seeds, corpora and mutation operators; what counts as a bug &mdash; crashes, assertions and sanitizers (ASan / UBSan / MSan) as oracles; black-, white- and greybox fuzzing; coverage-guided greybox fuzzing (AFL, libFuzzer, AFL++); edge-coverage instrumentation and the coverage bitmap; corpus scheduling and power schedules.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================== Week 6 ================== -->
+    <section class="week-block" id="w6">
+      <header><span>Week 6 &middot; Topic 2 &rarr; 3 &mdash; Fuzzing wrap-up; dataflow starts</span><span class="range">Sep 2 &ndash; 3 &middot; Tue 1 Sep Institute Day</span></header>
+      <p style="margin:0 0 10px;font-size:13px;color:var(--text-muted);">
+        <b>Tue 1 Sep &mdash; no class</b> (Institute Day).
+      </p>
+      <div class="week-readings">
+        <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
+        <!-- READINGS (uncomment at start of the week)
+
+        <b>Weekly readings (classical).</b>
+        <ul>
           <li>Godefroid, Kiezun, Levin. &ldquo;Grammar-based Whitebox Fuzzing&rdquo;, PLDI 2008.</li>
           <li>Musuvathi, Qadeer. &ldquo;Iterative Context Bounding for Systematic Testing of Multithreaded Programs&rdquo;, PLDI 2007.</li>
           <li>Cousot, Cousot. &ldquo;Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs&rdquo;, POPL 1977.</li>
@@ -299,105 +348,34 @@
         </ul>
         <b>Recent (2024&ndash;2026).</b>
         <ul>
-          <li>She, Storek, Xie, Kweon, Srivastava, Jana. &ldquo;<a href="https://arxiv.org/abs/2406.04517">FOX: Coverage-guided Fuzzing as Online Stochastic Control</a>&rdquo;, CCS 2024.</li>
-          <li>Zhang, Rong, He, Chen. &ldquo;<a href="https://arxiv.org/abs/2406.07714">LLAMAFUZZ: Large Language Model Enhanced Greybox Fuzzing</a>&rdquo;, arXiv 2406.07714 (2024).</li>
-          <li>Dac&iacute;k, Vojnar. &ldquo;<a href="https://arxiv.org/abs/2502.04905">RacerF: Lightweight Static Data Race Detection for C Code</a>&rdquo;, arXiv 2502.04905 (2025) &mdash; concurrency angle for <a href="#L14">L14</a>.</li>
+          <li>Dac&iacute;k, Vojnar. &ldquo;<a href="https://arxiv.org/abs/2502.04905">RacerF: Lightweight Static Data Race Detection for C Code</a>&rdquo;, arXiv 2502.04905 (2025) &mdash; concurrency angle for <a href="#L15">L15</a>.</li>
           <li>Stein, Chang, Sridharan. &ldquo;<a href="https://pldi24.sigplan.org/details/pldi-2024-papers/96/-TOPLAS-Interactive-Abstract-Interpretation-with-Demanded-Summarization">Interactive Abstract Interpretation with Demanded Summarization</a>&rdquo;, TOPLAS 2023 / PLDI 2024.</li>
-          <li>Lesbre, Lemerre. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3656392">Compiling with Abstract Interpretation</a>&rdquo;, PLDI 2024 &mdash; treats compilation itself as an abstract-interpretation problem.</li>
         </ul>
         -->
       </div>
 
-      <div class="lecture" id="L13">
-        <h3>L13. Coverage &amp; mutation testing; fuzz testing</h3>
-        <div class="meta">Tue 25 Aug (Tue-5) &middot; Topic 1 &rarr; 2</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <dl>
-          <dt>Follow</dt><dd>Zhu, Hall, May, &ldquo;Software Unit Test Coverage and Adequacy&rdquo;, ACM CSUR 1997; FB &ldquo;Introduction to Fuzzing&rdquo; &amp; &ldquo;Greybox Fuzzing&rdquo;; AFL technical whitepaper (M. Zalewski)</dd>
-          <dt>Paper</dt><dd>Jia, Harman, &ldquo;An Analysis and Survey of the Development of Mutation Testing&rdquo;, TSE 2011; Miller, Fredriksen, So 1990; B&ouml;hme, Pham, Roychoudhury 2016 (AFLFast); Fioraldi et al., &ldquo;AFL++&rdquo;, WOOT 2020.</dd>
-          <dt>Outline</dt><dd>Line / branch / MC-DC coverage and adequacy; mutation testing; blind and mutation-based fuzzing; sanitizers as oracles; coverage-guided fuzzing (AFL, LibFuzzer, AFL++), edge-coverage instrumentation, corpus scheduling and power schedules.</dd>
-        </dl>
-        -->
-      </div>
-
-      <div class="lecture" id="L14">
-        <h3>L14. Grammar-based fuzzing &amp; concurrency testing</h3>
-        <div class="meta">Wed 26 Aug (Wed-5) &middot; Topic 2</div>
+      <div class="lecture" id="L15">
+        <h3>L15. Fuzzing (continued): grammar-based fuzzing &amp; concurrency testing</h3>
+        <div class="meta">Wed 2 Sep (Wed-6) &middot; Topic 2</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
           <dt>Follow</dt><dd>FB &ldquo;Grammar-based Fuzzing&rdquo;; Musuvathi &amp; Qadeer 2007</dd>
           <dt>Paper</dt><dd>Godefroid, Kiezun, Levin 2008; Aschermann et al., &ldquo;NAUTILUS&rdquo;, NDSS 2019; Sen, &ldquo;Race-directed random testing of concurrent programs&rdquo; (CalFuzzer), PLDI 2008. Modern: Dac&iacute;k &amp; Vojnar 2025.</dd>
-          <dt>Outline</dt><dd>CFG-driven input generation; language fuzzing (JS engines); mutating structured inputs; data races and happens-before; TSan/KCSAN; context bounding and systematic interleaving exploration.</dd>
+          <dt>Outline</dt><dd>Why bit-flip mutation fails on structured inputs; CFG-driven input generation; language fuzzing (JS engines, compilers); tree-based mutation of structured inputs; data races and happens-before; TSan / KCSAN; context bounding and systematic interleaving exploration.</dd>
         </dl>
-        -->
-      </div>
-
-      <div class="lecture" id="L15">
-        <h3>L15. Dataflow analysis: lattices, fixed points, worklist algorithms &amp; MOP</h3>
-        <div class="meta">Thu 27 Aug (Thu-5) &middot; Topic 3</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <dl>
-          <dt>Follow</dt><dd>NNH ch. 4 &amp; &sect;2.4; M&amp;S ch. 4; Aho &sect;9.2&ndash;9.3</dd>
-          <dt>Paper</dt><dd>Cousot &amp; Cousot 1977; Kildall 1973.</dd>
-          <dt>Outline</dt><dd>Posets, lattices; join / meet; Kleene &amp; Tarski fixed points; the monotone framework; chaotic vs worklist iteration; join-over-all-paths; distributive vs monotone.</dd>
-        </dl>
-        -->
-      </div>
-    </section>
-
-    <!-- ================== Week 6 ================== -->
-    <section class="week-block" id="w6">
-      <header><span>Week 6 &middot; Topic 3 &mdash; Classical dataflow</span><span class="range">Sep 1 &ndash; 3</span></header>
-      <div class="week-readings">
-        <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
-        <!-- READINGS (uncomment at start of the week)
-
-        <b>Weekly readings (classical).</b>
-        <ul>
-          <li>Cocke. &ldquo;Global Common Subexpression Elimination&rdquo;, SIGPLAN Notices 1970.</li>
-          <li>NNH ch. 2 (full walk-through of the four classical analyses).</li>
-        </ul>
         -->
       </div>
 
       <div class="lecture" id="L16">
-        <h3>L16. Reaching definitions</h3>
-        <div class="meta">Tue 1 Sep (Tue-6) &middot; Topic 3</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.2; Aho &sect;9.2</dd>
-          <dt>Paper</dt><dd>Kildall 1973 (canonical example).</dd>
-          <dt>Outline</dt><dd>Gen/kill sets; forward may analysis; use&ndash;def chains; running example on LLVM IR.</dd>
-        </dl>
-        -->
-      </div>
-
-      <div class="lecture" id="L17">
-        <h3>L17. Available expressions</h3>
-        <div class="meta">Wed 2 Sep (Wed-6) &middot; Topic 3</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.4; Aho &sect;9.2.6</dd>
-          <dt>Paper</dt><dd>Cocke 1970 (CSE motivation).</dd>
-          <dt>Outline</dt><dd>Forward must analysis; common-subexpression elimination; correctness argument.</dd>
-        </dl>
-        -->
-      </div>
-
-      <div class="lecture" id="L18">
-        <h3>L18. Very busy expressions</h3>
+        <h3>L16&ndash;L17. Dataflow analysis: lattices &amp; fixed points; reaching definitions (combined session)</h3>
         <div class="meta">Thu 3 Sep (Thu-6) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.3</dd>
-          <dt>Paper</dt><dd>NNH treatment (no single canonical paper).</dd>
-          <dt>Outline</dt><dd>Backward must analysis; code-motion applications; contrast with reaching defs.</dd>
+          <dt>Follow</dt><dd>NNH ch. 4, &sect;2.4 and &sect;2.1.2; M&amp;S ch. 4; Aho &sect;9.2&ndash;9.3</dd>
+          <dt>Paper</dt><dd>Cousot &amp; Cousot 1977; Kildall 1973.</dd>
+          <dt>Outline</dt><dd>Posets and lattices; join / meet; Kleene &amp; Tarski fixed points; the monotone framework; chaotic vs worklist iteration; join-over-all-paths; distributive vs monotone frameworks. Then reaching definitions as the first instance: gen / kill sets, forward may analysis, use&ndash;def chains, worked example on LLVM IR.</dd>
         </dl>
         -->
       </div>
@@ -405,7 +383,11 @@
 
     <!-- ================== Week 7 ================== -->
     <section class="week-block" id="w7">
-      <header><span>Week 7 &middot; Topic 3 &mdash; Numeric domains &amp; widening</span><span class="range">Sep 8 &ndash; 9 &middot; Quiz 1 on Thu Sep 10</span></header>
+      <header><span>Week 7 &middot; Topic 3 &mdash; Classical dataflow, numeric domains &amp; widening</span><span class="range">Sep 8 &ndash; 9 &middot; Quiz 1 on Thu Sep 10</span></header>
+      <p style="margin:0 0 10px;font-size:13px;color:var(--text-muted);">
+        Both sessions this week are <b>combined lectures</b>, so that Topics 1&ndash;3
+        are complete before <a href="#Q1">Quiz 1</a> on Thu 10 Sep.
+      </p>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <p style="margin:8px 0 0;color:var(--deadline);"><b><a href="#Q1">Quiz 1</a></b> on <b>Thu 10 Sep, 2:00 PM</b> &mdash; covers Topics 1&ndash;3.</p>
@@ -413,34 +395,41 @@
 
         <b>Weekly readings (classical).</b>
         <ul>
+          <li>Cocke. &ldquo;Global Common Subexpression Elimination&rdquo;, SIGPLAN Notices 1970.</li>
+          <li>NNH ch. 2 (full walk-through of the four classical analyses).</li>
           <li>Cousot, Cousot. &ldquo;Static Determination of Dynamic Properties of Programs&rdquo;, ISOP 1976.</li>
           <li>Min&eacute;. &ldquo;The Octagon Abstract Domain&rdquo;, <i>Higher-Order and Symbolic Computation</i> 2006.</li>
+        </ul>
+        <b>Recent (2024&ndash;2026).</b>
+        <ul>
+          <li>Lesbre, Lemerre. &ldquo;<a href="https://dl.acm.org/doi/10.1145/3656392">Compiling with Abstract Interpretation</a>&rdquo;, PLDI 2024 &mdash; treats compilation itself as an abstract-interpretation problem.</li>
         </ul>
         -->
       </div>
 
-      <div class="lecture" id="L19">
-        <h3>L19. Live variables &amp; dead code elimination</h3>
+      <div class="lecture" id="L18">
+        <h3>L18&ndash;L19. Available expressions &amp; very busy expressions (combined session)</h3>
         <div class="meta">Tue 8 Sep (Tue-7) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.5; Aho &sect;9.2.5</dd>
-          <dt>Paper</dt><dd>Aho / Kennedy classic surveys (see Aho refs).</dd>
-          <dt>Outline</dt><dd>Backward may analysis; DCE; register allocation motivation.</dd>
+          <dt>Follow</dt><dd>NNH &sect;2.1.3 &amp; &sect;2.1.4; Aho &sect;9.2.6</dd>
+          <dt>Paper</dt><dd>Cocke 1970 (CSE motivation); NNH treatment of very busy expressions.</dd>
+          <dt>Outline</dt><dd>Available expressions &mdash; forward must analysis, common-subexpression elimination, correctness argument. Very busy expressions &mdash; backward must analysis, code motion, contrast with reaching definitions; the four classical analyses arranged on the forward/backward &times; may/must grid.</dd>
+          <dt>Note</dt><dd>Merged into one session to keep Topics 1&ndash;3 complete before <a href="#Q1">Quiz 1</a>.</dd>
         </dl>
         -->
       </div>
 
       <div class="lecture" id="L20">
-        <h3>L20&ndash;L21. Interval analysis; widening &amp; abstract interpretation (combined session)</h3>
+        <h3>L20&ndash;L21. Live variables &amp; DCE; interval analysis, widening &amp; abstract interpretation (combined session)</h3>
         <div class="meta">Wed 9 Sep (Wed-7) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>Cousot &amp; Cousot 1976; NNH &sect;4.3 &amp; ch. 4; RY ch. 8</dd>
+          <dt>Follow</dt><dd>NNH &sect;2.1.5, &sect;4.3 &amp; ch. 4; Aho &sect;9.2.5; RY ch. 8; Cousot &amp; Cousot 1976</dd>
           <dt>Paper</dt><dd>Cousot &amp; Cousot 1976; Cousot &amp; Cousot 1992 &ldquo;Abstract Interpretation Frameworks&rdquo;, JLC; Min&eacute; 2006 (octagons).</dd>
-          <dt>Outline</dt><dd>Concrete vs abstract semantics; interval domain; Galois connections; widening operator; narrowing; polyhedra domain; how Astr&eacute;e uses these.</dd>
+          <dt>Outline</dt><dd>Live variables &mdash; backward may analysis, dead-code elimination, register-allocation motivation. Then concrete vs abstract semantics; the interval domain; Galois connections; why iteration need not terminate on infinite-height lattices; widening and narrowing; the polyhedra domain; how Astr&eacute;e uses these.</dd>
           <dt>Note</dt><dd>Merged into one session because Thu 10 Sep is taken by <a href="#Q1">Quiz 1</a>.</dd>
         </dl>
         -->
