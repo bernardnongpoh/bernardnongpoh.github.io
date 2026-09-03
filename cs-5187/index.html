@@ -39,7 +39,6 @@
         <li><a href="https://classroom50.org/PASS-IITG/cs5187/assignments/homework-1">HW 1 &mdash; LLVM &amp; Coverage</a></li>
         <li class="notes-slot">HW 2 &mdash; TBA</li>
         <li class="notes-slot">HW 3 &mdash; TBA</li>
-        <li class="notes-slot">HW 4 &mdash; TBA</li>
       </ul>
 
       <h2>Resources</h2>
@@ -66,9 +65,10 @@
     <!-- =========================================================
          SCHEDULE — dates from IITG Academic Calendar 2026.
          Weeks 1–3: Mon / Tue / Wed.  Week 4 onwards: Tue / Wed / Thu.
-         39 numbered sessions (L1–L39), including the 3 industry talks
-         (L19, L30, L36); some lecture sessions cover two topics from the
-         original 42-lecture syllabus.  Plus 2 quizzes.
+         41 numbered sessions (L1–L41), including the 3 industry talks
+         (L20, L31, L37); a few sessions cover two topics from the original
+         42-lecture syllabus.  Both quizzes are held at 6:30 PM, so their
+         Thursday afternoon slots carry regular lectures.
          Wed 26 Aug (holiday) and Tue 1 Sep (Institute Day) had no class.
          ========================================================= -->
     <section id="schedule">
@@ -201,7 +201,6 @@
             </td>
             <td class="cell">
               <span class="tag topic">Topic 1 &rarr; 2</span>
-              <span class="tag hw">HW 2 out</span>
             </td>
           </tr>
 
@@ -215,13 +214,13 @@
             </td>
             <td class="cell">
               <span class="date">Sep 2 &middot; Wed-6</span>
-              <span class="lec-title"><a href="lectures.html#L15">L15. Fuzzing (cont.): grammar-based fuzzing &amp; concurrency testing</a></span>
+              <span class="lec-title"><a href="lectures.html#L15">L15. Fuzzing: black-box &amp; grey-box</a></span>
             </td>
             <td class="cell">
               <span class="date">Sep 3 &middot; Thu-6</span>
-              <span class="lec-title"><a href="lectures.html#L16">L16. Lattices &amp; fixed points; reaching definitions</a></span>
+              <span class="lec-title"><a href="lectures.html#L16">L16. Grammar-based fuzzing</a></span>
             </td>
-            <td class="cell"><span class="tag topic">Topic 2 &rarr; 3</span></td>
+            <td class="cell"><span class="tag topic">Topic 2</span></td>
           </tr>
 
           <!-- ================= WEEK 7 (Sep 8 – 10) ================== -->
@@ -230,20 +229,20 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Sep 8 &middot; Tue-7</span>
-              <span class="lec-title"><a href="lectures.html#L17">L17. Available &amp; very busy expressions</a></span>
+              <span class="lec-title"><a href="lectures.html#L17">L17. Concurrency testing</a></span>
             </td>
             <td class="cell">
               <span class="date">Sep 9 &middot; Wed-7</span>
-              <span class="lec-title"><a href="lectures.html#L18">L18. Live variables &amp; DCE; interval analysis &amp; widening</a></span>
+              <span class="lec-title"><a href="lectures.html#L18">L18. Dataflow: lattices &amp; fixed points</a></span>
             </td>
             <td class="cell">
               <span class="date">Sep 10 &middot; Thu-7</span>
-              <span class="lec-title" style="color:var(--deadline);"><a href="lectures.html#Q1">Quiz 1</a></span>
-              <div style="font-size:11px;color:var(--text-faint);">2:00&ndash;2:55 PM &middot; Topics 1&ndash;3</div>
+              <span class="lec-title"><a href="lectures.html#L20">L19. Reaching definitions</a></span>
+              <div style="font-size:11px;color:var(--deadline);"><a href="lectures.html#Q1">Quiz 1</a> &middot; 6:30 PM</div>
             </td>
             <td class="cell">
-              <span class="tag topic">Topic 3</span>
-              <span class="tag deadline">HW 2 due Sep 11</span>
+              <span class="tag topic">Topic 2 &rarr; 3</span>
+              <span class="tag hw">HW 2 out Sep 7</span>
               <span class="tag exam">Quiz 1</span>
             </td>
           </tr>
@@ -260,19 +259,18 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Sep 22 &middot; Tue-8</span>
-              <span class="lec-title" style="color:var(--blue-700);"><a href="lectures.html#L19">L19. Industry Talk 1</a></span>
+              <span class="lec-title" style="color:var(--blue-700);"><a href="lectures.html#L20">L20. Industry Talk 1</a></span>
               <div style="font-size:11px;color:var(--text-faint);">Room 5G4 &middot; 4:00&ndash;4:55 PM</div>
             </td>
             <td class="cell">
               <span class="date">Sep 23 &middot; Wed-8</span>
-              <span class="lec-title"><a href="lectures.html#L20">L20</a></span>
+              <span class="lec-title"><a href="lectures.html#L21">L21. Available &amp; very busy expressions</a></span>
             </td>
             <td class="cell">
               <span class="date">Sep 24 &middot; Thu-8</span>
-              <span class="lec-title"><a href="lectures.html#L21">L21</a></span>
+              <span class="lec-title"><a href="lectures.html#L22">L22. Live variables &amp; DCE; interval analysis &amp; widening</a></span>
             </td>
             <td class="cell">
-              <span class="tag hw">HW 3 out</span>
               <span class="tag deadline">Project proposal due Sep 20</span>
               <span class="tag paper">Industry Talk 1</span>
             </td>
@@ -284,17 +282,20 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Sep 29 &middot; Tue-9</span>
-              <span class="lec-title"><a href="lectures.html#L22">L22</a></span>
-            </td>
-            <td class="cell">
-              <span class="date">Sep 30 &middot; Wed-9</span>
               <span class="lec-title"><a href="lectures.html#L23">L23</a></span>
             </td>
             <td class="cell">
-              <span class="date">Oct 1 &middot; Thu-9</span>
+              <span class="date">Sep 30 &middot; Wed-9</span>
               <span class="lec-title"><a href="lectures.html#L24">L24</a></span>
             </td>
-            <td class="cell"></td>
+            <td class="cell">
+              <span class="date">Oct 1 &middot; Thu-9</span>
+              <span class="lec-title"><a href="lectures.html#L25">L25</a></span>
+            </td>
+            <td class="cell">
+              <span class="tag deadline">HW 2 due Sep 28</span>
+              <span class="tag hw">HW 3 out Sep 29</span>
+            </td>
           </tr>
 
           <!-- ================= WEEK 10 (Oct 6 – 8) ================== -->
@@ -303,18 +304,17 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Oct 6 &middot; Tue-10</span>
-              <span class="lec-title"><a href="lectures.html#L25">L25</a></span>
-            </td>
-            <td class="cell">
-              <span class="date">Oct 7 &middot; Wed-10</span>
               <span class="lec-title"><a href="lectures.html#L26">L26</a></span>
             </td>
             <td class="cell">
-              <span class="date">Oct 8 &middot; Thu-10</span>
+              <span class="date">Oct 7 &middot; Wed-10</span>
               <span class="lec-title"><a href="lectures.html#L27">L27</a></span>
             </td>
             <td class="cell">
-              <span class="tag deadline">HW 3 due Oct 9</span>
+              <span class="date">Oct 8 &middot; Thu-10</span>
+              <span class="lec-title"><a href="lectures.html#L28">L28</a></span>
+            </td>
+            <td class="cell">
               <span class="tag exam">Progress meeting 1 &middot; Oct 5&ndash;9</span>
             </td>
           </tr>
@@ -325,19 +325,19 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Oct 13 &middot; Tue-11</span>
-              <span class="lec-title"><a href="lectures.html#L28">L28</a></span>
-            </td>
-            <td class="cell">
-              <span class="date">Oct 14 &middot; Wed-11</span>
               <span class="lec-title"><a href="lectures.html#L29">L29</a></span>
             </td>
             <td class="cell">
+              <span class="date">Oct 14 &middot; Wed-11</span>
+              <span class="lec-title"><a href="lectures.html#L30">L30</a></span>
+            </td>
+            <td class="cell">
               <span class="date">Oct 15 &middot; Thu-11</span>
-              <span class="lec-title" style="color:var(--blue-700);"><a href="lectures.html#L30">L30. Industry Talk 2</a></span>
+              <span class="lec-title" style="color:var(--blue-700);"><a href="lectures.html#L31">L31. Industry Talk 2</a></span>
               <div style="font-size:11px;color:var(--text-faint);">Room 5G4 &middot; 2:00&ndash;2:55 PM</div>
             </td>
             <td class="cell">
-              <span class="tag hw">HW 4 out</span>
+              <span class="tag deadline">HW 3 due Oct 16</span>
               <span class="tag paper">Industry Talk 2</span>
             </td>
           </tr>
@@ -349,11 +349,11 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Oct 21 &middot; Wed-12</span>
-              <span class="lec-title"><a href="lectures.html#L31">L31</a></span>
+              <span class="lec-title"><a href="lectures.html#L32">L32</a></span>
             </td>
             <td class="cell">
               <span class="date">Oct 22 &middot; Thu-12</span>
-              <span class="lec-title"><a href="lectures.html#L32">L32</a></span>
+              <span class="lec-title"><a href="lectures.html#L33">L33</a></span>
             </td>
             <td class="cell"><span style="font-size:11px;color:var(--text-faint);">No Tue class this week (institute calendar).</span></td>
           </tr>
@@ -364,18 +364,17 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Oct 27 &middot; Tue-13</span>
-              <span class="lec-title"><a href="lectures.html#L33">L33</a></span>
-            </td>
-            <td class="cell">
-              <span class="date">Oct 28 &middot; Wed-13</span>
               <span class="lec-title"><a href="lectures.html#L34">L34</a></span>
             </td>
             <td class="cell">
-              <span class="date">Oct 29 &middot; Thu-13</span>
+              <span class="date">Oct 28 &middot; Wed-13</span>
               <span class="lec-title"><a href="lectures.html#L35">L35</a></span>
             </td>
             <td class="cell">
-              <span class="tag deadline">HW 4 due Oct 30</span>
+              <span class="date">Oct 29 &middot; Thu-13</span>
+              <span class="lec-title"><a href="lectures.html#L36">L36</a></span>
+            </td>
+            <td class="cell">
               <span class="tag exam">Progress meeting 2 &middot; Oct 26&ndash;30</span>
             </td>
           </tr>
@@ -386,17 +385,17 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Nov 3 &middot; Tue-14</span>
-              <span class="lec-title" style="color:var(--blue-700);"><a href="lectures.html#L36">L36. Industry Talk 3</a></span>
+              <span class="lec-title" style="color:var(--blue-700);"><a href="lectures.html#L37">L37. Industry Talk 3</a></span>
               <div style="font-size:11px;color:var(--text-faint);">Room 5G4 &middot; 4:00&ndash;4:55 PM</div>
             </td>
             <td class="cell">
               <span class="date">Nov 4 &middot; Wed-14</span>
-              <span class="lec-title"><a href="lectures.html#L37">L37</a></span>
+              <span class="lec-title"><a href="lectures.html#L38">L38</a></span>
             </td>
             <td class="cell">
               <span class="date">Nov 5 &middot; Thu-14</span>
-              <span class="lec-title" style="color:var(--deadline);"><a href="lectures.html#Q2">Quiz 2</a></span>
-              <div style="font-size:11px;color:var(--text-faint);">2:00&ndash;2:55 PM &middot; Topics 4&ndash;8</div>
+              <span class="lec-title"><a href="lectures.html#L39">L39</a></span>
+              <div style="font-size:11px;color:var(--deadline);"><a href="lectures.html#Q2">Quiz 2</a> &middot; 6:30 PM</div>
             </td>
             <td class="cell">
               <span class="tag exam">Progress meeting 3 &middot; Nov 2&ndash;6</span>
@@ -411,11 +410,11 @@
             <td class="cell notes-slot">&mdash;</td>
             <td class="cell">
               <span class="date">Nov 10 &middot; Tue-15</span>
-              <span class="lec-title"><a href="lectures.html#L38">L38</a></span>
+              <span class="lec-title"><a href="lectures.html#L40">L40</a></span>
             </td>
             <td class="cell">
               <span class="date">Nov 11 &middot; Wed-15</span>
-              <span class="lec-title"><a href="lectures.html#L39">L39</a></span>
+              <span class="lec-title"><a href="lectures.html#L41">L41</a></span>
               <div style="font-size:11px;color:var(--text-faint);">last teaching day</div>
             </td>
             <td class="cell">
@@ -452,16 +451,16 @@
         </thead>
         <tbody>
           <tr><td class="week">1</td><td>Foundations &amp; Program Representation (incl. Clang / LLVM IR, specifications, Hoare logic &amp; invariants)</td><td>L1&ndash;L12</td><td>12</td></tr>
-          <tr><td class="week">2</td><td>Testing (coverage, mutation, fuzzing, grammar-based, concurrency)</td><td>L13&ndash;L15</td><td>3</td></tr>
-          <tr><td class="week">3</td><td>Dataflow Analysis</td><td>L16&ndash;L18</td><td>3</td></tr>
-          <tr><td class="week">4</td><td>Pointer Analysis</td><td>L20&ndash;L21</td><td>2</td></tr>
-          <tr><td class="week">5</td><td>Constraint-Based Analysis</td><td>L22&ndash;L25</td><td>4</td></tr>
-          <tr><td class="week">6</td><td>Type Systems</td><td>L26&ndash;L29</td><td>4</td></tr>
-          <tr><td class="week">7</td><td>Symbolic Execution</td><td>L31&ndash;L34</td><td>4</td></tr>
-          <tr><td class="week">8</td><td>Automated Test Generation</td><td>L35, L37</td><td>2</td></tr>
-          <tr><td class="week">9</td><td>LLM-Assisted Software Analysis</td><td>L38&ndash;L39</td><td>2</td></tr>
-          <tr><td class="week">&mdash;</td><td>Industry talks (guest sessions)</td><td>L19, L30, L36</td><td>3</td></tr>
-          <tr><td class="week">&mdash;</td><td><b>Total</b></td><td>L1&ndash;L39</td><td><b>39</b></td></tr>
+          <tr><td class="week">2</td><td>Testing (coverage, mutation, fuzzing, grammar-based, concurrency)</td><td>L13&ndash;L17</td><td>5</td></tr>
+          <tr><td class="week">3</td><td>Dataflow Analysis</td><td>L18&ndash;L19, L21&ndash;L22</td><td>4</td></tr>
+          <tr><td class="week">4</td><td>Pointer Analysis</td><td>L23&ndash;L24</td><td>2</td></tr>
+          <tr><td class="week">5</td><td>Constraint-Based Analysis</td><td>L25&ndash;L28</td><td>4</td></tr>
+          <tr><td class="week">6</td><td>Type Systems</td><td>L29&ndash;L30, L32&ndash;L33</td><td>4</td></tr>
+          <tr><td class="week">7</td><td>Symbolic Execution</td><td>L34&ndash;L36, L38</td><td>4</td></tr>
+          <tr><td class="week">8</td><td>Automated Test Generation</td><td>L39&ndash;L40</td><td>2</td></tr>
+          <tr><td class="week">9</td><td>LLM-Assisted Software Analysis</td><td>L41</td><td>1</td></tr>
+          <tr><td class="week">&mdash;</td><td>Industry talks (guest sessions)</td><td>L20, L31, L37</td><td>3</td></tr>
+          <tr><td class="week">&mdash;</td><td><b>Total</b></td><td>L1&ndash;L41</td><td><b>41</b></td></tr>
         </tbody>
       </table>
      
@@ -485,7 +484,7 @@
           <b>Thu</b> 2:00&ndash;2:55 PM
         </dd>
         <dt>Thursday slot</dt>
-        <dd>Now a regular lecture day. It also carries <b>Quiz 1</b> (Thu 10 Sep),
+        <dd>Now a regular lecture day. Both quizzes are held at 6:30 PM, so the afternoon slot is a lecture even on quiz days. It also carries <b>Quiz 1</b> (Thu 10 Sep),
         <b>Industry Talk 2</b> (Thu 15 Oct), <b>Quiz 2</b> (Thu 5 Nov) and the
         <b>final project presentations</b> (Thu 12 Nov).</dd>
         <dt>Office hours</dt><dd>By appointment &middot; email the instructor/TAs</dd>
@@ -502,7 +501,7 @@
       <dl class="info-grid">
         <dt>End-semester exam</dt><dd>30 %</dd>
         <dt>Mid-semester exam</dt><dd>25 %</dd>
-        <dt>H/W assignments</dt><dd>10 %</dd>
+        <dt>H/W assignments (3)</dt><dd>10 %</dd>
         <dt>Quizzes (2)</dt><dd>10 % &nbsp;<span style="font-size:12px;color:var(--text-faint);">(5 % each)</span></dd>
         <dt>Term project</dt><dd>20 % &nbsp;<span style="font-size:12px;color:var(--text-faint);">(see <a href="#project">Project</a> for internal breakdown)</span></dd>
         <dt>Attendance</dt><dd>5 %</dd>
@@ -516,9 +515,9 @@
       <h2>Quizzes (10 %)</h2>
       <dl class="info-grid">
         <dt>Quiz 1</dt>
-        <dd><b>Thu 10 September 2026</b>, 2:00&ndash;2:55 PM &middot; covers <b>Topics 1&ndash;3</b> (Foundations, Testing, Dataflow).</dd>
+        <dd><b>Thu 10 September 2026</b>, 6:30 PM &middot; covers <b>Topics 1&ndash;3</b> (Foundations, Testing, Dataflow). Held in the evening, so the afternoon lecture slot runs as usual.</dd>
         <dt>Quiz 2</dt>
-        <dd><b>Thu 5 November 2026</b>, 2:00&ndash;2:55 PM &middot; covers <b>Topics 4&ndash;8</b> (Pointer, Constraint-based, Types, SymExec, Test generation).</dd>
+        <dd><b>Thu 5 November 2026</b>, 6:30 PM &middot; covers <b>Topics 4&ndash;8</b> (Pointer, Constraint-based, Types, SymExec, Test generation). Held in the evening, so the afternoon lecture slot runs as usual.</dd>
       </dl>
     </section>
 

@@ -101,7 +101,6 @@
           <dt>Handout</dt><dd><a href="slides/L1-handout.pdf">L1 &mdash; handout (PDF)</a></dd>
           <dt>Follow</dt><dd></dd>
           <dt>Paper</dt><dd></dd>
-          <dt>Outline</dt><dd>Why analyze programs; kinds of bugs and vulnerabilities; a tour of the course; grading, logistics, tools.</dd>
         </dl>
       </div>
 
@@ -112,7 +111,6 @@
           <dt>Handout</dt><dd><a href="slides/L2-handout.pdf">L2 &mdash; handout (PDF)</a></dd>
           <dt>Follow</dt><dd>NNH &sect;1.1&ndash;1.3; RY ch. 1</dd>
           <dt>Paper</dt><dd>Ernst, &ldquo;<a href="https://homes.cs.washington.edu/~mernst/pubs/staticdynamic-woda2003.pdf">Static and Dynamic Analysis: Synergy and Duality</a>&rdquo;, WODA 2003; Ernst, Cockrell, Griswold, Notkin, &ldquo;<a href="https://homes.cs.washington.edu/~mernst/pubs/invariants-tse2001.pdf">Dynamically Discovering Likely Program Invariants&hellip;</a>&rdquo; (Daikon), TSE 2001.</dd>
-          <dt>Outline</dt><dd>Static vs dynamic vs hybrid; running examples; what an &ldquo;invariant&rdquo; is; over- and under-approximation.</dd>
         </dl>
       </div>
 
@@ -124,7 +122,6 @@
           <dt>Handout</dt><dd><a href="slides/L3-handout.pdf">L3 &mdash; handout (PDF)</a></dd>
           <dt>Follow</dt><dd></dd>
           <dt>Paper</dt><dd>Wagner, Foster, Brewer, Aiken. &ldquo;A First Step Towards Automated Detection of Buffer Overrun Vulnerabilities&rdquo;, NDSS 2000; One. &ldquo;Smashing the Stack for Fun and Profit&rdquo;, Phrack 1996.</dd>
-          <dt>Outline</dt><dd>Threat models; common vulnerability classes (memory safety, integer overflow, injection)</dd>
         </dl>
       </div>
     </section>
@@ -151,7 +148,6 @@
         <dl>
           <dt>Slides</dt><dd><a href="slides/L4.pdf">L4 &mdash; Soundness, completeness, undecidability (PDF)</a></dd>
           <dt>Handout</dt><dd><a href="slides/L4-handout.pdf">L4 &mdash; handout (PDF)</a></dd>
-          <dt>Outline</dt><dd>Rice's theorem; sound vs complete analyses; soundy analyses in practice.</dd>
         </dl>
       </div>
 
@@ -161,7 +157,6 @@
         <dl>
           <dt>Slides</dt><dd><a href="slides/L5.pdf">L5 &mdash; Precision, recall, F-measure for analyzers (PDF)</a></dd>
           <dt>Handout</dt><dd><a href="slides/L5-handout.pdf">L5 &mdash; handout (PDF)</a></dd>
-          <dt>Outline</dt><dd>True/false positives &amp; negatives</dd>
         </dl>
       </div>
 
@@ -172,7 +167,6 @@
           <dt>Slides</dt><dd><a href="slides/L6.pdf">L6 &mdash; Program representation (PDF)</a></dd>
           <dt>Follow</dt><dd>Aho ch. 5 &amp; 8; NNH &sect;1.5; <a href="https://clang.llvm.org/docs/IntroductionToTheClangAST.html">Introduction to the Clang AST</a>; <a href="https://cis547.github.io/downloads/lecture/llvm-framework-primer.pdf">CIS 547 &mdash; LLVM Framework Primer</a></dd>
           <dt>Paper</dt><dd>Cytron et al. 1991 (SSA).</dd>
-          <dt>Outline</dt><dd>What LLVM is and how its front-end/back-end pipeline fits together; abstract syntax trees; the Clang AST (inspect / detect / transform); dumping a tree with <code>clang++ -Xclang -ast-dump -fsyntax-only</code>; reading an AST dump; branch instrumentation as a worked example; from AST to CFG to IR.</dd>
         </dl>
       </div>
     </section>
@@ -199,7 +193,6 @@
         <dl>
           <dt>Slides</dt><dd><a href="https://swtv.kaist.ac.kr/files/courses/cs492-fall17/1-coverage/lec7-Clang-tutorial.pdf">L7 &mdash; Clang tutorial (external PDF, KAIST CS492)</a></dd>
           <dt>Follow</dt><dd><a href="https://clang.llvm.org/docs/LibTooling.html">LibTooling</a>; <a href="https://clang.llvm.org/docs/RAVFrontendAction.html">RecursiveASTVisitor-based ASTFrontendActions</a>; <a href="https://clang.llvm.org/docs/LibASTMatchersTutorial.html">AST Matchers tutorial</a></dd>
-          <dt>Outline</dt><dd>Building a stand-alone Clang tool; <code>ASTFrontendAction</code> and <code>ASTConsumer</code>; walking the tree with <code>RecursiveASTVisitor</code>; <code>SourceManager</code> and source locations; rewriting source with <code>Rewriter</code>; coverage instrumentation at the source level.</dd>
           <dt>Note</dt><dd>Delivered from the KAIST CS492 Clang tutorial deck linked above; the AST material it builds on is in <a href="#L6">L6</a>.</dd>
         </dl>
       </div>
@@ -211,7 +204,6 @@
           <dt>Slides</dt><dd><a href="slides/L8-1.pdf">L8 &mdash; LLVM IR (PDF)</a></dd>
           <dt>Follow</dt><dd><a href="https://llvm.org/docs/LangRef.html">LLVM Language Reference</a>; <a href="https://cis547.github.io/downloads/lecture/llvm-framework-primer.pdf">CIS 547 &mdash; LLVM Framework Primer</a>; Lattner &amp; Adve 2004</dd>
           <dt>Paper</dt><dd>Lattner &amp; Adve 2004 (LLVM design).</dd>
-          <dt>Outline</dt><dd>The LLVM pipeline: Clang front end &rarr; IR &rarr; <code>opt</code> passes &rarr; back end; analysis vs transformation passes; the three IR formats (in-memory, bitcode <code>.bc</code>, textual <code>.ll</code>); <code>clang -S -emit-llvm</code>; module / function / basic block / instruction structure; iterating the IR (STL, <code>auto</code>, <code>inst_iterator</code>); introduction to SSA form and why it helps analysis.</dd>
         </dl>
       </div>
 
@@ -221,7 +213,6 @@
         <dl>
           <dt>Slides</dt><dd><a href="slides/L9.pdf">L9 &mdash; LLVM IR continued (PDF)</a></dd>
           <dt>Follow</dt><dd><a href="https://llvm.org/docs/ProgrammersManual.html">LLVM Programmer's Manual</a>; <a href="https://llvm.org/doxygen/classllvm_1_1Value.html">llvm::Value</a> / <a href="https://llvm.org/doxygen/IR_2Instruction_8h_source.html">llvm::Instruction</a> doxygen</dd>
-          <dt>Outline</dt><dd>C program &rarr; LLVM IR walk-through; basic blocks and the CFG (<code>opt -p=dot-cfg</code>); SSA &mdash; one definition per variable, instruction as value name; printing with <code>outs()</code>/<code>errs()</code>; the class hierarchy <code>Value</code> &rarr; <code>User</code> &rarr; <code>Instruction</code>; <code>isa</code>/<code>cast</code>/<code>dyn_cast</code>; <code>LoadInst</code>, <code>StoreInst</code>, <code>BinaryOperator</code>, <code>PHINode</code>; <code>BasicBlock</code> and <code>Function</code> traversal.</dd>
           <dt>Announced</dt><dd>From Week 4 onwards the class meets on <b>Tuesday, Wednesday and Thursday</b>. <a href="https://classroom50.org/PASS-IITG/cs5187/assignments/homework-1">HW-1</a> released (due Fri 21 Aug, 23:59 IST).</dd>
         </dl>
       </div>
@@ -254,7 +245,6 @@
           <dt>Slides</dt><dd><a href="slides/L10.pdf">L10 &mdash; Software specifications (PDF)</a></dd>
           <dt>Follow</dt><dd>Naik, &ldquo;Software Specifications&rdquo;, CIS 5470 (Penn); <a href="https://checkerframework.org/manual/">The Checker Framework manual</a></dd>
           <dt>Paper</dt><dd></dd>
-          <dt>Outline</dt><dd>What a specification is and why there is nothing to test without one; kinds of specifications; pre- and post-conditions and weakest pre-conditions; contracts in testing vs verification; safety and liveness; typestate properties; types as lightweight specs and the Checker Framework; black-box vs white-box, automated vs manual testing.</dd>
         </dl>
       </div>
 
@@ -265,7 +255,6 @@
           <dt>Slides</dt><dd><a href="slides/L11.pdf">L11 &mdash; Hoare logic (PDF)</a></dd>
           <dt>Follow</dt><dd>Svendsen, <a href="https://www.cl.cam.ac.uk/teaching/2122/HLog+ModC/">Hoare Logic and Model Checking</a> (Cambridge), lectures 1&ndash;3</dd>
           <dt>Paper</dt><dd>Hoare, &ldquo;An Axiomatic Basis for Computer Programming&rdquo;, CACM 12(10), 1969.</dd>
-          <dt>Outline</dt><dd>Program state and assertions; the Hoare triple <code>{P} C {Q}</code>; partial vs total correctness; inference rules for <code>skip</code>, assignment, sequence, conditional and consequence; the assignment rule read backwards; the while rule, loop invariants and the three proof obligations.</dd>
         </dl>
       </div>
 
@@ -276,7 +265,6 @@
           <dt>Slides</dt><dd><a href="slides/L12.pdf">L12 &mdash; Invariants and specification inference (PDF)</a></dd>
           <dt>Follow</dt><dd>Naik, &ldquo;Software Specifications&rdquo;, CIS 5470 (Penn); JML <code>//@invariant</code> / <code>//@requires</code> annotations</dd>
           <dt>Paper</dt><dd>Flanagan, Leino, &ldquo;Houdini, an Annotation Assistant for ESC/Java&rdquo;, FME 2001; Ernst et al., &ldquo;Dynamically Discovering Likely Program Invariants&rdquo; (Daikon), TSE 2001.</dd>
-          <dt>Outline</dt><dd>Program, loop and class invariants; why validity is not enough &mdash; the useful invariant is the one implying the post-condition; inferring specifications instead of writing them; the Houdini algorithm (candidate invariants, refutation, workflow) on buggy and corrected programs; pros and cons.</dd>
         </dl>
       </div>
     </section>
@@ -313,7 +301,6 @@
           <dt>Slides</dt><dd><a href="slides/L13.pdf">L13 &mdash; Coverage &amp; mutation testing (PDF)</a></dd>
           <dt>Follow</dt><dd>Zhu, Hall, May, &ldquo;Software Unit Test Coverage and Adequacy&rdquo;, ACM CSUR 1997; Aho &sect;9 (CFG background for branch coverage)</dd>
           <dt>Paper</dt><dd>Jia, Harman, &ldquo;An Analysis and Survey of the Development of Mutation Testing&rdquo;, TSE 2011.</dd>
-          <dt>Outline</dt><dd>Test adequacy &mdash; when is a test suite &ldquo;enough&rdquo;; statement / line, branch, condition and MC-DC coverage; coverage on the CFG and what coverage does <i>not</i> tell you; instrumenting a program to measure it; mutation testing &mdash; mutation operators, mutants and the mutation score; killed vs surviving mutants; equivalent mutants and undecidability; cost and mutant-reduction techniques.</dd>
         </dl>
       </div>
 
@@ -324,14 +311,13 @@
           <dt>Slides</dt><dd><a href="slides/L14.pdf">L14 &mdash; Introduction to fuzzing (PDF)</a></dd>
           <dt>Follow</dt><dd>FB &ldquo;Introduction to Fuzzing&rdquo; &amp; &ldquo;Greybox Fuzzing&rdquo;; AFL technical whitepaper (M. Zalewski)</dd>
           <dt>Paper</dt><dd>Miller, Fredriksen, So, &ldquo;An Empirical Study of the Reliability of UNIX Utilities&rdquo;, CACM 1990; B&ouml;hme, Pham, Roychoudhury, &ldquo;Coverage-based Greybox Fuzzing as Markov Chain&rdquo; (AFLFast), CCS 2016; Fioraldi et al., &ldquo;AFL++&rdquo;, WOOT 2020.</dd>
-          <dt>Outline</dt><dd>Random testing and the 1990 UNIX utilities study; blind vs mutation-based fuzzing; seeds, corpora and mutation operators; what counts as a bug &mdash; crashes, assertions and sanitizers (ASan / UBSan / MSan) as oracles; black-, white- and greybox fuzzing; coverage-guided greybox fuzzing (AFL, libFuzzer, AFL++); edge-coverage instrumentation and the coverage bitmap; corpus scheduling and power schedules.</dd>
         </dl>
       </div>
     </section>
 
     <!-- ================== Week 6 ================== -->
     <section class="week-block" id="w6">
-      <header><span>Week 6 &middot; Topic 2 &rarr; 3 &mdash; Fuzzing wrap-up; dataflow starts</span><span class="range">Sep 2 &ndash; 3 &middot; Tue 1 Sep Institute Day</span></header>
+      <header><span>Week 6 &middot; Topic 2 &mdash; Fuzzing</span><span class="range">Sep 2 &ndash; 3 &middot; Tue 1 Sep Institute Day</span></header>
       <p style="margin:0 0 10px;font-size:13px;color:var(--text-muted);">
         <b>Tue 1 Sep &mdash; no class</b> (Institute Day).
       </p>
@@ -355,34 +341,32 @@
       </div>
 
       <div class="lecture" id="L15">
-        <h3>L15. Fuzzing (continued): grammar-based fuzzing &amp; concurrency testing</h3>
+        <h3>L15. Fuzzing: black-box &amp; grey-box</h3>
         <div class="meta">Wed 2 Sep (Wed-6) &middot; Topic 2</div>
         <dl>
-          <dt>Slides</dt><dd><a href="slides/L15.pdf">L15 &mdash; Grammar-based fuzzing &amp; concurrency testing (PDF)</a></dd>
-          <dt>Follow</dt><dd>FB &ldquo;Grammar-based Fuzzing&rdquo;; Musuvathi &amp; Qadeer 2007</dd>
-          <dt>Paper</dt><dd>Godefroid, Kiezun, Levin 2008; Aschermann et al., &ldquo;NAUTILUS&rdquo;, NDSS 2019; Sen, &ldquo;Race-directed random testing of concurrent programs&rdquo; (CalFuzzer), PLDI 2008. Modern: Dac&iacute;k &amp; Vojnar 2025.</dd>
-          <dt>Outline</dt><dd>Why bit-flip mutation fails on structured inputs; CFG-driven input generation; language fuzzing (JS engines, compilers); tree-based mutation of structured inputs; data races and happens-before; TSan / KCSAN; context bounding and systematic interleaving exploration.</dd>
+          <dt>Slides</dt><dd><a href="slides/L15.pdf">L15 &mdash; Black-box &amp; grey-box fuzzing (PDF)</a></dd>
+          <dt>Follow</dt><dd>FB &ldquo;Introduction to Fuzzing&rdquo; &amp; &ldquo;Greybox Fuzzing&rdquo;; <a href="https://lcamtuf.coredump.cx/afl/technical_details.txt">afl-fuzz technical whitepaper</a>; <a href="https://llvm.org/docs/LibFuzzer.html">libFuzzer</a> and <a href="https://clang.llvm.org/docs/SanitizerCoverage.html">SanitizerCoverage</a> docs</dd>
+          <dt>Paper</dt><dd>Miller, Fredriksen, So, &ldquo;An Empirical Study of the Reliability of UNIX Utilities&rdquo;, CACM 33(12), 1990; Fioraldi et al., &ldquo;AFL++&rdquo;, WOOT 2020.</dd>
         </dl>
       </div>
 
       <div class="lecture" id="L16">
-        <h3>L16. Dataflow analysis: lattices &amp; fixed points; reaching definitions</h3>
-        <div class="meta">Thu 3 Sep (Thu-6) &middot; Topic 3</div>
+        <h3>L16. Grammar-based fuzzing</h3>
+        <div class="meta">Thu 3 Sep (Thu-6) &middot; Topic 2</div>
         <dl>
-          <dt>Slides</dt><dd><a href="slides/L16.pdf">L16 &mdash; Lattices, fixed points &amp; reaching definitions (PDF)</a></dd>
-          <dt>Follow</dt><dd>NNH ch. 4, &sect;2.4 and &sect;2.1.2; M&amp;S ch. 4; Aho &sect;9.2&ndash;9.3</dd>
-          <dt>Paper</dt><dd>Cousot &amp; Cousot 1977; Kildall 1973.</dd>
-          <dt>Outline</dt><dd>Posets and lattices; join / meet; Kleene &amp; Tarski fixed points; the monotone framework; chaotic vs worklist iteration; join-over-all-paths; distributive vs monotone frameworks. Then reaching definitions as the first instance: gen / kill sets, forward may analysis, use&ndash;def chains, worked example on LLVM IR.</dd>
+          <dt>Slides</dt><dd><a href="slides/L16.pdf">L16 &mdash; Grammar-based fuzzing (PDF)</a></dd>
+          <dt>Follow</dt><dd>FB &ldquo;Grammar-based Fuzzing&rdquo; &amp; &ldquo;Efficient Grammar Fuzzing&rdquo;; <a href="https://github.com/AFLplusplus/LibAFL">LibAFL</a> mutator concepts</dd>
+          <dt>Paper</dt><dd>Godefroid, Kiezun, Levin, &ldquo;Grammar-based Whitebox Fuzzing&rdquo;, PLDI 2008; Aschermann et al., &ldquo;NAUTILUS: Fishing for Deep Bugs with Grammars&rdquo;, NDSS 2019.</dd>
         </dl>
       </div>
     </section>
 
     <!-- ================== Week 7 ================== -->
     <section class="week-block" id="w7">
-      <header><span>Week 7 &middot; Topic 3 &mdash; Classical dataflow, numeric domains &amp; widening</span><span class="range">Sep 8 &ndash; 9 &middot; Quiz 1 on Thu Sep 10</span></header>
+      <header><span>Week 7 &middot; Topic 2 &rarr; 3 &mdash; Concurrency; dataflow starts</span><span class="range">Sep 8 &ndash; 10 &middot; Quiz 1 Thu 6:30 PM</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
-        <p style="margin:8px 0 0;color:var(--deadline);"><b><a href="#Q1">Quiz 1</a></b> on <b>Thu 10 Sep, 2:00 PM</b> &mdash; covers Topics 1&ndash;3.</p>
+        <p style="margin:8px 0 0;color:var(--deadline);"><b><a href="#Q1">Quiz 1</a></b> on <b>Thu 10 Sep, 6:30 PM</b> &mdash; covers Topics 1&ndash;3. The afternoon slot that day is a regular lecture.</p>
         <!-- READINGS (uncomment at start of the week)
 
         <b>Weekly readings (classical).</b>
@@ -400,34 +384,41 @@
       </div>
 
       <div class="lecture" id="L17">
-        <h3>L17. Available expressions &amp; very busy expressions</h3>
-        <div class="meta">Tue 8 Sep (Tue-7) &middot; Topic 3</div>
+        <h3>L17. Concurrency testing: data races, happens-before &amp; systematic exploration</h3>
+        <div class="meta">Tue 8 Sep (Tue-7) &middot; Topic 2</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.3 &amp; &sect;2.1.4; Aho &sect;9.2.6</dd>
-          <dt>Paper</dt><dd>Cocke 1970 (CSE motivation); NNH treatment of very busy expressions.</dd>
-          <dt>Outline</dt><dd>Available expressions &mdash; forward must analysis, common-subexpression elimination, correctness argument. Very busy expressions &mdash; backward must analysis, code motion, contrast with reaching definitions; the four classical analyses arranged on the forward/backward &times; may/must grid.</dd>
+          <dt>Follow</dt><dd>FB &ldquo;Concurrency Fuzzing&rdquo;; <a href="https://clang.llvm.org/docs/ThreadSanitizer.html">ThreadSanitizer</a> docs; <a href="https://docs.kernel.org/dev-tools/kcsan.html">KCSAN</a></dd>
+          <dt>Paper</dt><dd>Musuvathi, Qadeer, &ldquo;Iterative Context Bounding for Systematic Testing of Multithreaded Programs&rdquo;, PLDI 2007; Sen, &ldquo;Race-directed Random Testing of Concurrent Programs&rdquo; (CalFuzzer), PLDI 2008. Modern: Dac&iacute;k &amp; Vojnar, &ldquo;RacerF&rdquo;, arXiv 2502.04905 (2025).</dd>
         </dl>
         -->
       </div>
-
       <div class="lecture" id="L18">
-        <h3>L18. Live variables &amp; DCE; interval analysis, widening &amp; abstract interpretation</h3>
+        <h3>L18. Dataflow analysis: lattices, fixed points &amp; the monotone framework</h3>
         <div class="meta">Wed 9 Sep (Wed-7) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.5, &sect;4.3 &amp; ch. 4; Aho &sect;9.2.5; RY ch. 8; Cousot &amp; Cousot 1976</dd>
-          <dt>Paper</dt><dd>Cousot &amp; Cousot 1976; Cousot &amp; Cousot 1992 &ldquo;Abstract Interpretation Frameworks&rdquo;, JLC; Min&eacute; 2006 (octagons).</dd>
-          <dt>Outline</dt><dd>Live variables &mdash; backward may analysis, dead-code elimination, register-allocation motivation. Then concrete vs abstract semantics; the interval domain; Galois connections; why iteration need not terminate on infinite-height lattices; widening and narrowing; the polyhedra domain; how Astr&eacute;e uses these.</dd>
+          <dt>Follow</dt><dd>NNH ch. 4 &amp; &sect;2.4; M&amp;S ch. 4; Aho &sect;9.2&ndash;9.3</dd>
+          <dt>Paper</dt><dd>Cousot &amp; Cousot, &ldquo;Abstract Interpretation&rdquo;, POPL 1977; Kildall, &ldquo;A Unified Approach to Global Program Optimization&rdquo;, POPL 1973.</dd>
         </dl>
         -->
       </div>
-
+      <div class="lecture" id="L19">
+        <h3>L19. Reaching definitions</h3>
+        <div class="meta">Thu 10 Sep (Thu-7) &middot; Topic 3</div>
+        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <dl>
+          <dt>Follow</dt><dd>NNH &sect;2.1.2; Aho &sect;9.2</dd>
+          <dt>Paper</dt><dd>Kildall 1973 (canonical example).</dd>
+        </dl>
+        -->
+      </div>
       <div class="lecture" id="Q1">
         <h3>Quiz 1</h3>
-        <div class="meta">Thu 10 Sep 2026 &middot; 2:00&ndash;2:55 PM &middot; Room 5G4 &middot; Thursday slot</div>
+        <div class="meta">Thu 10 Sep 2026 &middot; 6:30 PM &middot; Room 5G4 &middot; evening slot</div>
         <dl>
           <dt>Covers</dt><dd>Topics 1&ndash;3 (Foundations, Testing/Fuzzing, Dataflow) &mdash; definitions, algorithms, worked examples; closed book.</dd>
         </dl>
@@ -438,14 +429,14 @@
     <section class="week-block">
       <header><span>Mid-Semester Examinations</span><span class="range">Sep 13 &ndash; 20</span></header>
       <div class="week-readings">
-        <b>No classes.</b> Mid-sem exam covers L1&ndash;L18 (Topics 1&ndash;3).
+        <b>No classes.</b> Mid-sem exam covers L1&ndash;L19 (Topics 1&ndash;3).
         Project proposal due <b>Sun 20 Sep</b>.
       </div>
     </section>
 
     <!-- ================== Week 8 ================== -->
     <section class="week-block" id="w8">
-      <header><!-- topic hidden until delivered: Week 8 &middot; Topic 4 &mdash; Pointer Analysis --><span>Week 8</span><span class="range">Sep 22 &ndash; 24</span></header>
+      <header><!-- topic hidden until delivered: Week 8 &middot; Topic 3 &mdash; Classical dataflow continues --><span>Week 8</span><span class="range">Sep 22 &ndash; 24</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
@@ -466,32 +457,25 @@
         -->
       </div>
 
-      <div class="lecture" id="L20">
-        <h3>L20</h3>
-        <div class="meta">Wed 23 Sep (Wed-8) &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+      <div class="lecture" id="L21">
+        <h3>L21. Available expressions &amp; very busy expressions</h3>
+        <div class="meta">Wed 23 Sep (Wed-8) &middot; Topic 3</div>
+        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L20. Andersen's &amp; Steensgaard's algorithms</h3>
-        <div class="meta">Wed 23 Sep (Wed-8) &middot; Topic 4 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
         <dl>
-          <dt>Follow</dt><dd>Andersen 1994 ch. 3&ndash;4; Steensgaard 1996</dd>
-          <dt>Paper</dt><dd>Andersen 1994; Steensgaard 1996.</dd>
-          <dt>Outline</dt><dd>Inclusion-based (Andersen) vs equality-based (Steensgaard) points-to; subset constraints &amp; O(n&sup3;) worst case; union-find &amp; almost-linear time; precision trade-off; cycle elimination.</dd>
+          <dt>Follow</dt><dd>NNH &sect;2.1.3 &amp; &sect;2.1.4; Aho &sect;9.2.6</dd>
+          <dt>Paper</dt><dd>Cocke, &ldquo;Global Common Subexpression Elimination&rdquo;, SIGPLAN Notices 1970.</dd>
         </dl>
         -->
       </div>
-
-      <div class="lecture" id="L21">
-        <h3>L21</h3>
-        <div class="meta">Thu 24 Sep (Thu-8)</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+      <div class="lecture" id="L22">
+        <h3>L22. Live variables &amp; DCE; interval analysis, widening &amp; abstract interpretation</h3>
+        <div class="meta">Thu 24 Sep (Thu-8) &middot; Topic 3</div>
+        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L21. Flow/context sensitivity, heap abstraction, CFI</h3>
-        <div class="meta">Thu 24 Sep (Thu-8) &middot; Topic 4</div>
         <dl>
-          <dt>Follow</dt><dd>Smaragdakis, Balatsouras. &ldquo;Pointer Analysis&rdquo; survey, F&amp;T PL 2015</dd>
-          <dt>Paper</dt><dd>Abadi et al. 2005 (CFI); modern scaling &mdash; Wimmer et al. PLDI 2024 (see recent list).</dd>
-          <dt>Outline</dt><dd>Allocation-site vs shape abstraction; k-limited contexts; CFI as consumer of points-to.</dd>
+          <dt>Follow</dt><dd>NNH &sect;2.1.5, &sect;4.3 &amp; ch. 4; Aho &sect;9.2.5; RY ch. 8; Cousot &amp; Cousot 1976</dd>
+          <dt>Paper</dt><dd>Cousot &amp; Cousot 1976; Cousot &amp; Cousot, &ldquo;Abstract Interpretation Frameworks&rdquo;, JLC 1992; Min&eacute;, &ldquo;The Octagon Abstract Domain&rdquo;, HOSC 2006.</dd>
         </dl>
         -->
       </div>
@@ -499,7 +483,7 @@
 
     <!-- ================== Week 9 ================== -->
     <section class="week-block" id="w9">
-      <header><!-- topic hidden until delivered: Week 9 &middot; Topic 5 &mdash; Constraint-Based Analysis --><span>Week 9</span><span class="range">Sep 29 &ndash; Oct 1</span></header>
+      <header><!-- topic hidden until delivered: Week 9 &middot; Topic 4 &rarr; 5 (Pointer analysis; constraints start) --><span>Week 9</span><span class="range">Sep 29 &ndash; Oct 1</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
@@ -519,47 +503,45 @@
         -->
       </div>
 
-      <div class="lecture" id="L22">
-        <h3>L22</h3>
-        <div class="meta">Tue 29 Sep (Tue-9)</div>
+      <div class="lecture" id="L23">
+        <h3>L23</h3>
+        <div class="meta">Tue 29 Sep (Tue-9) &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L22. Datalog for program analysis</h3>
-        <div class="meta">Tue 29 Sep (Tue-9) &middot; Topic 5</div>
+        <h3>L23. Andersen's &amp; Steensgaard's algorithms</h3>
+        <div class="meta">Tue 29 Sep (Tue-9) &middot; Topic 4 &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
+        <dl>
+          <dt>Follow</dt><dd>Andersen 1994 ch. 3&ndash;4; Steensgaard 1996</dd>
+          <dt>Paper</dt><dd>Andersen 1994; Steensgaard 1996.</dd>
+
+        </dl>
+        -->
+      </div>
+      <div class="lecture" id="L24">
+        <h3>L24</h3>
+        <div class="meta">Wed 30 Sep (Wed-9) &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L24. Flow/context sensitivity, heap abstraction, CFI</h3>
+        <div class="meta">Wed 30 Sep (Wed-9) &middot; Topic 4 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <dl>
+          <dt>Follow</dt><dd>Smaragdakis, Balatsouras. &ldquo;Pointer Analysis&rdquo; survey, F&amp;T PL 2015</dd>
+          <dt>Paper</dt><dd>Abadi et al. 2005 (CFI); modern scaling &mdash; Wimmer et al. PLDI 2024 (see recent list).</dd>
+
+        </dl>
+        -->
+      </div>
+      <div class="lecture" id="L25">
+        <h3>L25</h3>
+        <div class="meta">Thu 1 Oct (Thu-9) &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
+        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L25. Datalog for program analysis</h3>
+        <div class="meta">Thu 1 Oct (Thu-9) &middot; Topic 5 &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
         <dl>
           <dt>Follow</dt><dd>Bravenboer, Smaragdakis, &ldquo;Doop&rdquo;, OOPSLA 2009; Soufflé <a href="https://souffle-lang.github.io/publications">publications</a></dd>
           <dt>Paper</dt><dd>Whaley &amp; Lam 2004 (bddbddb); modern &mdash; Abeysinghe &amp; Rompf, Flan POPL 2024 (see recent list).</dd>
-          <dt>Outline</dt><dd>Datalog primer; encoding pointer analysis as Datalog rules; Soufflé / Doop tooling.</dd>
-        </dl>
-        -->
-      </div>
 
-      <div class="lecture" id="L23">
-        <h3>L23</h3>
-        <div class="meta">Wed 30 Sep (Wed-9)</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L23. Intra- vs inter-procedural analysis</h3>
-        <div class="meta">Wed 30 Sep (Wed-9) &middot; Topic 5</div>
-        <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.5; RY ch. 9</dd>
-          <dt>Paper</dt><dd>Reps, Horwitz, Sagiv 1995 (IFDS).</dd>
-          <dt>Outline</dt><dd>Call strings vs functional summaries; the IFDS framework; taint tracking as IFDS.</dd>
-        </dl>
-        -->
-      </div>
-
-      <div class="lecture" id="L24">
-        <h3>L24</h3>
-        <div class="meta">Thu 1 Oct (Thu-9)</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L24. Context sensitivity (k-CFA, object sensitivity)</h3>
-        <div class="meta">Thu 1 Oct (Thu-9) &middot; Topic 5</div>
-        <dl>
-          <dt>Follow</dt><dd>Smaragdakis et al. 2011</dd>
-          <dt>Paper</dt><dd>Smaragdakis, Bravenboer, Lhot&aacute;k 2011.</dd>
-          <dt>Outline</dt><dd>Shivers' k-CFA; object sensitivity vs call-site; type sensitivity; precision/scalability.</dd>
         </dl>
         -->
       </div>
@@ -567,7 +549,7 @@
 
     <!-- ================== Week 10 ================== -->
     <section class="week-block" id="w10">
-      <header><!-- topic hidden until delivered: Week 10 &middot; Topic 5 &rarr; 6 (SMT; types start) --><span>Week 10</span><span class="range">Oct 6 &ndash; 8</span></header>
+      <header><!-- topic hidden until delivered: Week 10 &middot; Topic 5 &mdash; Constraint-Based Analysis --><span>Week 10</span><span class="range">Oct 6 &ndash; 8</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
@@ -585,47 +567,45 @@
         -->
       </div>
 
-      <div class="lecture" id="L25">
-        <h3>L25</h3>
-        <div class="meta">Tue 6 Oct (Tue-10)</div>
+      <div class="lecture" id="L26">
+        <h3>L26</h3>
+        <div class="meta">Tue 6 Oct (Tue-10) &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L25. SAT &amp; SMT solvers</h3>
-        <div class="meta">Tue 6 Oct (Tue-10) &middot; Topic 5</div>
+        <h3>L26. Intra- vs inter-procedural analysis</h3>
+        <div class="meta">Tue 6 Oct (Tue-10) &middot; Topic 5 &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
+        <dl>
+          <dt>Follow</dt><dd>NNH &sect;2.5; RY ch. 9</dd>
+          <dt>Paper</dt><dd>Reps, Horwitz, Sagiv 1995 (IFDS).</dd>
+
+        </dl>
+        -->
+      </div>
+      <div class="lecture" id="L27">
+        <h3>L27</h3>
+        <div class="meta">Wed 7 Oct (Wed-10) &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L27. Context sensitivity (k-CFA, object sensitivity)</h3>
+        <div class="meta">Wed 7 Oct (Wed-10) &middot; Topic 5 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <dl>
+          <dt>Follow</dt><dd>Smaragdakis et al. 2011</dd>
+          <dt>Paper</dt><dd>Smaragdakis, Bravenboer, Lhot&aacute;k 2011.</dd>
+
+        </dl>
+        -->
+      </div>
+      <div class="lecture" id="L28">
+        <h3>L28</h3>
+        <div class="meta">Thu 8 Oct (Thu-10) &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
+        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L28. SAT &amp; SMT solvers</h3>
+        <div class="meta">Thu 8 Oct (Thu-10) &middot; Topic 5 &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
         <dl>
           <dt>Follow</dt><dd>Kroening, Strichman, <i>Decision Procedures</i>, ch. 1&ndash;6</dd>
           <dt>Paper</dt><dd>de Moura &amp; Bj&oslash;rner 2008 (Z3).</dd>
-          <dt>Outline</dt><dd>CDCL for SAT; theories (LIA, bit-vectors, arrays); DPLL(T); using Z3 from Python.</dd>
-        </dl>
-        -->
-      </div>
 
-      <div class="lecture" id="L26">
-        <h3>L26</h3>
-        <div class="meta">Wed 7 Oct (Wed-10)</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L26. Type rules &amp; type checking</h3>
-        <div class="meta">Wed 7 Oct (Wed-10) &middot; Topic 6</div>
-        <dl>
-          <dt>Follow</dt><dd>TAPL ch. 8&ndash;11</dd>
-          <dt>Paper</dt><dd>Cardelli 1997.</dd>
-          <dt>Outline</dt><dd>Judgments; typing rules for STLC; progress &amp; preservation preview.</dd>
-        </dl>
-        -->
-      </div>
-
-      <div class="lecture" id="L27">
-        <h3>L27</h3>
-        <div class="meta">Thu 8 Oct (Thu-10)</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L27. Type soundness</h3>
-        <div class="meta">Thu 8 Oct (Thu-10) &middot; Topic 6</div>
-        <dl>
-          <dt>Follow</dt><dd>TAPL ch. 8; Wright, Felleisen 1994</dd>
-          <dt>Paper</dt><dd>Wright, Felleisen. &ldquo;A Syntactic Approach to Type Soundness&rdquo;, <i>Information &amp; Computation</i> 1994.</dd>
-          <dt>Outline</dt><dd>Progress &amp; preservation; &ldquo;well-typed programs don't go wrong&rdquo;; small-step semantics.</dd>
         </dl>
         -->
       </div>
@@ -633,7 +613,7 @@
 
     <!-- ================== Week 11 ================== -->
     <section class="week-block" id="w11">
-      <header><!-- topic hidden until delivered: Week 11 &middot; Topic 6 &rarr; 7 (Type inference, path-sensitivity, SymExec starts) --><span>Week 11</span><span class="range">Oct 13 &ndash; 14 &middot; Industry Talk 2 on Thu Oct 15</span></header>
+      <header><!-- topic hidden until delivered: Week 11 &middot; Topic 6 &mdash; Type Systems --><span>Week 11</span><span class="range">Oct 13 &ndash; 14 &middot; Industry Talk 2 on Thu Oct 15</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
@@ -651,41 +631,39 @@
         -->
       </div>
 
-      <div class="lecture" id="L28">
-        <h3>L28</h3>
-        <div class="meta">Tue 13 Oct (Tue-11)</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L28. Type inference via constraint solving</h3>
-        <div class="meta">Tue 13 Oct (Tue-11) &middot; Topic 6</div>
-        <dl>
-          <dt>Follow</dt><dd>TAPL ch. 22; Odersky, Sulzmann, Wehr 1999</dd>
-          <dt>Paper</dt><dd>Damas &amp; Milner 1982 (algorithm W).</dd>
-          <dt>Outline</dt><dd>Unification; let-polymorphism; HM inference; constraint-based view.</dd>
-        </dl>
-        -->
-      </div>
-
       <div class="lecture" id="L29">
         <h3>L29</h3>
-        <div class="meta">Wed 14 Oct (Wed-11)</div>
+        <div class="meta">Tue 13 Oct (Tue-11) &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L29. Flow-, path-sensitive type analyses</h3>
-        <div class="meta">Wed 14 Oct (Wed-11) &middot; Topic 6</div>
+        <h3>L29. Type rules &amp; type checking</h3>
+        <div class="meta">Tue 13 Oct (Tue-11) &middot; Topic 6 &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
         <dl>
-          <dt>Follow</dt><dd>Foster, Terauchi, Aiken 2002; TAPL ch. 15&ndash;16</dd>
-          <dt>Paper</dt><dd>Foster, Terauchi, Aiken 2002 (CQual); modern &mdash; Hamza et al. OOPSLA 2025 (see recent list).</dd>
-          <dt>Outline</dt><dd>Flow-insensitive vs -sensitive; refinement types glimpse; path sensitivity trade-offs.</dd>
+          <dt>Follow</dt><dd>TAPL ch. 8&ndash;11</dd>
+          <dt>Paper</dt><dd>Cardelli 1997.</dd>
+
         </dl>
         -->
       </div>
+      <div class="lecture" id="L30">
+        <h3>L30</h3>
+        <div class="meta">Wed 14 Oct (Wed-11) &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L30. Type soundness</h3>
+        <div class="meta">Wed 14 Oct (Wed-11) &middot; Topic 6 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <dl>
+          <dt>Follow</dt><dd>TAPL ch. 8; Wright, Felleisen 1994</dd>
+          <dt>Paper</dt><dd>Wright, Felleisen. &ldquo;A Syntactic Approach to Type Soundness&rdquo;, <i>Information &amp; Computation</i> 1994.</dd>
 
+        </dl>
+        -->
+      </div>
     </section>
 
     <!-- ================== Week 12 ================== -->
     <section class="week-block" id="w12">
-      <header><!-- topic hidden until delivered: Week 12 &middot; Topic 7 &mdash; Symbolic Execution --><span>Week 12</span><span class="range">Oct 21 &ndash; 22</span></header>
+      <header><!-- topic hidden until delivered: Week 12 &middot; Topic 6 &mdash; Type Systems --><span>Week 12</span><span class="range">Oct 21 &ndash; 22</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
@@ -701,32 +679,31 @@
         -->
       </div>
 
-      <div class="lecture" id="L31">
-        <h3>L31</h3>
-        <div class="meta">Wed 21 Oct (Wed-12)</div>
+      <div class="lecture" id="L32">
+        <h3>L32</h3>
+        <div class="meta">Wed 21 Oct (Wed-12) &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L31. Symbolic values &amp; path conditions</h3>
-        <div class="meta">Wed 21 Oct (Wed-12) &middot; Topic 7</div>
+        <h3>L32. Type inference via constraint solving</h3>
+        <div class="meta">Wed 21 Oct (Wed-12) &middot; Topic 6 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
         <dl>
-          <dt>Follow</dt><dd>King 1976</dd>
-          <dt>Paper</dt><dd>King 1976.</dd>
-          <dt>Outline</dt><dd>Symbolic states; path condition accumulation; branching semantics.</dd>
+          <dt>Follow</dt><dd>TAPL ch. 22; Odersky, Sulzmann, Wehr 1999</dd>
+          <dt>Paper</dt><dd>Damas &amp; Milner 1982 (algorithm W).</dd>
+
         </dl>
         -->
       </div>
-
-      <div class="lecture" id="L32">
-        <h3>L32</h3>
-        <div class="meta">Thu 22 Oct (Thu-12)</div>
+      <div class="lecture" id="L33">
+        <h3>L33</h3>
+        <div class="meta">Thu 22 Oct (Thu-12) &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L32. Computation trees &amp; static symbolic execution</h3>
-        <div class="meta">Thu 22 Oct (Thu-12) &middot; Topic 7</div>
+        <h3>L33. Flow-, path-sensitive type analyses</h3>
+        <div class="meta">Thu 22 Oct (Thu-12) &middot; Topic 6 &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
         <dl>
-          <dt>Follow</dt><dd>Baldoni et al. 2018</dd>
-          <dt>Paper</dt><dd>Baldoni et al. 2018; Bailey &amp; Nicholas 2025 (see recent list).</dd>
-          <dt>Outline</dt><dd>Path explosion; heuristics; loops and unbounded structures; state merging.</dd>
+          <dt>Follow</dt><dd>Foster, Terauchi, Aiken 2002; TAPL ch. 15&ndash;16</dd>
+          <dt>Paper</dt><dd>Foster, Terauchi, Aiken 2002 (CQual); modern &mdash; Hamza et al. OOPSLA 2025 (see recent list).</dd>
+
         </dl>
         -->
       </div>
@@ -734,7 +711,7 @@
 
     <!-- ================== Week 13 ================== -->
     <section class="week-block" id="w13">
-      <header><!-- topic hidden until delivered: Week 13 &middot; Topics 7 &rarr; 8 (DSE, vulnerabilities, spec-guided gen) --><span>Week 13</span><span class="range">Oct 27 &ndash; 29</span></header>
+      <header><!-- topic hidden until delivered: Week 13 &middot; Topic 7 &mdash; Symbolic Execution --><span>Week 13</span><span class="range">Oct 27 &ndash; 29</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
@@ -754,47 +731,45 @@
         -->
       </div>
 
-      <div class="lecture" id="L33">
-        <h3>L33</h3>
-        <div class="meta">Tue 27 Oct (Tue-13)</div>
+      <div class="lecture" id="L34">
+        <h3>L34</h3>
+        <div class="meta">Tue 27 Oct (Tue-13) &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L33. Dynamic symbolic / concolic execution (DART, KLEE)</h3>
-        <div class="meta">Tue 27 Oct (Tue-13) &middot; Topic 7</div>
+        <h3>L34. Symbolic values &amp; path conditions</h3>
+        <div class="meta">Tue 27 Oct (Tue-13) &middot; Topic 7 &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
+        <dl>
+          <dt>Follow</dt><dd>King 1976</dd>
+          <dt>Paper</dt><dd>King 1976.</dd>
+
+        </dl>
+        -->
+      </div>
+      <div class="lecture" id="L35">
+        <h3>L35</h3>
+        <div class="meta">Wed 28 Oct (Wed-13) &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L35. Computation trees &amp; static symbolic execution</h3>
+        <div class="meta">Wed 28 Oct (Wed-13) &middot; Topic 7 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <dl>
+          <dt>Follow</dt><dd>Baldoni et al. 2018</dd>
+          <dt>Paper</dt><dd>Baldoni et al. 2018; Bailey &amp; Nicholas 2025 (see recent list).</dd>
+
+        </dl>
+        -->
+      </div>
+      <div class="lecture" id="L36">
+        <h3>L36</h3>
+        <div class="meta">Thu 29 Oct (Thu-13) &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
+        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L36. Dynamic symbolic / concolic execution (DART, KLEE)</h3>
+        <div class="meta">Thu 29 Oct (Thu-13) &middot; Topic 7 &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
         <dl>
           <dt>Follow</dt><dd>Godefroid, Klarlund, Sen 2005; Cadar, Dunbar, Engler 2008</dd>
           <dt>Paper</dt><dd>DART; KLEE.</dd>
-          <dt>Outline</dt><dd>Concolic execution loop; concrete&ndash;symbolic interplay; KLEE architecture.</dd>
-        </dl>
-        -->
-      </div>
 
-      <div class="lecture" id="L34">
-        <h3>L34</h3>
-        <div class="meta">Wed 28 Oct (Wed-13)</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L34. SymExec for vulnerability detection</h3>
-        <div class="meta">Wed 28 Oct (Wed-13) &middot; Topic 7</div>
-        <dl>
-          <dt>Follow</dt><dd>Cha et al. 2012 (Mayhem)</dd>
-          <dt>Paper</dt><dd>Mayhem; Shoshitaishvili et al. &ldquo;SOK: (State of) The Art of War: Offensive Techniques in Binary Analysis&rdquo; (angr), IEEE S&amp;P 2016; modern &mdash; Li, Meng, Duck OOPSLA 2025 (see recent list).</dd>
-          <dt>Outline</dt><dd>Exploit generation; symbolic memory; binary-level analysis.</dd>
-        </dl>
-        -->
-      </div>
-
-      <div class="lecture" id="L35">
-        <h3>L35</h3>
-        <div class="meta">Thu 29 Oct (Thu-13)</div>
-        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L35. Specification-guided test generation</h3>
-        <div class="meta">Thu 29 Oct (Thu-13) &middot; Topic 8</div>
-        <dl>
-          <dt>Follow</dt><dd>Boyapati, Khurshid, Marinov 2002 (Korat); Fraser, Arcuri, &ldquo;EvoSuite&rdquo;, FSE 2011</dd>
-          <dt>Paper</dt><dd>Korat.</dd>
-          <dt>Outline</dt><dd>Bounded exhaustive testing; using preconditions/invariants as generators.</dd>
         </dl>
         -->
       </div>
@@ -802,10 +777,10 @@
 
     <!-- ================== Week 14 ================== -->
     <section class="week-block" id="w14">
-      <header><!-- topic hidden until delivered: Week 14 &middot; Topics 8 &rarr; 9 (Random / systematic / LLM-guided) --><span>Week 14</span><span class="range">Nov 4 &middot; Industry Talk 3 on Tue Nov 3 &middot; Quiz 2 on Thu Nov 5</span></header>
+      <header><!-- topic hidden until delivered: Week 14 &middot; Topics 7 &rarr; 8 (SymExec for vulns; test generation) --><span>Week 14</span><span class="range">Nov 4 &ndash; 5 &middot; Industry Talk 3 on Tue Nov 3 &middot; Quiz 2 on Thu Nov 5</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
-        <p style="margin:8px 0 0;color:var(--deadline);"><b><a href="#Q2">Quiz 2</a></b> on <b>Thu 5 Nov, 2:00 PM</b> &mdash; covers Topics 4&ndash;8.</p>
+        <p style="margin:8px 0 0;color:var(--deadline);"><b><a href="#Q2">Quiz 2</a></b> on <b>Thu 5 Nov, 6:30 PM</b> &mdash; covers Topics 4&ndash;8. The afternoon slot that day is a regular lecture.</p>
         <!-- READINGS (uncomment at start of the week)
 
         <b>Weekly readings (classical).</b>
@@ -824,24 +799,37 @@
         -->
       </div>
 
-      <div class="lecture" id="L37">
-        <h3>L37</h3>
+      <div class="lecture" id="L38">
+        <h3>L38</h3>
         <div class="meta">Wed 4 Nov (Wed-14) &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L37. Random &amp; systematic test generation</h3>
-        <div class="meta">Wed 4 Nov (Wed-14) &middot; Topic 8 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
+        <h3>L38. SymExec for vulnerability detection</h3>
+        <div class="meta">Wed 4 Nov (Wed-14) &middot; Topic 7 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
         <dl>
-          <dt>Follow</dt><dd>Claessen &amp; Hughes 2000; Pacheco, Lahiri, Ernst, Ball 2007; Fraser &amp; Arcuri 2011</dd>
-          <dt>Paper</dt><dd>QuickCheck (ICFP 2000); Randoop (ICSE 2007); EvoSuite (FSE 2011); modern &mdash; Abdullin, Derakhshanfar, Panichella 2025 (see recent list).</dd>
-          <dt>Outline</dt><dd>Property-based testing with generators &amp; shrinking; feedback-directed random generation; search-based (genetic) test generation; regression oracles.</dd>
+          <dt>Follow</dt><dd>Cha et al. 2012 (Mayhem)</dd>
+          <dt>Paper</dt><dd>Mayhem; Shoshitaishvili et al. &ldquo;SOK: (State of) The Art of War: Offensive Techniques in Binary Analysis&rdquo; (angr), IEEE S&amp;P 2016; modern &mdash; Li, Meng, Duck OOPSLA 2025 (see recent list).</dd>
+
         </dl>
         -->
       </div>
+      <div class="lecture" id="L39">
+        <h3>L39</h3>
+        <div class="meta">Thu 5 Nov (Thu-14) &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
+        <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
+        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L39. Specification-guided test generation</h3>
+        <div class="meta">Thu 5 Nov (Thu-14) &middot; Topic 8 &middot; Room 5G4, 2:00&ndash;2:55 PM</div>
+        <dl>
+          <dt>Follow</dt><dd>Boyapati, Khurshid, Marinov 2002 (Korat); Fraser, Arcuri, &ldquo;EvoSuite&rdquo;, FSE 2011</dd>
+          <dt>Paper</dt><dd>Korat.</dd>
 
+        </dl>
+        -->
+      </div>
       <div class="lecture" id="Q2">
         <h3>Quiz 2</h3>
-        <div class="meta">Thu 5 Nov 2026 &middot; 2:00&ndash;2:55 PM &middot; Room 5G4 &middot; Thursday slot</div>
+        <div class="meta">Thu 5 Nov 2026 &middot; 6:30 PM &middot; Room 5G4 &middot; evening slot</div>
         <dl>
           <dt>Covers</dt><dd>Topics 4&ndash;8 (Pointer, Constraint-based, Types, SymExec, Test generation) &mdash; definitions, algorithms, worked examples; closed book.</dd>
         </dl>
@@ -850,7 +838,7 @@
 
     <!-- ================== Week 15 ================== -->
     <section class="week-block" id="w15">
-      <header><!-- topic hidden until delivered: Week 15 &middot; Topic 9 &mdash; LLM-Assisted Analysis --><span>Week 15</span><span class="range">Nov 10 &amp; 11</span></header>
+      <header><!-- topic hidden until delivered: Week 15 &middot; Topics 8 &rarr; 9 (Test generation; LLM-assisted) --><span>Week 15</span><span class="range">Nov 10 &amp; 11</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
@@ -871,33 +859,35 @@
         -->
       </div>
 
-      <div class="lecture" id="L38">
-        <h3>L38</h3>
-        <div class="meta">Tue 10 Nov (Tue-15)</div>
+      <div class="lecture" id="L40">
+        <h3>L40</h3>
+        <div class="meta">Tue 10 Nov (Tue-15) &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L38. LLM-guided test generation</h3>
-        <div class="meta">Tue 10 Nov (Tue-15) &middot; Topic 9</div>
+        <h3>L40. Random &amp; systematic test generation</h3>
+        <div class="meta">Tue 10 Nov (Tue-15) &middot; Topic 8 &middot; Room 5G4, 4:00&ndash;4:55 PM</div>
         <dl>
-          <dt>Follow</dt><dd>Deng et al. 2023; Xia et al. 2024</dd>
-          <dt>Paper</dt><dd>Deng, Xia, Peng, Yang, Zhang 2023 (Zero-Shot Fuzzers); Fuzz4All ICSE 2024; Gu, Nashid, Mesbah 2025 (see recent list).</dd>
-          <dt>Outline</dt><dd>Prompting for input generation; feedback loops with coverage; universal fuzzer design.</dd>
+          <dt>Follow</dt><dd>Claessen &amp; Hughes 2000; Pacheco, Lahiri, Ernst, Ball 2007; Fraser &amp; Arcuri 2011</dd>
+          <dt>Paper</dt><dd>QuickCheck (ICFP 2000); Randoop (ICSE 2007); EvoSuite (FSE 2011); modern &mdash; Abdullin, Derakhshanfar, Panichella 2025 (see recent list).</dd>
+
         </dl>
         -->
       </div>
-
-      <div class="lecture" id="L39">
-        <h3>L39</h3>
-        <div class="meta">Wed 11 Nov (Wed-15) &middot; Last teaching day</div>
+      <div class="lecture" id="L41">
+        <h3>L41</h3>
+        <div class="meta">Wed 11 Nov (Wed-15) &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
         <div class="notes-slot">Title, topic and materials posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
-        <h3>L39. LLM-based vulnerability discovery; LLM + static/dynamic integration &amp; course wrap-up</h3>
-        <div class="meta">Wed 11 Nov (Wed-15) &middot; Topic 9 &middot; Last teaching day</div>
+        <h3>L41. LLM-guided test generation; LLM-based vulnerability discovery; LLM + static/dynamic integration &amp; course wrap-up (combined session)</h3>
+        <div class="meta">Wed 11 Nov (Wed-15) &middot; Topic 9 &middot; Room 5G4, 3:00&ndash;3:55 PM</div>
         <dl>
+          <dt>Follow</dt><dd>Deng et al. 2023; Xia et al. 2024</dd>
+          <dt>Paper</dt><dd>Deng, Xia, Peng, Yang, Zhang 2023 (Zero-Shot Fuzzers); Fuzz4All ICSE 2024; Gu, Nashid, Mesbah 2025 (see recent list).</dd>
           <dt>Follow</dt><dd>Meng, Mirchev, B&ouml;hme, Roychoudhury (NDSS 2024); Google Project Zero &ldquo;Naptime&rdquo; / &ldquo;Big Sleep&rdquo; technical reports; Li, Hao, Zhai, Qian OOPSLA 2024 (LLift); Fan et al. &ldquo;LLMs for Software Engineering: Survey and Open Problems&rdquo;, ICSE FoSE 2023</dd>
           <dt>Paper</dt><dd>Meng et al. NDSS 2024; Huang, Wang, Zhou arXiv 2508.01750; Li, Hao, Zhai, Qian OOPSLA 2024; Li, Zhou, Sridharan, Zhang, Qian arXiv 2606.15122 (see recent list).</dd>
-          <dt>Outline</dt><dd>LLMs as bug oracles; agentic vuln discovery; grounding LLMs with static tooling; case studies; coupling LLMs with SMT/fuzzers/analyzers; open problems; end-of-course summary; project pitches.</dd>
           <dt>Note</dt><dd>Merged into the last teaching session; the student project presentations are on Thu 12 Nov.</dd>
+
+          <dt>Note</dt><dd>Two lectures combined into the final session.</dd>
         </dl>
         -->
       </div>
@@ -914,8 +904,8 @@
         &amp; topics will be filled in as they confirm;
       </div>
 
-      <div class="lecture" id="L19">
-        <h3>L19. Industry Talk 1</h3>
+      <div class="lecture" id="L20">
+        <h3>L20. Industry Talk 1</h3>
         <div class="meta">Tue 22 Sep 2026 &middot; 4:00&ndash;4:55 PM &middot; Room 5G4 &middot;</div>
         <dl>
           <dt>Speaker</dt><dd class="notes-slot">TBA</dd>
@@ -923,8 +913,8 @@
         </dl>
       </div>
 
-      <div class="lecture" id="L30">
-        <h3>L30. Industry Talk 2</h3>
+      <div class="lecture" id="L31">
+        <h3>L31. Industry Talk 2</h3>
         <div class="meta">Thu 15 Oct 2026 &middot; 2:00&ndash;2:55 PM &middot; Room 5G4 &middot;</div>
         <dl>
           <dt>Speaker</dt><dd class="notes-slot">TBA</dd>
@@ -932,8 +922,8 @@
         </dl>
       </div>
 
-      <div class="lecture" id="L36">
-        <h3>L36. Industry Talk 3</h3>
+      <div class="lecture" id="L37">
+        <h3>L37. Industry Talk 3</h3>
         <div class="meta">Tue 3 Nov 2026 &middot; 4:00&ndash;4:55 PM &middot; Room 5G4 &middot;</div>
         <dl>
           <dt>Speaker</dt><dd class="notes-slot">TBA</dd>
