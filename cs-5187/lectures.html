@@ -363,7 +363,7 @@
 
     <!-- ================== Week 7 ================== -->
     <section class="week-block" id="w7">
-      <header><span>Week 7 &middot; Topic 2 &rarr; 3 &mdash; Concurrency; dataflow starts</span><span class="range">Sep 8 &ndash; 10 &middot; Quiz 1 Thu 6:30 PM</span></header>
+      <header><span>Week 7 &middot; Topic 3 &mdash; Data-flow analysis starts</span><span class="range">Sep 8 &ndash; 10 &middot; Quiz 1 Thu 6:30 PM</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <p style="margin:8px 0 0;color:var(--deadline);"><b><a href="#Q1">Quiz 1</a></b> on <b>Thu 10 Sep, 6:30 PM</b> &mdash; covers Topics 1&ndash;3. The afternoon slot that day is a regular lecture.</p>
@@ -384,35 +384,31 @@
       </div>
 
       <div class="lecture" id="L17">
-        <h3>L17. Concurrency testing: data races, happens-before &amp; systematic exploration</h3>
-        <div class="meta">Tue 8 Sep (Tue-7) &middot; Topic 2</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
+        <h3>L17. Data-flow analysis: CFGs, reaching definitions, lattices &amp; fixed points</h3>
+        <div class="meta">Tue 8 Sep (Tue-7) &middot; Topic 3</div>
         <dl>
-          <dt>Follow</dt><dd>FB &ldquo;Concurrency Fuzzing&rdquo;; <a href="https://clang.llvm.org/docs/ThreadSanitizer.html">ThreadSanitizer</a> docs; <a href="https://docs.kernel.org/dev-tools/kcsan.html">KCSAN</a></dd>
-          <dt>Paper</dt><dd>Musuvathi, Qadeer, &ldquo;Iterative Context Bounding for Systematic Testing of Multithreaded Programs&rdquo;, PLDI 2007; Sen, &ldquo;Race-directed Random Testing of Concurrent Programs&rdquo; (CalFuzzer), PLDI 2008. Modern: Dac&iacute;k &amp; Vojnar, &ldquo;RacerF&rdquo;, arXiv 2502.04905 (2025).</dd>
+          <dt>Slides</dt><dd><a href="slides/L17.pdf">L17 &mdash; Data-flow analysis (PDF)</a></dd>
+          <dt>Follow</dt><dd>NNH &sect;2.1 &amp; ch. 4; Aho &sect;9.2&ndash;9.3; Naik, &ldquo;Data-Flow Analysis&rdquo;, CIS 5470 (Penn)</dd>
+          <dt>Paper</dt><dd>Kildall, &ldquo;A Unified Approach to Global Program Optimization&rdquo;, POPL 1973; Cousot &amp; Cousot, &ldquo;Abstract Interpretation&rdquo;, POPL 1977.</dd>
         </dl>
-        -->
       </div>
       <div class="lecture" id="L18">
-        <h3>L18. Dataflow analysis: lattices, fixed points &amp; the monotone framework</h3>
+        <h3>L18. Data-flow analysis: very busy &amp; available expressions, live variables</h3>
         <div class="meta">Wed 9 Sep (Wed-7) &middot; Topic 3</div>
-        <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
-        <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>NNH ch. 4 &amp; &sect;2.4; M&amp;S ch. 4; Aho &sect;9.2&ndash;9.3</dd>
-          <dt>Paper</dt><dd>Cousot &amp; Cousot, &ldquo;Abstract Interpretation&rdquo;, POPL 1977; Kildall, &ldquo;A Unified Approach to Global Program Optimization&rdquo;, POPL 1973.</dd>
+          <dt>Slides</dt><dd><a href="slides/L18.pdf">L18 &mdash; Very busy, available &amp; live (PDF)</a></dd>
+          <dt>Follow</dt><dd>NNH &sect;2.1.3&ndash;2.1.5; Aho &sect;9.2 &amp; &sect;9.4; M&amp;S ch. 4</dd>
+          <dt>Paper</dt><dd>Cocke, &ldquo;Global Common Subexpression Elimination&rdquo;, SIGPLAN Notices 1970; Kildall, &ldquo;A Unified Approach to Global Program Optimization&rdquo;, POPL 1973.</dd>
         </dl>
-        -->
       </div>
       <div class="lecture" id="L19">
-        <h3>L19. Reaching definitions</h3>
+        <h3>L19. Interval analysis, widening &amp; abstract interpretation</h3>
         <div class="meta">Thu 10 Sep (Thu-7) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.2; Aho &sect;9.2</dd>
-          <dt>Paper</dt><dd>Kildall 1973 (canonical example).</dd>
+          <dt>Follow</dt><dd>NNH &sect;4.3 &amp; ch. 4; RY ch. 8; Cousot &amp; Cousot 1976</dd>
+          <dt>Paper</dt><dd>Cousot &amp; Cousot, &ldquo;Static Determination of Dynamic Properties of Programs&rdquo;, ISOP 1976; Cousot &amp; Cousot, &ldquo;Abstract Interpretation Frameworks&rdquo;, JLC 1992; Min&eacute;, &ldquo;The Octagon Abstract Domain&rdquo;, HOSC 2006.</dd>
         </dl>
         -->
       </div>
@@ -436,7 +432,7 @@
 
     <!-- ================== Week 8 ================== -->
     <section class="week-block" id="w8">
-      <header><!-- topic hidden until delivered: Week 8 &middot; Topic 3 &mdash; Classical dataflow continues --><span>Week 8</span><span class="range">Sep 22 &ndash; 24</span></header>
+      <header><!-- topic hidden until delivered: Week 8 &middot; Topic 3 &mdash; Type-state &amp; taint analysis --><span>Week 8</span><span class="range">Sep 22 &ndash; 24</span></header>
       <div class="week-readings">
         <span class="notes-slot">Readings for this week will be posted when the week begins.</span>
         <!-- READINGS (uncomment at start of the week)
@@ -458,24 +454,24 @@
       </div>
 
       <div class="lecture" id="L21">
-        <h3>L21. Available expressions &amp; very busy expressions</h3>
+        <h3>L21. Type-state analysis</h3>
         <div class="meta">Wed 23 Sep (Wed-8) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.3 &amp; &sect;2.1.4; Aho &sect;9.2.6</dd>
-          <dt>Paper</dt><dd>Cocke, &ldquo;Global Common Subexpression Elimination&rdquo;, SIGPLAN Notices 1970.</dd>
+          <dt>Follow</dt><dd>Naik, &ldquo;Type-State Analysis&rdquo;, CIS 5470 (Penn); <a href="https://checkerframework.org/manual/">The Checker Framework manual</a></dd>
+          <dt>Paper</dt><dd>Strom, Yemini, &ldquo;Typestate: A Programming Language Concept for Enhancing Software Reliability&rdquo;, TSE 1986; Fink et al., &ldquo;Effective Typestate Verification in the Presence of Aliasing&rdquo;, ISSTA 2006.</dd>
         </dl>
         -->
       </div>
       <div class="lecture" id="L22">
-        <h3>L22. Live variables &amp; DCE; interval analysis, widening &amp; abstract interpretation</h3>
+        <h3>L22. Taint analysis</h3>
         <div class="meta">Thu 24 Sep (Thu-8) &middot; Topic 3</div>
         <div class="notes-slot">Slides, readings and outline posted when this lecture is delivered.</div>
         <!-- LECTURE DETAIL (uncomment after delivering this lecture)
         <dl>
-          <dt>Follow</dt><dd>NNH &sect;2.1.5, &sect;4.3 &amp; ch. 4; Aho &sect;9.2.5; RY ch. 8; Cousot &amp; Cousot 1976</dd>
-          <dt>Paper</dt><dd>Cousot &amp; Cousot 1976; Cousot &amp; Cousot, &ldquo;Abstract Interpretation Frameworks&rdquo;, JLC 1992; Min&eacute;, &ldquo;The Octagon Abstract Domain&rdquo;, HOSC 2006.</dd>
+          <dt>Follow</dt><dd>Naik, &ldquo;Taint Analysis&rdquo;, CIS 5470 (Penn); Schwartz, Avgerinos, Brumley, &ldquo;All You Ever Wanted to Know about Dynamic Taint Analysis&rdquo;, S&amp;P 2010</dd>
+          <dt>Paper</dt><dd>Newsome, Song, &ldquo;Dynamic Taint Analysis&rdquo;, NDSS 2005; Arzt et al., &ldquo;FlowDroid&rdquo;, PLDI 2014.</dd>
         </dl>
         -->
       </div>
