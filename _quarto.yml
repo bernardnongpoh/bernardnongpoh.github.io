@@ -4,6 +4,7 @@ project:
   resources:
     - "static/**"
     - "cs-5187/**"
+    - "web-security/**"
 
 website:
   title: "Bernard Nongpoh"
