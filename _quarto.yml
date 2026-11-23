@@ -16,6 +16,8 @@ website:
         text: Publications
       - href: teaching.qmd
         text: Teaching
+      - href: training.qmd
+        text: Training & Workshops
       - href: students.qmd
         text: Students
       - href: posts/index.qmd

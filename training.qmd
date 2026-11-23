@@ -1,0 +1,17 @@
+---
+title: "Training & Workshops"
+---
+
+Hands-on training programmes and workshops, separate from my regular semester courses.
+
+## Security
+
+### [Web Application Security](web-security/index.html)
+
+Invited sessions in the **Training of Trainers Program on Cybersecurity** under PM-SETU, conducted by E&ICT Academy, IIT Guwahati.
+
+- **Session date:** 20 November 2026, 10:00 am – 5:00 pm
+- **Program dates:** 15–25 November 2026
+- **Venue:** E&ICT Academy IIT Guwahati Skilling and Computing Facility, Technology Complex
+
+Topics: web application architecture, OWASP Top 10 vulnerabilities, SQL injection, cross-site scripting (XSS), authentication vulnerabilities, session hijacking, and secure coding practices. [Session slides and student worksheets](web-security/index.html) are available.
