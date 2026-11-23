@@ -1,0 +1,31 @@
+---
+title: "Web Application Security: PM-SETU Training of Trainers"
+date: "2026-11-20"
+categories: [Training, Web Security, Cybersecurity]
+description: "A one-day, CTF-style session on web application security in the Training of Trainers Program on Cybersecurity at E&ICT Academy, IIT Guwahati, with slides and student worksheets."
+---
+
+On 20 November 2026, I delivered a one-day, hands-on session on Web Application Security in the **Training of Trainers Program on Cybersecurity** under the Government of India's PM-SETU initiative. E&ICT Academy, IIT Guwahati conducted the program from 15 to 25 November 2026 at its Skilling and Computing Facility in the Technology Complex.
+
+We ran the session in a CTF style, with participants working through web security challenges. They were enthusiastic and active throughout, and the top scorers earned chocolate rewards. My thanks to E&ICT Academy and to all the participants.
+
+I also shared this [on LinkedIn](https://www.linkedin.com/posts/bernard-nongpoh_had-a-great-time-delivering-a-one-day-hands-on-ugcPost-7529809176999694336-_RcS/).
+
+## What the day covered
+
+**Morning, 10:00 am to 1:00 pm**
+
+- Web application architecture
+- OWASP Top 10 vulnerabilities
+- SQL injection
+- Cross-site scripting (XSS)
+- Authentication vulnerabilities
+
+**Afternoon, 2:00 pm to 5:00 pm**
+
+- Session hijacking
+- Secure coding practices
+
+## Slides and worksheets
+
+The slides and student worksheets for all seven sessions are on the [Web Security page](../web-security/index.html).

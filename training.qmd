@@ -14,4 +14,4 @@ Invited sessions in the **Training of Trainers Program on Cybersecurity** under 
 - **Program dates:** 15–25 November 2026
 - **Venue:** E&ICT Academy IIT Guwahati Skilling and Computing Facility, Technology Complex
 
-Topics: web application architecture, OWASP Top 10 vulnerabilities, SQL injection, cross-site scripting (XSS), authentication vulnerabilities, session hijacking, and secure coding practices. [Session slides and student worksheets](web-security/index.html) are available.
+Topics: web application architecture, OWASP Top 10 vulnerabilities, SQL injection, cross-site scripting (XSS), authentication vulnerabilities, session hijacking, and secure coding practices. [Session slides and student worksheets](web-security/index.html) are available, and you can read about the session in the [blog post](posts/web-security-training.qmd) or on [LinkedIn](https://www.linkedin.com/posts/bernard-nongpoh_had-a-great-time-delivering-a-one-day-hands-on-ugcPost-7529809176999694336-_RcS/).

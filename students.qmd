@@ -13,6 +13,20 @@ I work with students at IIT Guwahati on systems, security, and program analysis.
 
 Working on techniques to automatically discover vulnerabilities in USB device drivers.
 
+### Ayush Sharma
+
+- **Programme:** B.Tech (CSE)
+- **Project:** Solidity Compiler Fuzzing (B.Tech Project)
+
+### Sayan Mandal
+
+- **Programme:** B.Tech (CSE)
+- **Project:** Solidity Compiler Fuzzing (B.Tech Project)
+
+### Kavya Choudhary
+
+- **Project:** An Agent-Driven Static Analysis Platform
+
 ## Incoming Interns
 
 ### Bornov Shyam Kalita

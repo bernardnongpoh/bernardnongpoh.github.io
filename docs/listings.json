@@ -3,6 +3,7 @@
     "listing": "/posts/index.html",
     "items": [
       "/posts/cs5187-bug-finding.html",
+      "/posts/web-security-training.html",
       "/posts/callgraph-bornov.html",
       "/posts/llvm.html",
       "/posts/riscv.html",

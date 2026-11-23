@@ -11,7 +11,7 @@
     "href": "training.html#security",
     "title": "Training & Workshops",
     "section": "Security",
-    "text": "Security\n\nWeb Application Security\nInvited sessions in the Training of Trainers Program on Cybersecurity under PM-SETU, conducted by E&ICT Academy, IIT Guwahati.\n\nSession date: 20 November 2026, 10:00 am – 5:00 pm\nProgram dates: 15–25 November 2026\nVenue: E&ICT Academy IIT Guwahati Skilling and Computing Facility, Technology Complex\n\nTopics: web application architecture, OWASP Top 10 vulnerabilities, SQL injection, cross-site scripting (XSS), authentication vulnerabilities, session hijacking, and secure coding practices. Session slides and student worksheets are available."
+    "text": "Security\n\nWeb Application Security\nInvited sessions in the Training of Trainers Program on Cybersecurity under PM-SETU, conducted by E&ICT Academy, IIT Guwahati.\n\nSession date: 20 November 2026, 10:00 am – 5:00 pm\nProgram dates: 15–25 November 2026\nVenue: E&ICT Academy IIT Guwahati Skilling and Computing Facility, Technology Complex\n\nTopics: web application architecture, OWASP Top 10 vulnerabilities, SQL injection, cross-site scripting (XSS), authentication vulnerabilities, session hijacking, and secure coding practices. Session slides and student worksheets are available, and you can read about the session in the blog post or on LinkedIn."
   },
   {
     "objectID": "students.html",
@@ -25,7 +25,7 @@
     "href": "students.html#current-students",
     "title": "Students",
     "section": "Current Students",
-    "text": "Current Students\n\nRohit Patil\n\nProgramme: M.Tech (CSE), 2026 Batch\nProject: USB Driver Fuzzing\n\nWorking on techniques to automatically discover vulnerabilities in USB device drivers."
+    "text": "Current Students\n\nRohit Patil\n\nProgramme: M.Tech (CSE), 2026 Batch\nProject: USB Driver Fuzzing\n\nWorking on techniques to automatically discover vulnerabilities in USB device drivers.\n\n\nAyush Sharma\n\nProgramme: B.Tech (CSE)\nProject: Solidity Compiler Fuzzing (B.Tech Project)\n\n\n\nSayan Mandal\n\nProgramme: B.Tech (CSE)\nProject: Solidity Compiler Fuzzing (B.Tech Project)\n\n\n\nKavya Choudhary\n\nProject: An Agent-Driven Static Analysis Platform"
   },
   {
     "objectID": "students.html#incoming-interns",
@@ -256,7 +256,7 @@
     "href": "posts/index.html",
     "title": "Writeups",
     "section": "",
-    "text": "Notes and short posts, mostly about tooling and systems.\n\n\n\n\n\n\n\n\n\n146 Bugs in Real Software: What My CS 5187 Students Found\n\n\n\nTeaching\n\nSoftware Testing\n\nFuzzing\n\n\n\nStudent teams in CS 5187 at IIT Guwahati tested more than 20 widely used open-source projects and reported 146 bugs upstream. 56 are already fixed.\n\n\n\n\n\nNov 21, 2026\n\n\n\n\n\n\n\nWhat FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)\n\n\n\nStatic Analysis\n\nLLVM\n\nPhASAR\n\n\n\nEmpirically comparing CHA, RTA, and OTF call-graph construction on FFmpeg with PhASAR, and the toolchain issues met along the way.\n\n\n\n\n\nJul 24, 2026\n\n\n\n\n\n\n\nInstalling LLVM Compiler Infrastructure\n\n\n\nLLVM\n\n\n\nSteps for installing the LLVM Compiler Infrastructure from source, including common build errors.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nInstalling & Building RISC-V Toolchain\n\n\n\nRISC-V\n\n\n\nA walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nComputer Architecture Summer School (CASS) 2018, IIT Kanpur\n\n\n\nSummer School\n\n\n\nMy experience attending the first Computer Architecture Summer School at IIT Kanpur.\n\n\n\n\n\nAug 19, 2018\n\n\n\n\n\nNo matching items"
+    "text": "Notes and short posts, mostly about tooling and systems.\n\n\n\n\n\n\n\n\n\n146 Bugs in Real Software: What My CS 5187 Students Found\n\n\n\nTeaching\n\nSoftware Testing\n\nFuzzing\n\n\n\nStudent teams in CS 5187 at IIT Guwahati tested more than 20 widely used open-source projects and reported 146 bugs upstream. 56 are already fixed.\n\n\n\n\n\nNov 21, 2026\n\n\n\n\n\n\n\nWeb Application Security: PM-SETU Training of Trainers\n\n\n\nTraining\n\nWeb Security\n\nCybersecurity\n\n\n\nA one-day, CTF-style session on web application security in the Training of Trainers Program on Cybersecurity at E&ICT Academy, IIT Guwahati, with slides and student worksheets.\n\n\n\n\n\nNov 20, 2026\n\n\n\n\n\n\n\nWhat FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)\n\n\n\nStatic Analysis\n\nLLVM\n\nPhASAR\n\n\n\nEmpirically comparing CHA, RTA, and OTF call-graph construction on FFmpeg with PhASAR, and the toolchain issues met along the way.\n\n\n\n\n\nJul 24, 2026\n\n\n\n\n\n\n\nInstalling LLVM Compiler Infrastructure\n\n\n\nLLVM\n\n\n\nSteps for installing the LLVM Compiler Infrastructure from source, including common build errors.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nInstalling & Building RISC-V Toolchain\n\n\n\nRISC-V\n\n\n\nA walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nComputer Architecture Summer School (CASS) 2018, IIT Kanpur\n\n\n\nSummer School\n\n\n\nMy experience attending the first Computer Architecture Summer School at IIT Kanpur.\n\n\n\n\n\nAug 19, 2018\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "talks.html",
@@ -355,5 +355,26 @@
     "title": "Publications",
     "section": "Posters",
     "text": "Posters\n\nEnhancing Speculative Execution with Selective Approximate Computing.\nB. Nongpoh, R. Ray, Moumita Das, A. Banerjee.\nWorkshop on Program Analysis, Software Engineering and Formal Methods, 6 November 2017, Department of CSE, NIT Meghalaya.\nPoster"
+  },
+  {
+    "objectID": "posts/web-security-training.html",
+    "href": "posts/web-security-training.html",
+    "title": "Web Application Security: PM-SETU Training of Trainers",
+    "section": "",
+    "text": "On 20 November 2026, I delivered a one-day, hands-on session on Web Application Security in the Training of Trainers Program on Cybersecurity under the Government of India’s PM-SETU initiative. E&ICT Academy, IIT Guwahati conducted the program from 15 to 25 November 2026 at its Skilling and Computing Facility in the Technology Complex.\nWe ran the session in a CTF style, with participants working through web security challenges. They were enthusiastic and active throughout, and the top scorers earned chocolate rewards. My thanks to E&ICT Academy and to all the participants.\nI also shared this on LinkedIn."
+  },
+  {
+    "objectID": "posts/web-security-training.html#what-the-day-covered",
+    "href": "posts/web-security-training.html#what-the-day-covered",
+    "title": "Web Application Security: PM-SETU Training of Trainers",
+    "section": "What the day covered",
+    "text": "What the day covered\nMorning, 10:00 am to 1:00 pm\n\nWeb application architecture\nOWASP Top 10 vulnerabilities\nSQL injection\nCross-site scripting (XSS)\nAuthentication vulnerabilities\n\nAfternoon, 2:00 pm to 5:00 pm\n\nSession hijacking\nSecure coding practices"
+  },
+  {
+    "objectID": "posts/web-security-training.html#slides-and-worksheets",
+    "href": "posts/web-security-training.html#slides-and-worksheets",
+    "title": "Web Application Security: PM-SETU Training of Trainers",
+    "section": "Slides and worksheets",
+    "text": "Slides and worksheets\nThe slides and student worksheets for all seven sessions are on the Web Security page."
   }
 ]
