@@ -1,0 +1,246 @@
+---
+title: "146 Bugs in Real Software: What My CS 5187 Students Found"
+date: "2026-11-21"
+date-modified: "2026-11-23"
+categories: [Teaching, Software Testing, Fuzzing]
+description: "Student teams in CS 5187 at IIT Guwahati tested more than 20 widely used open-source projects and reported 146 bugs upstream. 56 are already fixed."
+---
+
+```{=html}
+<style>
+.ir{--ink:#16181a;--mute:#4b5054;--faint:#80858a;--rule:#e5e2d9;--rule2:#cbc7bb;--accent:#b64a1d;--accent-soft:#f3e0d4;--ok:#2f6b3c;--ok-soft:#dcecd8;--warn:#94690a;--warn-soft:#f4e8c8;font-variant-numeric:tabular-nums;margin:1.2rem 0 1.6rem}
+.ir .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.ir .tile{border:1px solid var(--rule);padding:12px 14px}
+.ir .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0 0 6px}
+.ir .num{font-size:30px;font-weight:600;line-height:1}
+.ir .sub{font-size:12px;color:var(--mute);margin-top:6px}
+.ir .hi .num{color:var(--ok)}
+.ir .bars{border:1px solid var(--rule);padding:16px 18px;display:grid;gap:8px}
+.ir .brow{display:grid;grid-template-columns:150px 1fr 60px;gap:12px;align-items:center}
+.ir .brow .n{font-size:13px}
+.ir .track{height:16px;background:var(--rule);position:relative}
+.ir .rep{position:absolute;inset:0 auto 0 0;background:var(--accent-soft)}
+.ir .fix{position:absolute;inset:0 auto 0 0;background:var(--ok)}
+.ir .v{font-size:13px;font-weight:600;text-align:right;white-space:nowrap}
+.ir .v span{color:var(--faint);font-weight:400}
+.ir .legend{display:flex;gap:16px;font-size:12px;color:var(--mute);margin-top:8px}
+.ir .legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.ir .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.ir .kind{border:1px solid var(--rule);padding:12px 14px}
+.ir .pct{font-size:26px;font-weight:600;line-height:1;color:var(--accent)}
+.ir .t{font-weight:600;margin:6px 0 2px}
+.ir .d{font-size:13.5px;color:var(--mute)}
+.ir .hl{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.ir .card{border:1px solid var(--rule);border-left:3px solid var(--accent);padding:12px 14px}
+.ir .p{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.ir .h{font-weight:600;font-size:16px;margin-bottom:4px}
+.ir .tablewrap{border:1px solid var(--rule);overflow-x:auto}
+.ir table{width:100%;border-collapse:collapse;min-width:600px;font-size:13.5px;margin:0}
+.ir th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:10px 12px;border-bottom:1px solid var(--rule2)}
+.ir td{padding:10px 12px;border-top:1px solid var(--rule);vertical-align:top;color:var(--mute)}
+.ir td.proj{color:var(--ink);font-weight:500;white-space:nowrap}
+.ir td.proj small{display:block;font-weight:400;color:var(--faint);font-size:12px}
+.ir td.num{text-align:right;color:var(--ink);font-weight:600;font-size:13.5px}
+.ir .chip{display:inline-block;font-size:11.5px;line-height:1;padding:4px 8px;border-radius:999px;margin:2px 4px 2px 0;white-space:nowrap;text-decoration:none}
+.ir .chip.ok{background:var(--ok-soft);color:var(--ok)}
+.ir .chip.open{background:var(--warn-soft);color:var(--warn)}
+.ir .chip.plain{border:1px solid var(--rule2);color:var(--mute)}
+@media (max-width:560px){.ir .brow{grid-template-columns:96px 1fr 50px;gap:8px}}
+</style>
+```
+
+This is my first time teaching CS 5187 (Software Analysis), and I started the course with one belief: the best way to learn testing is to test software that people actually use. So the term project asked each team to pick a widely used open-source codebase, attack it with the techniques we covered in class, and report whatever they found to the maintainers.
+
+The timing also helped. AI has sped up bug finding a lot. Language models can read an unfamiliar codebase, suggest where the risky code is, write test harnesses and input generators, and help turn a messy crash into a clean, minimal report. Work that used to take a team weeks of ramp-up now takes days. That let students who had never seen PostgreSQL or FFmpeg before reach the deep, interesting parts of these codebases within a single semester.
+
+AI does not replace the method, though. A model will happily suggest a "bug" that is not one. What made the difference was pairing it with automatic checks, so every suggestion had to prove itself against the real program before anyone filed it.
+
+The results came in better than I expected.
+
+```{=html}
+<div class="ir"><div class="tiles">
+<div class="tile"><p class="label">Projects</p><div class="num">20+</div><div class="sub">open-source codebases tested</div></div>
+<div class="tile"><p class="label">Bugs reported</p><div class="num">146</div><div class="sub">filed upstream</div></div>
+<div class="tile hi"><p class="label">Fixed / merged</p><div class="num">56</div><div class="sub">confirmed fixed upstream</div></div>
+<div class="tile"><p class="label">Teams</p><div class="num">19</div><div class="sub">with upstream findings</div></div>
+<div class="tile"><p class="label">Fix rate so far</p><div class="num">38%</div><div class="sub">many more in review</div></div>
+</div></div>
+```
+
+These are not toy programs. The list includes PostgreSQL, DuckDB, FFmpeg, LLVM, GCC, Neovim, libarchive, llama.cpp, ONNX and three Python type checkers. Many of them are fuzzed continuously by projects such as OSS-Fuzz, and all of them have experienced maintainers who review every change.
+
+## Where the bugs were
+
+```{=html}
+<div class="ir"><div class="bars" id="bars"></div>
+<div class="legend"><span><i style="background:var(--ok)"></i>fixed / merged</span><span><i style="background:var(--accent-soft)"></i>reported, still open</span></div></div>
+```
+
+Databases dominate the list. That is partly because several teams chose them, and partly because a database is a good target for the kind of testing that does not need a crash to find a bug, which brings me to the most interesting result.
+
+## Most bugs were not crashes
+
+When people hear "fuzzing" they picture a program falling over with a segmentation fault. Crashes were a small part of what the students found:
+
+```{=html}
+<div class="ir"><div class="grid">
+<div class="kind"><div class="pct">39%</div><div class="t">Wrong results</div><div class="d">Software runs fine but returns a wrong answer or writes a corrupted file.</div></div>
+<div class="kind"><div class="pct">32%</div><div class="t">Memory safety</div><div class="d">Out-of-bounds reads and writes, use-after-free, integer overflow, leaks.</div></div>
+<div class="kind"><div class="pct">19%</div><div class="t">Crashes &amp; assertions</div><div class="d">Internal errors and failed sanity checks that abort the program.</div></div>
+<div class="kind"><div class="pct">10%</div><div class="t">Resource exhaustion</div><div class="d">Hangs and runaway memory use triggered by small inputs.</div></div>
+</div></div>
+```
+
+These shares come from the findings classified on 16 November. Most reports added since then are also wrong-result bugs, so that group has only grown.
+
+Wrong results are the biggest group, and they are also the hardest to notice. A crash announces itself. A query that returns a plausible but wrong row count does not. Nobody files a bug report for an answer they never knew was wrong.
+
+## Highlights
+
+```{=html}
+<div class="ir"><div class="hl">
+<div class="card"><div class="p">PostgreSQL</div><div class="h">11 fixes in a mature database</div><div class="d">Silent wrong query results, and SQL-standard function bodies that broke <code>pg_upgrade</code>.</div></div>
+<div class="card"><div class="p">llama.cpp</div><div class="h">A flaw that hid for 31 months</div><div class="d">The model-splitting tool could write a file that loads but is quietly wrong.</div></div>
+<div class="card"><div class="p">FFmpeg</div><div class="h">68 KB file &rarr; 1.7 GB allocation</div><div class="d">Fixed upstream, along with two seek bugs.</div></div>
+<div class="card"><div class="p">libarchive</div><div class="h">1.8 KB ZIP &rarr; 4.2 GB allocation</div><div class="d">Three oversized-allocation bugs, all fixed.</div></div>
+<div class="card"><div class="p">Neovim</div><div class="h">Fixed the same day</div><div class="d">A null dereference and a heap out-of-bounds read, patched within hours.</div></div>
+<div class="card"><div class="p">Python type checkers</div><div class="h">24 reports across mypy, ty, pyright</div><div class="d">Hangs, unsound narrowing, crashes. Five fixes merged so far.</div></div>
+<div class="card"><div class="p">libultrahdr</div><div class="h">Images it could not read back</div><div class="d">Two encoder bugs found by checking that the library can decode its own output.</div></div>
+<div class="card"><div class="p">LLVM &amp; GCC</div><div class="h">14 coverage-tool reports</div><div class="d">Coverage reports that disagree with what the program actually executed.</div></div>
+</div></div>
+```
+
+**PostgreSQL: 11 fixes in a mature database.** PostgreSQL is about as carefully engineered as open-source software gets. Students found queries that silently returned wrong results, and a bug where SQL-standard function bodies broke `pg_upgrade`. Several of the fixes were written by the students themselves and accepted into PostgreSQL.
+
+**llama.cpp: a flaw that hid for 31 months.** The model-splitting tool could write a file that loads without complaint but is quietly wrong. Continuous fuzzing had missed it for more than two and a half years. A fuzzer only reports what its oracle can see, and "this output file is subtly wrong" is not something a crash detector can see.
+
+**FFmpeg: a 68 KB file asks for 1.7 GB.** A tiny crafted video could make the demuxer request gigabytes of memory. This is fixed upstream, along with two seek bugs.
+
+**libarchive: a 1.8 KB ZIP asks for 4.2 GB.** Three oversized-allocation bugs in archive reading, all fixed upstream.
+
+**Neovim: fixed the same day.** A null pointer dereference in command parsing and a heap out-of-bounds read. The maintainers patched both within hours of the report.
+
+**Python type checkers: 24 reports across mypy, ty and pyright.** Hangs on recursive types, unsound type narrowing and crashes. Five fixes have been merged so far.
+
+**libultrahdr: images it could not read back.** The check was simple: the library must be able to decode what it just wrote. That exposed two bugs present in every release since v1.3.0, in a library OSS-Fuzz has fuzzed for more than two years. With the check turned off, 1.5 million executions found nothing. With it on, the first bug appeared after 34,400. One fix is merged and the other is in review.
+
+**LLVM and GCC: 14 reports against the coverage tools.** Developers trust coverage reports to decide what has been tested. Students compared `llvm-cov` and `gcov` and found code reported as executed when it never ran, branches attributed to the wrong line, and lines dropped from the report. These reports are still open upstream.
+
+## How the bugs were found
+
+None of the techniques are new. Each team took a well-established idea from the course and adapted it to their target.
+
+- **Structure-aware input generation.** Generate inputs that follow the target's own grammar or file format, so the tests get past the parser and reach the deep logic behind it.
+- **Consistency checks.** Ask the same question in two equivalent ways. If the answers differ, at least one of them is wrong, and no crash is needed to prove it.
+- **Differential testing.** Run several tools that should agree (two compilers, two databases, three type checkers) and investigate every disagreement.
+- **Sanitizer-instrumented fuzzing.** Build the target with sanitizers so that silent memory errors become immediate, reproducible failures.
+- **Round-trip checks.** Write, read back, compare. This catches corruption in dumps, converters and file formats.
+- **LLM assistance, checked automatically.** Language models propose test cases, and only the ones that pass an automatic check are kept.
+
+The first, second, third and fifth ideas all solve the same problem: they give the tester an *oracle*, a way to tell that an output is wrong without knowing the correct answer in advance. That is why the wrong-results category is so large. The students did not have better crash detectors than OSS-Fuzz. They had better questions.
+
+## Reporting bugs properly
+
+Finding a bug is half the job. Getting it fixed is the other half, and maintainers are busy people. Before filing, every report was reproduced on a clean upstream build and minimised to the smallest input that still triggers it. A 68 KB reproducer with a one-line explanation gets attention. A 50 MB fuzzer output with a stack trace often does not.
+
+The same-day Neovim fixes and the student-written PostgreSQL patches show what happens when the report makes the maintainer's job easy.
+
+## Where things stand
+
+As of 23 November 2026, 56 of the 146 reports are fixed upstream, either by a student patch or by the maintainers. Many of the rest are confirmed and waiting in review queues, so I expect that number to keep growing. Security-sensitive findings that are not yet public or patched are not listed here and will stay unlisted until a fix ships.
+
+Here is every project with its upstream reports. Each report counts as either fixed or open, and a report stays open until a fix lands, even if its first patch was closed without merging. Of the 146 reports, 56 are fixed and 90 are open. Links are shown where a report is individually listed.
+
+```{=html}
+<div class="ir"><p style="font-size:13px;color:#4b5054">Green = fixed or merged, amber = open. Click a chip to open the upstream issue, pull request or commit.</p>
+<div class="tablewrap"><table><thead><tr><th>Project</th><th style="text-align:right">Reported</th><th style="text-align:right">Fixed</th><th style="text-align:right">Open</th><th>Links</th></tr></thead><tbody id="rows"></tbody></table></div></div>
+<script>
+const GH = (repo, n) => `https://github.com/${repo}/issues/${n}`;
+const P = [
+  {name:"PostgreSQL", area:"Database", rep:26, fix:11, links:[
+    {t:"Fix commit 44cf2892bb", u:"https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=44cf2892bb", s:"ok"},
+    {t:"BUG #19849", s:"ok"},{t:"BUG #19857", s:"ok"},{t:"BUG #19848", s:"ok"}]},
+  {name:"Python type checkers", area:"mypy · ty · pyright", rep:24, fix:5, links:[
+    {t:"ty #4883", u:GH("astral-sh/ty",4883), s:"ok"},
+    {t:"ty #4934", u:GH("astral-sh/ty",4934), s:"ok"},
+    {t:"pyright #11960", u:GH("microsoft/pyright",11960), s:"ok"},
+    {t:"mypy #22343", u:GH("python/mypy",22343), s:"open"},
+    {t:"mypy #22344", u:GH("python/mypy",22344), s:"open"}]},
+  {name:"DuckDB", area:"Database", rep:16, fix:4, links:[]},
+  {name:"Neovim & Vim", area:"Editor", rep:12, fix:4, links:[
+    {t:"neovim #42318", u:GH("neovim/neovim",42318), s:"ok"},
+    {t:"neovim #42559", u:GH("neovim/neovim",42559), s:"ok"}]},
+  {name:"Turso", area:"Database", rep:12, fix:7, links:[
+    {t:"#10547", u:GH("tursodatabase/turso",10547), s:"ok"},
+    {t:"#10963", u:GH("tursodatabase/turso",10963), s:"ok"},
+    {t:"#10964", u:GH("tursodatabase/turso",10964), s:"ok"},
+    {t:"#11564", u:GH("tursodatabase/turso",11564), s:"open"},
+    {t:"#11716", u:GH("tursodatabase/turso",11716), s:"open"}]},
+  {name:"FFmpeg", area:"Media", rep:7, fix:3, links:[
+    {t:"commit 5442733480", u:"https://github.com/FFmpeg/FFmpeg/commit/5442733480", s:"ok"},
+    {t:"commit 46bd2205b9", u:"https://github.com/FFmpeg/FFmpeg/commit/46bd2205b9", s:"ok"},
+    {t:"commit 3a3f5e24a9", u:"https://github.com/FFmpeg/FFmpeg/commit/3a3f5e24a9", s:"ok"},
+    {t:"PR #25729", u:"https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25729", s:"open"},
+    {t:"PR #25730", u:"https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25730", s:"open"},
+    {t:"PR #25732", u:"https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25732", s:"open"},
+    {t:"PR #25733", u:"https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25733", s:"open"}]},
+  {name:"llama.cpp", area:"AI model tooling", rep:5, fix:3, links:[]},
+  {name:"LLVM", area:"Compiler / coverage", rep:10, fix:0, links:[
+    {t:"PR #237537", u:"https://github.com/llvm/llvm-project/pull/237537", s:"open"},
+    {t:"PR #237546", u:"https://github.com/llvm/llvm-project/pull/237546", s:"open"},
+    {t:"#243402", u:GH("llvm/llvm-project",243402), s:"open"},
+    {t:"#243423", u:GH("llvm/llvm-project",243423), s:"open"},
+    {t:"#243451", u:GH("llvm/llvm-project",243451), s:"open"},
+    {t:"#243464", u:GH("llvm/llvm-project",243464), s:"open"},
+    {t:"#243547", u:GH("llvm/llvm-project",243547), s:"open"}]},
+  {name:"GCC", area:"Compiler / coverage", rep:4, fix:0, links:[
+    {t:"PR 128800", u:"https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128800", s:"open"},
+    {t:"PR 128804", u:"https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128804", s:"open"},
+    {t:"PR 128805", u:"https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128805", s:"open"},
+    {t:"PR 128827", u:"https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128827", s:"open"}]},
+  {name:"SQLite & DataFusion", area:"Database", rep:5, fix:0, links:[]},
+  {name:"CodeGraph", area:"Program analysis", rep:4, fix:3, links:[
+    {t:"PR #3349", u:GH("colbymchenry/codegraph",3349), s:"ok"},
+    {t:"PR #3350", u:GH("colbymchenry/codegraph",3350), s:"ok"},
+    {t:"PR #3360", u:GH("colbymchenry/codegraph",3360), s:"ok"},
+    {t:"PR #3218", u:GH("colbymchenry/codegraph",3218), s:"open"}]},
+  {name:"libultrahdr", area:"Image", rep:2, fix:1, links:[
+    {t:"PR #506", u:GH("google/libultrahdr",506), s:"ok"},
+    {t:"PR #507", u:GH("google/libultrahdr",507), s:"open"}]},
+  {name:"libarchive", area:"Archives", rep:4, fix:4, links:[
+    {t:"PR #3709", u:GH("libarchive/libarchive",3709), s:"ok"}]},
+  {name:"ONNX", area:"AI model format", rep:4, fix:4, links:[
+    {t:"issue #8651", u:GH("onnx/onnx",8651), s:"ok"},
+    {t:"PR #8652", u:GH("onnx/onnx",8652), s:"ok"}]},
+  {name:"raylib", area:"Graphics", rep:3, fix:3, links:[
+    {t:"PR #6362", u:GH("raysan5/raylib",6362), s:"ok"}]},
+  {name:"Ollama", area:"AI model tooling", rep:3, fix:0, links:[]},
+  {name:"drogon", area:"Web server", rep:2, fix:2, links:[
+    {t:"PR #2662", u:GH("drogonframework/drogon",2662), s:"ok"}]},
+  {name:"fastgltf", area:"3D format", rep:1, fix:1, links:[]},
+  {name:"lodepng", area:"Image", rep:1, fix:0, links:[
+    {t:"#233", u:GH("lvandeve/lodepng",233), s:"open"}]},
+  {name:"dr_libs", area:"Audio", rep:1, fix:1, links:[
+    {t:"#351", u:GH("mackron/dr_libs",351), s:"ok"}]},
+].sort((a,b) => b.rep - a.rep || b.fix - a.fix);
+const max = Math.max(...P.map(p=>p.rep));
+document.getElementById("bars").innerHTML = P.map(p=>`
+  <div class="brow"><div class="n">${p.name}</div>
+  <div class="track"><span class="rep" style="width:${p.rep/max*100}%"></span><span class="fix" style="width:${p.fix/max*100}%"></span></div>
+  <div class="v">${p.fix} <span>/ ${p.rep}</span></div></div>`).join("");
+const chip = l => l.u
+  ? `<a class="chip ${l.s}" href="${l.u}" target="_blank" rel="noopener">${l.t}</a>`
+  : `<span class="chip ${l.s}">${l.t}</span>`;
+document.getElementById("rows").innerHTML = P.map(p=>`
+  <tr><td class="proj">${p.name}<small>${p.area}</small></td>
+  <td class="num">${p.rep}</td><td class="num">${p.fix}</td><td class="num">${p.rep - p.fix}</td>
+  <td>${p.links.length ? p.links.map(chip).join("") : [
+    p.fix ? `<span class="chip ok">${p.fix} fixed</span>` : "",
+    p.rep - p.fix ? `<span class="chip open">${p.rep - p.fix} open</span>` : ""
+  ].join("")}</td></tr>`).join("");
+</script>
+```
+
+## A note to my students
+
+Thank you. A semester is short, and most of you had never filed an upstream bug report before this course. Your fixes now ship in software that runs on millions of machines. That is a better grade than anything I can put on a transcript.

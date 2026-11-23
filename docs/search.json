@@ -102,7 +102,7 @@
     "href": "posts/index.html",
     "title": "Writeups",
     "section": "",
-    "text": "Notes and short posts, mostly about tooling and systems.\n\n\n\n\n\n\n\n\n\nWhat FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)\n\n\n\nStatic Analysis\n\nLLVM\n\nPhASAR\n\n\n\nEmpirically comparing CHA, RTA, and OTF call-graph construction on FFmpeg with PhASAR, and the toolchain issues met along the way.\n\n\n\n\n\nJul 24, 2026\n\n\n\n\n\n\n\nInstalling LLVM Compiler Infrastructure\n\n\n\nLLVM\n\n\n\nSteps for installing the LLVM Compiler Infrastructure from source, including common build errors.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nInstalling & Building RISC-V Toolchain\n\n\n\nRISC-V\n\n\n\nA walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nComputer Architecture Summer School (CASS) 2018, IIT Kanpur\n\n\n\nSummer School\n\n\n\nMy experience attending the first Computer Architecture Summer School at IIT Kanpur.\n\n\n\n\n\nAug 19, 2018\n\n\n\n\n\nNo matching items"
+    "text": "Notes and short posts, mostly about tooling and systems.\n\n\n\n\n\n\n\n\n\n146 Bugs in Real Software: What My CS 5187 Students Found\n\n\n\nTeaching\n\nSoftware Testing\n\nFuzzing\n\n\n\nStudent teams in CS 5187 at IIT Guwahati tested more than 20 widely used open-source projects and reported 146 bugs upstream. 56 are already fixed.\n\n\n\n\n\nNov 21, 2026\n\n\n\n\n\n\n\nWhat FFmpeg Taught Us About Call Graph Precision (and About PhASAR’s Rough Edges)\n\n\n\nStatic Analysis\n\nLLVM\n\nPhASAR\n\n\n\nEmpirically comparing CHA, RTA, and OTF call-graph construction on FFmpeg with PhASAR, and the toolchain issues met along the way.\n\n\n\n\n\nJul 24, 2026\n\n\n\n\n\n\n\nInstalling LLVM Compiler Infrastructure\n\n\n\nLLVM\n\n\n\nSteps for installing the LLVM Compiler Infrastructure from source, including common build errors.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nInstalling & Building RISC-V Toolchain\n\n\n\nRISC-V\n\n\n\nA walkthrough of installing and building the RISC-V toolchain from scratch on Ubuntu 20 LTS.\n\n\n\n\n\nMay 21, 2021\n\n\n\n\n\n\n\nComputer Architecture Summer School (CASS) 2018, IIT Kanpur\n\n\n\nSummer School\n\n\n\nMy experience attending the first Computer Architecture Summer School at IIT Kanpur.\n\n\n\n\n\nAug 19, 2018\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/callgraph-bornov.html",
@@ -285,5 +285,61 @@
     "title": "Students",
     "section": "Joining the Group",
     "text": "Joining the Group\nIf you are an M.Tech or Ph.D. student (or prospective) at IIT Guwahati interested in systems security, fuzzing, program analysis, compilers, or operating systems, please get in touch via email."
+  },
+  {
+    "objectID": "posts/cs5187-bug-finding.html",
+    "href": "posts/cs5187-bug-finding.html",
+    "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
+    "section": "",
+    "text": "This is my first time teaching CS 5187 (Software Analysis), and I started the course with one belief: the best way to learn testing is to test software that people actually use. So the term project asked each team to pick a widely used open-source codebase, attack it with the techniques we covered in class, and report whatever they found to the maintainers.\nThe timing also helped. AI has sped up bug finding a lot. Language models can read an unfamiliar codebase, suggest where the risky code is, write test harnesses and input generators, and help turn a messy crash into a clean, minimal report. Work that used to take a team weeks of ramp-up now takes days. That let students who had never seen PostgreSQL or FFmpeg before reach the deep, interesting parts of these codebases within a single semester.\nAI does not replace the method, though. A model will happily suggest a “bug” that is not one. What made the difference was pairing it with automatic checks, so every suggestion had to prove itself against the real program before anyone filed it.\nThe results came in better than I expected.\nThese are not toy programs. The list includes PostgreSQL, DuckDB, FFmpeg, LLVM, GCC, Neovim, libarchive, llama.cpp, ONNX and three Python type checkers. Many of them are fuzzed continuously by projects such as OSS-Fuzz, and all of them have experienced maintainers who review every change."
+  },
+  {
+    "objectID": "posts/cs5187-bug-finding.html#where-the-bugs-were",
+    "href": "posts/cs5187-bug-finding.html#where-the-bugs-were",
+    "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
+    "section": "Where the bugs were",
+    "text": "Where the bugs were\n\nfixed / mergedreported, still open\nDatabases dominate the list. That is partly because several teams chose them, and partly because a database is a good target for the kind of testing that does not need a crash to find a bug, which brings me to the most interesting result."
+  },
+  {
+    "objectID": "posts/cs5187-bug-finding.html#most-bugs-were-not-crashes",
+    "href": "posts/cs5187-bug-finding.html#most-bugs-were-not-crashes",
+    "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
+    "section": "Most bugs were not crashes",
+    "text": "Most bugs were not crashes\nWhen people hear “fuzzing” they picture a program falling over with a segmentation fault. Crashes were a small part of what the students found:\n\n39%Wrong resultsSoftware runs fine but returns a wrong answer or writes a corrupted file.\n32%Memory safetyOut-of-bounds reads and writes, use-after-free, integer overflow, leaks.\n19%Crashes & assertionsInternal errors and failed sanity checks that abort the program.\n10%Resource exhaustionHangs and runaway memory use triggered by small inputs.\n\nThese shares come from the findings classified on 16 November. Most reports added since then are also wrong-result bugs, so that group has only grown.\nWrong results are the biggest group, and they are also the hardest to notice. A crash announces itself. A query that returns a plausible but wrong row count does not. Nobody files a bug report for an answer they never knew was wrong."
+  },
+  {
+    "objectID": "posts/cs5187-bug-finding.html#highlights",
+    "href": "posts/cs5187-bug-finding.html#highlights",
+    "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
+    "section": "Highlights",
+    "text": "Highlights\n\nPostgreSQL11 fixes in a mature databaseSilent wrong query results, and SQL-standard function bodies that broke pg_upgrade.\nllama.cppA flaw that hid for 31 monthsThe model-splitting tool could write a file that loads but is quietly wrong.\nFFmpeg68 KB file → 1.7 GB allocationFixed upstream, along with two seek bugs.\nlibarchive1.8 KB ZIP → 4.2 GB allocationThree oversized-allocation bugs, all fixed.\nNeovimFixed the same dayA null dereference and a heap out-of-bounds read, patched within hours.\nPython type checkers24 reports across mypy, ty, pyrightHangs, unsound narrowing, crashes. Five fixes merged so far.\nlibultrahdrImages it could not read backTwo encoder bugs found by checking that the library can decode its own output.\nLLVM & GCC14 coverage-tool reportsCoverage reports that disagree with what the program actually executed.\n\nPostgreSQL: 11 fixes in a mature database. PostgreSQL is about as carefully engineered as open-source software gets. Students found queries that silently returned wrong results, and a bug where SQL-standard function bodies broke pg_upgrade. Several of the fixes were written by the students themselves and accepted into PostgreSQL.\nllama.cpp: a flaw that hid for 31 months. The model-splitting tool could write a file that loads without complaint but is quietly wrong. Continuous fuzzing had missed it for more than two and a half years. A fuzzer only reports what its oracle can see, and “this output file is subtly wrong” is not something a crash detector can see.\nFFmpeg: a 68 KB file asks for 1.7 GB. A tiny crafted video could make the demuxer request gigabytes of memory. This is fixed upstream, along with two seek bugs.\nlibarchive: a 1.8 KB ZIP asks for 4.2 GB. Three oversized-allocation bugs in archive reading, all fixed upstream.\nNeovim: fixed the same day. A null pointer dereference in command parsing and a heap out-of-bounds read. The maintainers patched both within hours of the report.\nPython type checkers: 24 reports across mypy, ty and pyright. Hangs on recursive types, unsound type narrowing and crashes. Five fixes have been merged so far.\nlibultrahdr: images it could not read back. The check was simple: the library must be able to decode what it just wrote. That exposed two bugs present in every release since v1.3.0, in a library OSS-Fuzz has fuzzed for more than two years. With the check turned off, 1.5 million executions found nothing. With it on, the first bug appeared after 34,400. One fix is merged and the other is in review.\nLLVM and GCC: 14 reports against the coverage tools. Developers trust coverage reports to decide what has been tested. Students compared llvm-cov and gcov and found code reported as executed when it never ran, branches attributed to the wrong line, and lines dropped from the report. These reports are still open upstream."
+  },
+  {
+    "objectID": "posts/cs5187-bug-finding.html#how-the-bugs-were-found",
+    "href": "posts/cs5187-bug-finding.html#how-the-bugs-were-found",
+    "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
+    "section": "How the bugs were found",
+    "text": "How the bugs were found\nNone of the techniques are new. Each team took a well-established idea from the course and adapted it to their target.\n\nStructure-aware input generation. Generate inputs that follow the target’s own grammar or file format, so the tests get past the parser and reach the deep logic behind it.\nConsistency checks. Ask the same question in two equivalent ways. If the answers differ, at least one of them is wrong, and no crash is needed to prove it.\nDifferential testing. Run several tools that should agree (two compilers, two databases, three type checkers) and investigate every disagreement.\nSanitizer-instrumented fuzzing. Build the target with sanitizers so that silent memory errors become immediate, reproducible failures.\nRound-trip checks. Write, read back, compare. This catches corruption in dumps, converters and file formats.\nLLM assistance, checked automatically. Language models propose test cases, and only the ones that pass an automatic check are kept.\n\nThe first, second, third and fifth ideas all solve the same problem: they give the tester an oracle, a way to tell that an output is wrong without knowing the correct answer in advance. That is why the wrong-results category is so large. The students did not have better crash detectors than OSS-Fuzz. They had better questions."
+  },
+  {
+    "objectID": "posts/cs5187-bug-finding.html#reporting-bugs-properly",
+    "href": "posts/cs5187-bug-finding.html#reporting-bugs-properly",
+    "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
+    "section": "Reporting bugs properly",
+    "text": "Reporting bugs properly\nFinding a bug is half the job. Getting it fixed is the other half, and maintainers are busy people. Before filing, every report was reproduced on a clean upstream build and minimised to the smallest input that still triggers it. A 68 KB reproducer with a one-line explanation gets attention. A 50 MB fuzzer output with a stack trace often does not.\nThe same-day Neovim fixes and the student-written PostgreSQL patches show what happens when the report makes the maintainer’s job easy."
+  },
+  {
+    "objectID": "posts/cs5187-bug-finding.html#where-things-stand",
+    "href": "posts/cs5187-bug-finding.html#where-things-stand",
+    "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
+    "section": "Where things stand",
+    "text": "Where things stand\nAs of 23 November 2026, 56 of the 146 reports are fixed upstream, either by a student patch or by the maintainers. Many of the rest are confirmed and waiting in review queues, so I expect that number to keep growing. Security-sensitive findings that are not yet public or patched are not listed here and will stay unlisted until a fix ships.\nHere is every project with its upstream reports. Each report counts as either fixed or open, and a report stays open until a fix lands, even if its first patch was closed without merging. Of the 146 reports, 56 are fixed and 90 are open. Links are shown where a report is individually listed.\nGreen = fixed or merged, amber = open. Click a chip to open the upstream issue, pull request or commit.\n\n\n\n\nProject\nReported\nFixed\nOpen\nLinks"
+  },
+  {
+    "objectID": "posts/cs5187-bug-finding.html#a-note-to-my-students",
+    "href": "posts/cs5187-bug-finding.html#a-note-to-my-students",
+    "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
+    "section": "A note to my students",
+    "text": "A note to my students\nThank you. A semester is short, and most of you had never filed an upstream bug report before this course. Your fixes now ship in software that runs on millions of machines. That is a better grade than anything I can put on a transcript."
   }
 ]

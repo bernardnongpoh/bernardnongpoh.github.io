@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-11-21">
+<meta name="description" content="Student teams in CS 5187 at IIT Guwahati tested more than 20 widely used open-source projects and reported 146 bugs upstream. 56 are already fixed.">
+
+<title>146 Bugs in Real Software: What My CS 5187 Students Found – Bernard Nongpoh</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Bernard Nongpoh</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../students.html"> 
+<span class="menu-text">Students</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../posts/index.html"> 
+<span class="menu-text">Writeups</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../travels.html"> 
+<span class="menu-text">Travels</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#where-the-bugs-were" id="toc-where-the-bugs-were" class="nav-link active" data-scroll-target="#where-the-bugs-were">Where the bugs were</a></li>
+  <li><a href="#most-bugs-were-not-crashes" id="toc-most-bugs-were-not-crashes" class="nav-link" data-scroll-target="#most-bugs-were-not-crashes">Most bugs were not crashes</a></li>
+  <li><a href="#highlights" id="toc-highlights" class="nav-link" data-scroll-target="#highlights">Highlights</a></li>
+  <li><a href="#how-the-bugs-were-found" id="toc-how-the-bugs-were-found" class="nav-link" data-scroll-target="#how-the-bugs-were-found">How the bugs were found</a></li>
+  <li><a href="#reporting-bugs-properly" id="toc-reporting-bugs-properly" class="nav-link" data-scroll-target="#reporting-bugs-properly">Reporting bugs properly</a></li>
+  <li><a href="#where-things-stand" id="toc-where-things-stand" class="nav-link" data-scroll-target="#where-things-stand">Where things stand</a></li>
+  <li><a href="#a-note-to-my-students" id="toc-a-note-to-my-students" class="nav-link" data-scroll-target="#a-note-to-my-students">A note to my students</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">146 Bugs in Real Software: What My CS 5187 Students Found</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Teaching</div>
+    <div class="quarto-category">Software Testing</div>
+    <div class="quarto-category">Fuzzing</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Student teams in CS 5187 at IIT Guwahati tested more than 20 widely used open-source projects and reported 146 bugs upstream. 56 are already fixed.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 21, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">November 23, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+.ir{--ink:#16181a;--mute:#4b5054;--faint:#80858a;--rule:#e5e2d9;--rule2:#cbc7bb;--accent:#b64a1d;--accent-soft:#f3e0d4;--ok:#2f6b3c;--ok-soft:#dcecd8;--warn:#94690a;--warn-soft:#f4e8c8;font-variant-numeric:tabular-nums;margin:1.2rem 0 1.6rem}
+.ir .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.ir .tile{border:1px solid var(--rule);padding:12px 14px}
+.ir .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0 0 6px}
+.ir .num{font-size:30px;font-weight:600;line-height:1}
+.ir .sub{font-size:12px;color:var(--mute);margin-top:6px}
+.ir .hi .num{color:var(--ok)}
+.ir .bars{border:1px solid var(--rule);padding:16px 18px;display:grid;gap:8px}
+.ir .brow{display:grid;grid-template-columns:150px 1fr 60px;gap:12px;align-items:center}
+.ir .brow .n{font-size:13px}
+.ir .track{height:16px;background:var(--rule);position:relative}
+.ir .rep{position:absolute;inset:0 auto 0 0;background:var(--accent-soft)}
+.ir .fix{position:absolute;inset:0 auto 0 0;background:var(--ok)}
+.ir .v{font-size:13px;font-weight:600;text-align:right;white-space:nowrap}
+.ir .v span{color:var(--faint);font-weight:400}
+.ir .legend{display:flex;gap:16px;font-size:12px;color:var(--mute);margin-top:8px}
+.ir .legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.ir .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.ir .kind{border:1px solid var(--rule);padding:12px 14px}
+.ir .pct{font-size:26px;font-weight:600;line-height:1;color:var(--accent)}
+.ir .t{font-weight:600;margin:6px 0 2px}
+.ir .d{font-size:13.5px;color:var(--mute)}
+.ir .hl{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.ir .card{border:1px solid var(--rule);border-left:3px solid var(--accent);padding:12px 14px}
+.ir .p{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.ir .h{font-weight:600;font-size:16px;margin-bottom:4px}
+.ir .tablewrap{border:1px solid var(--rule);overflow-x:auto}
+.ir table{width:100%;border-collapse:collapse;min-width:600px;font-size:13.5px;margin:0}
+.ir th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:10px 12px;border-bottom:1px solid var(--rule2)}
+.ir td{padding:10px 12px;border-top:1px solid var(--rule);vertical-align:top;color:var(--mute)}
+.ir td.proj{color:var(--ink);font-weight:500;white-space:nowrap}
+.ir td.proj small{display:block;font-weight:400;color:var(--faint);font-size:12px}
+.ir td.num{text-align:right;color:var(--ink);font-weight:600;font-size:13.5px}
+.ir .chip{display:inline-block;font-size:11.5px;line-height:1;padding:4px 8px;border-radius:999px;margin:2px 4px 2px 0;white-space:nowrap;text-decoration:none}
+.ir .chip.ok{background:var(--ok-soft);color:var(--ok)}
+.ir .chip.open{background:var(--warn-soft);color:var(--warn)}
+.ir .chip.plain{border:1px solid var(--rule2);color:var(--mute)}
+@media (max-width:560px){.ir .brow{grid-template-columns:96px 1fr 50px;gap:8px}}
+</style>
+<p>This is my first time teaching CS 5187 (Software Analysis), and I started the course with one belief: the best way to learn testing is to test software that people actually use. So the term project asked each team to pick a widely used open-source codebase, attack it with the techniques we covered in class, and report whatever they found to the maintainers.</p>
+<p>The timing also helped. AI has sped up bug finding a lot. Language models can read an unfamiliar codebase, suggest where the risky code is, write test harnesses and input generators, and help turn a messy crash into a clean, minimal report. Work that used to take a team weeks of ramp-up now takes days. That let students who had never seen PostgreSQL or FFmpeg before reach the deep, interesting parts of these codebases within a single semester.</p>
+<p>AI does not replace the method, though. A model will happily suggest a “bug” that is not one. What made the difference was pairing it with automatic checks, so every suggestion had to prove itself against the real program before anyone filed it.</p>
+<p>The results came in better than I expected.</p>
+<div class="ir"><div class="tiles">
+<div class="tile"><p class="label">Projects</p><div class="num">20+</div><div class="sub">open-source codebases tested</div></div>
+<div class="tile"><p class="label">Bugs reported</p><div class="num">146</div><div class="sub">filed upstream</div></div>
+<div class="tile hi"><p class="label">Fixed / merged</p><div class="num">56</div><div class="sub">confirmed fixed upstream</div></div>
+<div class="tile"><p class="label">Teams</p><div class="num">19</div><div class="sub">with upstream findings</div></div>
+<div class="tile"><p class="label">Fix rate so far</p><div class="num">38%</div><div class="sub">many more in review</div></div>
+</div></div>
+<p>These are not toy programs. The list includes PostgreSQL, DuckDB, FFmpeg, LLVM, GCC, Neovim, libarchive, llama.cpp, ONNX and three Python type checkers. Many of them are fuzzed continuously by projects such as OSS-Fuzz, and all of them have experienced maintainers who review every change.</p>
+<section id="where-the-bugs-were" class="level2">
+<h2 class="anchored" data-anchor-id="where-the-bugs-were">Where the bugs were</h2>
+<div class="ir"><div class="bars" id="bars"></div>
+<div class="legend"><span><i style="background:var(--ok)"></i>fixed / merged</span><span><i style="background:var(--accent-soft)"></i>reported, still open</span></div></div>
+<p>Databases dominate the list. That is partly because several teams chose them, and partly because a database is a good target for the kind of testing that does not need a crash to find a bug, which brings me to the most interesting result.</p>
+</section>
+<section id="most-bugs-were-not-crashes" class="level2">
+<h2 class="anchored" data-anchor-id="most-bugs-were-not-crashes">Most bugs were not crashes</h2>
+<p>When people hear “fuzzing” they picture a program falling over with a segmentation fault. Crashes were a small part of what the students found:</p>
+<div class="ir"><div class="grid">
+<div class="kind"><div class="pct">39%</div><div class="t">Wrong results</div><div class="d">Software runs fine but returns a wrong answer or writes a corrupted file.</div></div>
+<div class="kind"><div class="pct">32%</div><div class="t">Memory safety</div><div class="d">Out-of-bounds reads and writes, use-after-free, integer overflow, leaks.</div></div>
+<div class="kind"><div class="pct">19%</div><div class="t">Crashes &amp; assertions</div><div class="d">Internal errors and failed sanity checks that abort the program.</div></div>
+<div class="kind"><div class="pct">10%</div><div class="t">Resource exhaustion</div><div class="d">Hangs and runaway memory use triggered by small inputs.</div></div>
+</div></div>
+<p>These shares come from the findings classified on 16 November. Most reports added since then are also wrong-result bugs, so that group has only grown.</p>
+<p>Wrong results are the biggest group, and they are also the hardest to notice. A crash announces itself. A query that returns a plausible but wrong row count does not. Nobody files a bug report for an answer they never knew was wrong.</p>
+</section>
+<section id="highlights" class="level2">
+<h2 class="anchored" data-anchor-id="highlights">Highlights</h2>
+<div class="ir"><div class="hl">
+<div class="card"><div class="p">PostgreSQL</div><div class="h">11 fixes in a mature database</div><div class="d">Silent wrong query results, and SQL-standard function bodies that broke <code>pg_upgrade</code>.</div></div>
+<div class="card"><div class="p">llama.cpp</div><div class="h">A flaw that hid for 31 months</div><div class="d">The model-splitting tool could write a file that loads but is quietly wrong.</div></div>
+<div class="card"><div class="p">FFmpeg</div><div class="h">68 KB file → 1.7 GB allocation</div><div class="d">Fixed upstream, along with two seek bugs.</div></div>
+<div class="card"><div class="p">libarchive</div><div class="h">1.8 KB ZIP → 4.2 GB allocation</div><div class="d">Three oversized-allocation bugs, all fixed.</div></div>
+<div class="card"><div class="p">Neovim</div><div class="h">Fixed the same day</div><div class="d">A null dereference and a heap out-of-bounds read, patched within hours.</div></div>
+<div class="card"><div class="p">Python type checkers</div><div class="h">24 reports across mypy, ty, pyright</div><div class="d">Hangs, unsound narrowing, crashes. Five fixes merged so far.</div></div>
+<div class="card"><div class="p">libultrahdr</div><div class="h">Images it could not read back</div><div class="d">Two encoder bugs found by checking that the library can decode its own output.</div></div>
+<div class="card"><div class="p">LLVM &amp; GCC</div><div class="h">14 coverage-tool reports</div><div class="d">Coverage reports that disagree with what the program actually executed.</div></div>
+</div></div>
+<p><strong>PostgreSQL: 11 fixes in a mature database.</strong> PostgreSQL is about as carefully engineered as open-source software gets. Students found queries that silently returned wrong results, and a bug where SQL-standard function bodies broke <code>pg_upgrade</code>. Several of the fixes were written by the students themselves and accepted into PostgreSQL.</p>
+<p><strong>llama.cpp: a flaw that hid for 31 months.</strong> The model-splitting tool could write a file that loads without complaint but is quietly wrong. Continuous fuzzing had missed it for more than two and a half years. A fuzzer only reports what its oracle can see, and “this output file is subtly wrong” is not something a crash detector can see.</p>
+<p><strong>FFmpeg: a 68 KB file asks for 1.7 GB.</strong> A tiny crafted video could make the demuxer request gigabytes of memory. This is fixed upstream, along with two seek bugs.</p>
+<p><strong>libarchive: a 1.8 KB ZIP asks for 4.2 GB.</strong> Three oversized-allocation bugs in archive reading, all fixed upstream.</p>
+<p><strong>Neovim: fixed the same day.</strong> A null pointer dereference in command parsing and a heap out-of-bounds read. The maintainers patched both within hours of the report.</p>
+<p><strong>Python type checkers: 24 reports across mypy, ty and pyright.</strong> Hangs on recursive types, unsound type narrowing and crashes. Five fixes have been merged so far.</p>
+<p><strong>libultrahdr: images it could not read back.</strong> The check was simple: the library must be able to decode what it just wrote. That exposed two bugs present in every release since v1.3.0, in a library OSS-Fuzz has fuzzed for more than two years. With the check turned off, 1.5 million executions found nothing. With it on, the first bug appeared after 34,400. One fix is merged and the other is in review.</p>
+<p><strong>LLVM and GCC: 14 reports against the coverage tools.</strong> Developers trust coverage reports to decide what has been tested. Students compared <code>llvm-cov</code> and <code>gcov</code> and found code reported as executed when it never ran, branches attributed to the wrong line, and lines dropped from the report. These reports are still open upstream.</p>
+</section>
+<section id="how-the-bugs-were-found" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-bugs-were-found">How the bugs were found</h2>
+<p>None of the techniques are new. Each team took a well-established idea from the course and adapted it to their target.</p>
+<ul>
+<li><strong>Structure-aware input generation.</strong> Generate inputs that follow the target’s own grammar or file format, so the tests get past the parser and reach the deep logic behind it.</li>
+<li><strong>Consistency checks.</strong> Ask the same question in two equivalent ways. If the answers differ, at least one of them is wrong, and no crash is needed to prove it.</li>
+<li><strong>Differential testing.</strong> Run several tools that should agree (two compilers, two databases, three type checkers) and investigate every disagreement.</li>
+<li><strong>Sanitizer-instrumented fuzzing.</strong> Build the target with sanitizers so that silent memory errors become immediate, reproducible failures.</li>
+<li><strong>Round-trip checks.</strong> Write, read back, compare. This catches corruption in dumps, converters and file formats.</li>
+<li><strong>LLM assistance, checked automatically.</strong> Language models propose test cases, and only the ones that pass an automatic check are kept.</li>
+</ul>
+<p>The first, second, third and fifth ideas all solve the same problem: they give the tester an <em>oracle</em>, a way to tell that an output is wrong without knowing the correct answer in advance. That is why the wrong-results category is so large. The students did not have better crash detectors than OSS-Fuzz. They had better questions.</p>
+</section>
+<section id="reporting-bugs-properly" class="level2">
+<h2 class="anchored" data-anchor-id="reporting-bugs-properly">Reporting bugs properly</h2>
+<p>Finding a bug is half the job. Getting it fixed is the other half, and maintainers are busy people. Before filing, every report was reproduced on a clean upstream build and minimised to the smallest input that still triggers it. A 68 KB reproducer with a one-line explanation gets attention. A 50 MB fuzzer output with a stack trace often does not.</p>
+<p>The same-day Neovim fixes and the student-written PostgreSQL patches show what happens when the report makes the maintainer’s job easy.</p>
+</section>
+<section id="where-things-stand" class="level2">
+<h2 class="anchored" data-anchor-id="where-things-stand">Where things stand</h2>
+<p>As of 23 November 2026, 56 of the 146 reports are fixed upstream, either by a student patch or by the maintainers. Many of the rest are confirmed and waiting in review queues, so I expect that number to keep growing. Security-sensitive findings that are not yet public or patched are not listed here and will stay unlisted until a fix ships.</p>
+<p>Here is every project with its upstream reports. Each report counts as either fixed or open, and a report stays open until a fix lands, even if its first patch was closed without merging. Of the 146 reports, 56 are fixed and 90 are open. Links are shown where a report is individually listed.</p>
+<div class="ir"><p style="font-size:13px;color:#4b5054">Green = fixed or merged, amber = open. Click a chip to open the upstream issue, pull request or commit.</p>
+<div class="tablewrap">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Project</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Reported</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Fixed</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Open</th>
+<th data-quarto-table-cell-role="th">Links</th>
+</tr>
+</thead>
+<tbody id="rows">
+</tbody>
+</table>
+</div></div>
+<script>
+const GH = (repo, n) => `https://github.com/${repo}/issues/${n}`;
+const P = [
+  {name:"PostgreSQL", area:"Database", rep:26, fix:11, links:[
+    {t:"Fix commit 44cf2892bb", u:"https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=44cf2892bb", s:"ok"},
+    {t:"BUG #19849", s:"ok"},{t:"BUG #19857", s:"ok"},{t:"BUG #19848", s:"ok"}]},
+  {name:"Python type checkers", area:"mypy · ty · pyright", rep:24, fix:5, links:[
+    {t:"ty #4883", u:GH("astral-sh/ty",4883), s:"ok"},
+    {t:"ty #4934", u:GH("astral-sh/ty",4934), s:"ok"},
+    {t:"pyright #11960", u:GH("microsoft/pyright",11960), s:"ok"},
+    {t:"mypy #22343", u:GH("python/mypy",22343), s:"open"},
+    {t:"mypy #22344", u:GH("python/mypy",22344), s:"open"}]},
+  {name:"DuckDB", area:"Database", rep:16, fix:4, links:[]},
+  {name:"Neovim & Vim", area:"Editor", rep:12, fix:4, links:[
+    {t:"neovim #42318", u:GH("neovim/neovim",42318), s:"ok"},
+    {t:"neovim #42559", u:GH("neovim/neovim",42559), s:"ok"}]},
+  {name:"Turso", area:"Database", rep:12, fix:7, links:[
+    {t:"#10547", u:GH("tursodatabase/turso",10547), s:"ok"},
+    {t:"#10963", u:GH("tursodatabase/turso",10963), s:"ok"},
+    {t:"#10964", u:GH("tursodatabase/turso",10964), s:"ok"},
+    {t:"#11564", u:GH("tursodatabase/turso",11564), s:"open"},
+    {t:"#11716", u:GH("tursodatabase/turso",11716), s:"open"}]},
+  {name:"FFmpeg", area:"Media", rep:7, fix:3, links:[
+    {t:"commit 5442733480", u:"https://github.com/FFmpeg/FFmpeg/commit/5442733480", s:"ok"},
+    {t:"commit 46bd2205b9", u:"https://github.com/FFmpeg/FFmpeg/commit/46bd2205b9", s:"ok"},
+    {t:"commit 3a3f5e24a9", u:"https://github.com/FFmpeg/FFmpeg/commit/3a3f5e24a9", s:"ok"},
+    {t:"PR #25729", u:"https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25729", s:"open"},
+    {t:"PR #25730", u:"https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25730", s:"open"},
+    {t:"PR #25732", u:"https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25732", s:"open"},
+    {t:"PR #25733", u:"https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25733", s:"open"}]},
+  {name:"llama.cpp", area:"AI model tooling", rep:5, fix:3, links:[]},
+  {name:"LLVM", area:"Compiler / coverage", rep:10, fix:0, links:[
+    {t:"PR #237537", u:"https://github.com/llvm/llvm-project/pull/237537", s:"open"},
+    {t:"PR #237546", u:"https://github.com/llvm/llvm-project/pull/237546", s:"open"},
+    {t:"#243402", u:GH("llvm/llvm-project",243402), s:"open"},
+    {t:"#243423", u:GH("llvm/llvm-project",243423), s:"open"},
+    {t:"#243451", u:GH("llvm/llvm-project",243451), s:"open"},
+    {t:"#243464", u:GH("llvm/llvm-project",243464), s:"open"},
+    {t:"#243547", u:GH("llvm/llvm-project",243547), s:"open"}]},
+  {name:"GCC", area:"Compiler / coverage", rep:4, fix:0, links:[
+    {t:"PR 128800", u:"https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128800", s:"open"},
+    {t:"PR 128804", u:"https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128804", s:"open"},
+    {t:"PR 128805", u:"https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128805", s:"open"},
+    {t:"PR 128827", u:"https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128827", s:"open"}]},
+  {name:"SQLite & DataFusion", area:"Database", rep:5, fix:0, links:[]},
+  {name:"CodeGraph", area:"Program analysis", rep:4, fix:3, links:[
+    {t:"PR #3349", u:GH("colbymchenry/codegraph",3349), s:"ok"},
+    {t:"PR #3350", u:GH("colbymchenry/codegraph",3350), s:"ok"},
+    {t:"PR #3360", u:GH("colbymchenry/codegraph",3360), s:"ok"},
+    {t:"PR #3218", u:GH("colbymchenry/codegraph",3218), s:"open"}]},
+  {name:"libultrahdr", area:"Image", rep:2, fix:1, links:[
+    {t:"PR #506", u:GH("google/libultrahdr",506), s:"ok"},
+    {t:"PR #507", u:GH("google/libultrahdr",507), s:"open"}]},
+  {name:"libarchive", area:"Archives", rep:4, fix:4, links:[
+    {t:"PR #3709", u:GH("libarchive/libarchive",3709), s:"ok"}]},
+  {name:"ONNX", area:"AI model format", rep:4, fix:4, links:[
+    {t:"issue #8651", u:GH("onnx/onnx",8651), s:"ok"},
+    {t:"PR #8652", u:GH("onnx/onnx",8652), s:"ok"}]},
+  {name:"raylib", area:"Graphics", rep:3, fix:3, links:[
+    {t:"PR #6362", u:GH("raysan5/raylib",6362), s:"ok"}]},
+  {name:"Ollama", area:"AI model tooling", rep:3, fix:0, links:[]},
+  {name:"drogon", area:"Web server", rep:2, fix:2, links:[
+    {t:"PR #2662", u:GH("drogonframework/drogon",2662), s:"ok"}]},
+  {name:"fastgltf", area:"3D format", rep:1, fix:1, links:[]},
+  {name:"lodepng", area:"Image", rep:1, fix:0, links:[
+    {t:"#233", u:GH("lvandeve/lodepng",233), s:"open"}]},
+  {name:"dr_libs", area:"Audio", rep:1, fix:1, links:[
+    {t:"#351", u:GH("mackron/dr_libs",351), s:"ok"}]},
+].sort((a,b) => b.rep - a.rep || b.fix - a.fix);
+const max = Math.max(...P.map(p=>p.rep));
+document.getElementById("bars").innerHTML = P.map(p=>`
+  <div class="brow"><div class="n">${p.name}</div>
+  <div class="track"><span class="rep" style="width:${p.rep/max*100}%"></span><span class="fix" style="width:${p.fix/max*100}%"></span></div>
+  <div class="v">${p.fix} <span>/ ${p.rep}</span></div></div>`).join("");
+const chip = l => l.u
+  ? `<a class="chip ${l.s}" href="${l.u}" target="_blank" rel="noopener">${l.t}</a>`
+  : `<span class="chip ${l.s}">${l.t}</span>`;
+document.getElementById("rows").innerHTML = P.map(p=>`
+  <tr><td class="proj">${p.name}<small>${p.area}</small></td>
+  <td class="num">${p.rep}</td><td class="num">${p.fix}</td><td class="num">${p.rep - p.fix}</td>
+  <td>${p.links.length ? p.links.map(chip).join("") : [
+    p.fix ? `<span class="chip ok">${p.fix} fixed</span>` : "",
+    p.rep - p.fix ? `<span class="chip open">${p.rep - p.fix} open</span>` : ""
+  ].join("")}</td></tr>`).join("");
+</script>
+</section>
+<section id="a-note-to-my-students" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-to-my-students">A note to my students</h2>
+<p>Thank you. A semester is short, and most of you had never filed an upstream bug report before this course. Your fixes now ship in software that runs on millions of machines. That is a better grade than anything I can put on a transcript.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
