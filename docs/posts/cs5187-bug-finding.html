@@ -234,6 +234,17 @@ ul.task-list li input[type="checkbox"] {
 .ir .chip.ok{background:var(--ok-soft);color:var(--ok)}
 .ir .chip.open{background:var(--warn-soft);color:var(--warn)}
 .ir .chip.plain{border:1px solid var(--rule2);color:var(--mute)}
+.ir .lhead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;font-size:13.5px;font-weight:600;color:var(--accent);margin-bottom:10px}
+.ir .lhead .okt{color:var(--ok)}
+.ir .logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.ir .lg{border:1px solid var(--rule);border-radius:6px;padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;min-width:0}
+.ir .lg.oss{border:2px solid var(--ok);padding:11px 5px 9px}
+.ir .lg img{height:36px;width:36px;object-fit:contain;margin:0 0 4px;background:#fff;border-radius:4px}
+.ir .lg .mono{height:36px;width:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center;margin-bottom:4px}
+.ir .lg b{font-size:13px;color:var(--ink);overflow-wrap:anywhere}
+.ir .lg small{font-size:11.5px;color:var(--warn)}
+.ir .lnote{font-size:12.5px;color:var(--mute);margin:10px 0 0}
+.ir .lnote i{display:inline-block;width:10px;height:10px;border:2px solid var(--ok);border-radius:2px;margin-right:6px;vertical-align:-1px}
 @media (max-width:560px){.ir .brow{grid-template-columns:96px 1fr 50px;gap:8px}}
 </style>
 <p>This is my first time teaching CS 5187 (Software Analysis), and I started the course with one belief: the best way to learn testing is to test software that people actually use. So the term project asked each team to pick a widely used open-source codebase, attack it with the techniques we covered in class, and report whatever they found to the maintainers.</p>
@@ -247,7 +258,30 @@ ul.task-list li input[type="checkbox"] {
 <div class="tile"><p class="label">Teams</p><div class="num">19</div><div class="sub">with upstream findings</div></div>
 <div class="tile"><p class="label">Fix rate so far</p><div class="num">38%</div><div class="sub">many more in review</div></div>
 </div></div>
-<p>These are not toy programs. The list includes PostgreSQL, DuckDB, FFmpeg, LLVM, GCC, Neovim, libarchive, llama.cpp, ONNX and three Python type checkers. Many of them are fuzzed continuously by projects such as OSS-Fuzz, and all of them have experienced maintainers who review every change.</p>
+<p>These are not toy programs. The list includes PostgreSQL, DuckDB, FFmpeg, LLVM, GCC, Neovim, libarchive, llama.cpp, ONNX and three Python type checkers. Half of them are fuzzed continuously by OSS-Fuzz, and all of them have experienced maintainers who review every change.</p>
+<div class="ir">
+<div class="lhead"><span>18 of 24 have 10K+ GitHub stars</span><span class="okt">12 of 24 are in OSS-Fuzz</span></div>
+<div class="logos" id="logos"></div>
+<p class="lnote"><i></i>Green outline = continuously fuzzed by OSS-Fuzz. Stars from GitHub on 24 November 2026 (mirror repositories for PostgreSQL, GCC and SQLite).</p>
+</div>
+<script>
+(() => {
+  const T = [
+    ["Ollama","ollama","187.9K",0],["llama.cpp","llamacpp","136.1K",1],["Neovim","neovim","103.8K",0],
+    ["CodeGraph","","78.5K",0],["FFmpeg","ffmpeg","68.0K",1],["DuckDB","duckdb","43.3K",1],
+    ["LLVM","llvm","41.6K",1],["Vim","vim","41.3K",0],["raylib","raylib","35.8K",0],
+    ["Turso","turso","25.3K",0],["PostgreSQL","postgres","22.9K",1],["ONNX","onnx","21.7K",1],
+    ["mypy","mypy","20.7K",0],["ty","ty","20.1K",0],["pyright","pyright","15.8K",0],
+    ["drogon","drogon","14.4K",0],["GCC","gcc","11.4K",0],["SQLite","sqlite","11.1K",1],
+    ["DataFusion","datafusion","9.6K",0],["libarchive","","3.7K",1],["lodepng","","2.4K",1],
+    ["dr_libs","","1.9K",1],["fastgltf","","627",1],["libultrahdr","libultrahdr","358",1]];
+  document.getElementById("logos").innerHTML = T.map(([n,f,s,o]) => `
+    <div class="lg${o ? " oss" : ""}">
+      ${f ? `<img src="../static/media/images/targets/${f}.png" alt="${n} logo" loading="lazy">`
+          : `<span class="mono" aria-hidden="true">${n[0].toUpperCase()}</span>`}
+      <b>${n}</b><small>&#9733; ${s}</small></div>`).join("");
+})();
+</script>
 <section id="where-the-bugs-were" class="level2">
 <h2 class="anchored" data-anchor-id="where-the-bugs-were">Where the bugs were</h2>
 <div class="ir"><div class="bars" id="bars"></div>

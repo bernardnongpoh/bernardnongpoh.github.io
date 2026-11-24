@@ -6,13 +6,6 @@ I work with students at IIT Guwahati on systems, security, and program analysis.
 
 ## Current Students
 
-### Rohit Patil
-
-- **Programme:** M.Tech (CSE), 2026 Batch
-- **Project:** USB Driver Fuzzing
-
-Working on techniques to automatically discover vulnerabilities in USB device drivers.
-
 ### Ayush Sharma
 
 - **Programme:** B.Tech (CSE)
@@ -32,6 +25,15 @@ Working on techniques to automatically discover vulnerabilities in USB device dr
 ### Bornov Shyam Kalita
 
 - **Role:** Incoming Intern
+
+## Past Students
+
+### Rohit Patil
+
+- **Programme:** M.Tech (CSE), 2026 Batch
+- **Project:** USB Driver Fuzzing (Completed)
+
+Worked on techniques to automatically discover vulnerabilities in USB device drivers.
 
 ## Past Interns
 

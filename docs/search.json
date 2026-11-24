@@ -25,7 +25,7 @@
     "href": "students.html#current-students",
     "title": "Students",
     "section": "Current Students",
-    "text": "Current Students\n\nRohit Patil\n\nProgramme: M.Tech (CSE), 2026 Batch\nProject: USB Driver Fuzzing\n\nWorking on techniques to automatically discover vulnerabilities in USB device drivers.\n\n\nAyush Sharma\n\nProgramme: B.Tech (CSE)\nProject: Solidity Compiler Fuzzing (B.Tech Project)\n\n\n\nSayan Mandal\n\nProgramme: B.Tech (CSE)\nProject: Solidity Compiler Fuzzing (B.Tech Project)\n\n\n\nKavya Choudhary\n\nProject: An Agent-Driven Static Analysis Platform"
+    "text": "Current Students\n\nAyush Sharma\n\nProgramme: B.Tech (CSE)\nProject: Solidity Compiler Fuzzing (B.Tech Project)\n\n\n\nSayan Mandal\n\nProgramme: B.Tech (CSE)\nProject: Solidity Compiler Fuzzing (B.Tech Project)\n\n\n\nKavya Choudhary\n\nProject: An Agent-Driven Static Analysis Platform"
   },
   {
     "objectID": "students.html#incoming-interns",
@@ -109,7 +109,7 @@
     "href": "posts/cs5187-bug-finding.html",
     "title": "146 Bugs in Real Software: What My CS 5187 Students Found",
     "section": "",
-    "text": "This is my first time teaching CS 5187 (Software Analysis), and I started the course with one belief: the best way to learn testing is to test software that people actually use. So the term project asked each team to pick a widely used open-source codebase, attack it with the techniques we covered in class, and report whatever they found to the maintainers.\nThe timing also helped. AI has sped up bug finding a lot. Language models can read an unfamiliar codebase, suggest where the risky code is, write test harnesses and input generators, and help turn a messy crash into a clean, minimal report. Work that used to take a team weeks of ramp-up now takes days. That let students who had never seen PostgreSQL or FFmpeg before reach the deep, interesting parts of these codebases within a single semester.\nAI does not replace the method, though. A model will happily suggest a “bug” that is not one. What made the difference was pairing it with automatic checks, so every suggestion had to prove itself against the real program before anyone filed it.\nThe results came in better than I expected.\nThese are not toy programs. The list includes PostgreSQL, DuckDB, FFmpeg, LLVM, GCC, Neovim, libarchive, llama.cpp, ONNX and three Python type checkers. Many of them are fuzzed continuously by projects such as OSS-Fuzz, and all of them have experienced maintainers who review every change."
+    "text": "This is my first time teaching CS 5187 (Software Analysis), and I started the course with one belief: the best way to learn testing is to test software that people actually use. So the term project asked each team to pick a widely used open-source codebase, attack it with the techniques we covered in class, and report whatever they found to the maintainers.\nThe timing also helped. AI has sped up bug finding a lot. Language models can read an unfamiliar codebase, suggest where the risky code is, write test harnesses and input generators, and help turn a messy crash into a clean, minimal report. Work that used to take a team weeks of ramp-up now takes days. That let students who had never seen PostgreSQL or FFmpeg before reach the deep, interesting parts of these codebases within a single semester.\nAI does not replace the method, though. A model will happily suggest a “bug” that is not one. What made the difference was pairing it with automatic checks, so every suggestion had to prove itself against the real program before anyone filed it.\nThe results came in better than I expected.\nThese are not toy programs. The list includes PostgreSQL, DuckDB, FFmpeg, LLVM, GCC, Neovim, libarchive, llama.cpp, ONNX and three Python type checkers. Half of them are fuzzed continuously by OSS-Fuzz, and all of them have experienced maintainers who review every change."
   },
   {
     "objectID": "posts/cs5187-bug-finding.html#where-the-bugs-were",
@@ -376,5 +376,12 @@
     "title": "Web Application Security: PM-SETU Training of Trainers",
     "section": "Slides and worksheets",
     "text": "Slides and worksheets\nThe slides and student worksheets for all seven sessions are on the Web Security page."
+  },
+  {
+    "objectID": "students.html#past-students",
+    "href": "students.html#past-students",
+    "title": "Students",
+    "section": "Past Students",
+    "text": "Past Students\n\nRohit Patil\n\nProgramme: M.Tech (CSE), 2026 Batch\nProject: USB Driver Fuzzing (Completed)\n\nWorked on techniques to automatically discover vulnerabilities in USB device drivers."
   }
 ]
