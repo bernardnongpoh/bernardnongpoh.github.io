@@ -18,7 +18,8 @@ I work with students at IIT Guwahati on systems, security, and program analysis.
 
 ### Kavya Choudhary
 
-- **Project:** An Agent-Driven Static Analysis Platform
+- **Programme:** B.Tech (CSE)
+- **Project:** An Agent-Driven Static Analysis Platform (B.Tech Project)
 
 ## Incoming Interns
 
